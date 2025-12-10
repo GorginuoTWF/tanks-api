@@ -1,0 +1,107 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = "mysql://root:root@localhost:3306/tankDB"
+}
+
+model battlelocation {
+  id          Int      @id @default(autoincrement())
+  name        String   @db.VarChar(255)
+  latitude    Decimal? @db.Decimal(9, 6)
+  longitude   Decimal? @db.Decimal(9, 6)
+  description String?  @db.Text
+
+  battleCountries battlelocation_country[]
+  battleTanks     battlelocation_tank[]
+}
+
+model battlelocation_country {
+  battlelocation_id Int
+  country_id        Int
+
+  battlelocation battlelocation @relation(fields: [battlelocation_id], references: [id], onDelete: Cascade)
+  countries      countries      @relation(fields: [country_id], references: [country_id], onDelete: Cascade)
+
+  @@id([battlelocation_id, country_id])
+}
+
+model battlelocation_tank {
+  battlelocation_id Int
+  tank_id           Int
+
+  battlelocation battlelocation @relation(fields: [battlelocation_id], references: [id], onDelete: Cascade)
+  tanks          tanks          @relation(fields: [tank_id], references: [tank_id], onDelete: Cascade)
+
+  @@id([battlelocation_id, tank_id])
+}
+
+model users {
+  user_id    Int     @id @default(autoincrement())
+  nickname   String
+  password   String
+  email      String  @unique
+  role       String  @default("user")
+  avatar_url String? @default("")
+
+  favourite_tanks favourite_tanks[] // <-- массив, НЕ один объект
+}
+
+model favourite_tanks {
+  fav_id  Int @id @default(autoincrement())
+  user_id Int
+  tank_id Int
+
+  users users @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
+  tanks tanks @relation(fields: [tank_id], references: [tank_id], onDelete: Cascade)
+
+  @@unique([user_id, tank_id]) // запрет дублей
+}
+
+model countries {
+  country_id Int    @id @default(autoincrement())
+  name       String @db.VarChar(100)
+
+  battleCountries battlelocation_country[]
+  tanks           tanks[]
+}
+
+model vehicle_types {
+  type_id Int    @id @default(autoincrement())
+  name    String @db.VarChar(50)
+
+  tanks tanks[]
+}
+
+model tanks {
+  tank_id    Int    @id @default(autoincrement())
+  name       String @db.VarChar(255)
+  country_id Int?
+  type_id    Int?
+
+  weight_kg       Int?
+  crew            Int?
+  engine_power_hp Int?
+  top_speed_kmh   Decimal? @db.Decimal(5, 2)
+
+  armor_front_mm Int?
+  armor_side_mm  Int?
+  armor_rear_mm  Int?
+
+  gun_caliber_mm  Decimal? @db.Decimal(5, 1)
+  year_introduced Int?
+
+  notes String? @db.Text
+
+  countries     countries?     @relation(fields: [country_id], references: [country_id], onDelete: SetNull)
+  vehicle_types vehicle_types? @relation(fields: [type_id], references: [type_id], onDelete: SetNull)
+
+  battleTanks     battlelocation_tank[]
+  favourite_tanks favourite_tanks[]
+
+  @@index([country_id])
+  @@index([type_id])
+}
