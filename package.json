@@ -8,7 +8,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "compare-proxy": "node proxy/compare_server.js",
+    "dev": "nodemon index.js"
   },
   "dependencies": {
     "@prisma/client": "^6.17.1",

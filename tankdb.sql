@@ -34,7 +34,9 @@ CREATE TABLE tanks (
     armor_side_mm INT,
     armor_rear_mm INT,
     gun_caliber_mm DECIMAL(5,1),
+    penetration_mm INT,
     year_introduced YEAR,
+    summary TEXT,
     notes TEXT,
     FOREIGN KEY (country_id) REFERENCES countries(country_id),
     FOREIGN KEY (type_id) REFERENCES vehicle_types(type_id)
@@ -151,43 +153,62 @@ INSERT INTO vehicle_types (name) VALUES
 
 
 -- === INSERT WWII TANKS ===
-INSERT INTO tanks (name, country_id, type_id, weight_kg, crew, engine_power_hp, top_speed_kmh,
-                   armor_front_mm, armor_side_mm, armor_rear_mm, gun_caliber_mm, year_introduced, notes)
+INSERT INTO tanks (
+  name, country_id, type_id, weight_kg, crew, engine_power_hp, top_speed_kmh,
+  armor_front_mm, armor_side_mm, armor_rear_mm,
+  gun_caliber_mm, penetration_mm, year_introduced, notes
+)
 VALUES
-('T-34-76', 1, 2, 26800, 4, 500, 53.0, 45, 40, 40, 76.2, 1940,
+('T-34-76', 1, 2, 26800, 4, 500, 53.0, 45, 40, 40, 76.2, 70, 1940,
  'Revolutionary Soviet medium tank — well-balanced and mass-produced.'),
-('KV-1', 1, 3, 47000, 5, 600, 35.0, 90, 75, 70, 76.2, 1939,
+
+('KV-1', 1, 3, 47000, 5, 600, 35.0, 90, 75, 70, 76.2, 75, 1939,
  'Heavy Soviet tank that was nearly invulnerable early in the war.'),
-('Panzer 3', 2, 2, 23000, 5, 300, 40.0, 50, 30, 20, 50.0, 1937,
+
+('Panzer 3', 2, 2, 23000, 5, 300, 40.0, 50, 30, 20, 50.0, 60, 1937,
  'German medium tank used in Blitzkrieg campaigns.'),
- ('M3 Stuart', 3, 1, 14300, 4, 250, 58.0, 38, 25, 25, 37.0, 1941,
+
+('M3 Stuart', 3, 1, 14300, 4, 250, 58.0, 38, 25, 25, 37.0, 45, 1941,
  'Light American reconnaissance tank, fast but lightly armored.'),
-('Panzer 4', 2, 2, 25000, 5, 300, 42.0, 80, 30, 20, 75.0, 1937,
+
+('Panzer 4', 2, 2, 25000, 5, 300, 42.0, 80, 30, 20, 75.0, 90, 1937,
  'Versatile German medium tank, widely used across all fronts.'),
-('Tiger 1', 2, 3, 57000, 5, 700, 38.0, 100, 80, 80, 88.0, 1942,
+
+('Tiger 1', 2, 3, 57000, 5, 700, 38.0, 100, 80, 80, 88.0, 110, 1942,
  'Iconic German heavy tank with formidable armor and gun.'),
- ('Panther', 2, 2, 44500, 5, 700, 55.0, 80, 50, 45, 75.0, 1943,
- 'German medium tank with strong frontal armor and powerful 75mm gun, widely used from 1943.'),
-('Fiat M14/41', 7, 2, 14000, 4, 125, 42.0, 42, 30, 20, 47.0, 1941,
- 'Italian medium tank (improved M13/40) used in North Africa and on other fronts; moderate armor and a 47 mm gun.'),
-('M4 Sherman', 3, 2, 30300, 5, 450, 48.0, 63, 38, 38, 75.0, 1942,
+
+('Panther', 2, 2, 44500, 5, 700, 55.0, 80, 50, 45, 75.0, 120, 1943,
+ 'German medium tank with strong frontal armor and powerful 75mm gun.'),
+
+('Fiat M14/41', 7, 2, 14000, 4, 125, 42.0, 42, 30, 20, 47.0, 55, 1941,
+ 'Italian medium tank used in North Africa.'),
+
+('M4 Sherman', 3, 2, 30300, 5, 450, 48.0, 63, 38, 38, 75.0, 90, 1942,
  'Reliable Allied tank, mass-produced and easily maintained.'),
- ('SU-152', 1, 5, 45600, 5, 520, 43.0, 75, 60, 60, 152.4, 1943,
- 'Soviet heavy self-propelled gun, used for assaulting fortified positions and destroying heavy tanks.'),
-('Churchill Mk 4', 4, 3, 40000, 5, 350, 25.0, 102, 76, 50, 75.0, 1941,
- 'Heavily armored British infantry tank, slow but tough.'),
-('Crusader', 4, 2, 20500, 4, 340, 42.0, 40, 30, 20, 40.0, 1941,
- 'British cruiser tank used in North Africa, fast and maneuverable.'),
-('Type 97 Chi-Ha', 5, 2, 15500, 4, 170, 38.0, 33, 25, 20, 57.0, 1938,
- 'Japanese medium tank with weak armor but high production numbers.'),
-('Renault FT', 6, 1, 6000, 2, 35, 7.0, 22, 8, 8, 37.0, 1917,
- 'Iconic WWI French light tank, revolutionary rotating turret design.'),
-('Char B1', 6, 3, 28000, 4, 105, 28.0, 60, 45, 40, 75.0, 1935,
- 'Heavily armored French heavy tank with strong frontal armor and 75mm hull gun.'),
-('Somua S35', 6, 2, 19500, 3, 190, 40.0, 47, 40, 40, 47.0, 1936,
- 'Well-armored French cavalry tank, fast and mobile, good balance between firepower and speed.'),
- ('Cromwell', 4, 2, 28000, 5, 600, 64.0, 76, 40, 25, 75.0, 1943,
- 'British cruiser tank known for its excellent speed, maneuverability, and reliable Meteor engine. Used in Normandy and Western Europe.');
+
+('SU-152', 1, 5, 45600, 5, 520, 43.0, 75, 60, 60, 152.4, 125, 1943,
+ 'Soviet heavy self-propelled gun.'),
+
+('Churchill Mk 4', 4, 3, 40000, 5, 350, 25.0, 102, 76, 50, 75.0, 75, 1941,
+ 'Heavily armored British infantry tank.'),
+
+('Crusader', 4, 2, 20500, 4, 340, 42.0, 40, 30, 20, 40.0, 55, 1941,
+ 'British cruiser tank used in North Africa.'),
+
+('Type 97 Chi-Ha', 5, 2, 15500, 4, 170, 38.0, 33, 25, 20, 57.0, 50, 1938,
+ 'Japanese medium tank with weak armor.'),
+
+('Renault FT', 6, 1, 6000, 2, 35, 7.0, 22, 8, 8, 37.0, 30, 1917,
+ 'Iconic WWI French light tank.'),
+
+('Char B1', 6, 3, 28000, 4, 105, 28.0, 60, 45, 40, 75.0, 75, 1935,
+ 'Heavily armored French heavy tank.'),
+
+('Somua S35', 6, 2, 19500, 3, 190, 40.0, 47, 40, 40, 47.0, 60, 1936,
+ 'Well-armored French cavalry tank.'),
+
+('Cromwell', 4, 2, 28000, 5, 600, 64.0, 76, 40, 25, 75.0, 95, 1943,
+ 'British cruiser tank known for its speed.');
 -- === INSERT USERS ===
 INSERT INTO users (nickname, password, email) VALUES
 ('RedComrade', 'pass123', 'redcomrade@example.com'),
@@ -273,22 +294,22 @@ VALUES
     ('Cromwell_2.jpg', 'uploads/tankphoto/Cromwell_2.jpg'),
     ('Cromwell_3.jpg', 'uploads/tankphoto/Cromwell_3.jpg'),
     ('Cromwell_4.jpg', 'uploads/tankphoto/Cromwell_4.jpg'),
-  ('El_Alamein_1.jpg', 'uploads/locationphoto/el_alamein_1.jpg'),
-  ('El_Alamein_2.jpg', 'uploads/locationphoto/el_alamein_2.jpg'),
-    ('El_Alamein_3.jpg', 'uploads/locationphoto/el_alamein_3.jpg'),
-    ('El_Alamein_4.jpg', 'uploads/locationphoto/el_alamein_4.jpg'),
-  ('Kursk_1.jpg','uploads/locationphoto/kursk_1.jpg'),
-  ('Kursk_2.jpg','uploads/locationphoto/kursk_2.jpg'),
-  ('Kursk_1.jpg','uploads/locationphoto/kursk_3.jpg'),
-  ('Kursk_2.jpg','uploads/locationphoto/kursk_4.jpg'),
-  ('Prokhorovka_1.jpg','uploads/location/prokhorovka_1.jpg'),
+  ('El_Alamein_1.jpg', 'uploads/location/el_alamein_1.png'),
+  ('El_Alamein_2.jpg', 'uploads/location/el_alamein_2.jpg'),
+    ('El_Alamein_3.jpg', 'uploads/location/el_alamein_3.png'),
+    ('El_Alamein_4.jpg', 'uploads/location/el_alamein_4.png'),
+  ('Kursk_1.jpg','uploads/location/kursk_1.jpg'),
+  ('Kursk_2.jpg','uploads/location/kursk_2.jpg'),
+  ('Kursk_1.jpg','uploads/location/kursk_3.jpg'),
+  ('Kursk_2.jpg','uploads/location/kursk_4.jpg'),
+  ('Prokhorovka_1.jpg','uploads/location/prokhorovka_1.png'),
   ('Prokhorovka_2.jpg','uploads/location/prokhorovka_2.jpg'),
-  ('Prokhorovka_3.jpg','uploads/location/prokhorovka_3.jpg'),
-  ('Prokhorovka_4.jpg','uploads/location/prokhorovka_4.jpg'),
-  ('Villers_1.jpg','uploads/locationphoto/villers_bocage_1.jpg'),
-  ('Villers_2.jpg','uploads/locationphoto/villers_bocage_2.jpg'),
-  ('Villers_3.jpg','uploads/locationphoto/villers_bocage_3.jpg'),
-  ('Villers_4.jpg','uploads/locationphoto/villers_bocage_4.jpg');
+  ('Prokhorovka_3.jpg','uploads/location/prokhorovka_3.png'),
+  ('Prokhorovka_4.jpg','uploads/location/prokhorovka_4.png'),
+  ('Villers_1.jpg','uploads/location/villers_bocage_1.png'),
+  ('Villers_2.jpg','uploads/location/villers_bocage_2.png'),
+  ('Villers_3.jpg','uploads/location/villers_bocage_3.png'),
+  ('Villers_4.jpg','uploads/location/villers_bocage_4.png');
 
 -- Связываем с танком
 INSERT INTO tank_photos (tank_id, photo_id)

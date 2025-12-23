@@ -5,10 +5,38 @@ const bcrypt = require("bcrypt");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
-
+const codes = new Map();
+const verifiedEmails = new Set(); // email -> { code, expires }
 // === Prisma ===
 const { PrismaClient } = require("../generated/prisma");
 const prisma = new PrismaClient();
+
+// === Nodemailer ===
+const nodemailer = require("nodemailer");
+
+// Replace with your actual email credentials or use environment variables
+const transporter = nodemailer.createTransport({
+  service: "gmail", // or your email service
+  auth: {
+    user: process.env.EMAIL_USER || "your-email@gmail.com",
+    pass: process.env.EMAIL_PASS || "your-app-password", // Use app password for Gmail
+  },
+});
+
+async function sendMail(to, text) {
+  try {
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER || "your-email@gmail.com",
+      to,
+      subject: "Your Verification Code",
+      text,
+    });
+    console.log(`Email sent to ${to}`);
+  } catch (error) {
+    console.error("Email sending error:", error);
+    throw new Error("Failed to send email");
+  }
+}
 
 // === Multer: сохранение аватаров ===
 const storage = multer.diskStorage({
@@ -23,7 +51,23 @@ const storage = multer.diskStorage({
     cb(null, filename);
   },
 });
+const validateRegisterInput = ({ email, password }) => {
+  // email: что-то@что-то
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return "Invalid email format";
+  }
 
+  // пароль: ≥6, 1 заглавная, 1 строчная, 1 спецсимвол
+  const passwordRegex =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{6,}$/;
+
+  if (!passwordRegex.test(password)) {
+    return "Password must be at least 6 chars, include upper, lower and special symbol";
+  }
+
+  return null;
+};
 const upload = multer({
   storage,
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB max
@@ -78,12 +122,20 @@ router.get("/", async (req, res) => {
     const users = await prisma.users.findMany({
       include: {
         favourite_tanks: {
-          include: { tanks: true },
+          include: { tank: true },
         },
       },
       orderBy: { user_id: "asc" },
     });
-    res.json(users);
+    // Map `favourite_tanks[].tank` -> `favourite_tanks[].tanks` to keep API shape
+    const mapped = users.map(u => ({
+      ...u,
+      favourite_tanks: (u.favourite_tanks || []).map(f => ({
+        ...f,
+        tanks: f.tank,
+      }))
+    }));
+    res.json(mapped);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch users" });
@@ -179,14 +231,29 @@ router.post("/register", async (req, res) => {
   if (!nickname || !email || !password) {
     return res.status(400).json({ error: "All fields required" });
   }
+  
+
+
+  // === VALIDATION (BEFORE DB) ===
+  const validationError = validateRegisterInput({ email, password });
+  if (validationError) {
+    return res.status(400).json({ error: validationError });
+  }
+  if (!verifiedEmails.has(email.toLowerCase())) {
+  return res.status(400).json({ error: "Email not verified" });
+}
 
   try {
     const exists = await prisma.users.findUnique({ where: { email } });
-    if (exists) return res.status(400).json({ error: "Email already taken" });
+    if (exists) {
+      return res.status(400).json({ error: "Email already taken" });
+    }
 
     const hashed = await bcrypt.hash(password, 12);
 
-    const role = nickname.toLowerCase().includes("erika") ? "admin" : "user";
+    const role = nickname.toLowerCase().includes("erika")
+      ? "admin"
+      : "user";
 
     const newUser = await prisma.users.create({
       data: {
@@ -242,11 +309,20 @@ router.put(
         where: { user_id: id },
         data: updateData,
         include: {
-          favourite_tanks: { include: { tanks: true } },
+          favourite_tanks: { include: { tank: true } },
         },
       });
 
-      res.json({ message: "Updated successfully", user: updatedUser });
+      // keep compatibility: return `tanks` key inside favourite_tanks
+      const mappedUser = {
+        ...updatedUser,
+        favourite_tanks: (updatedUser.favourite_tanks || []).map(f => ({
+          ...f,
+          tanks: f.tank,
+        }))
+      };
+
+      res.json({ message: "Updated successfully", user: mappedUser });
     } catch (err) {
       console.error("Admin update error:", err);
       if (err.code === "P2025") {
@@ -273,11 +349,46 @@ router.delete("/:id", isAdmin("admin"), async (req, res) => {
     res.status(500).json({ error: "Delete failed" });
   }
 });
+router.post("/:id/favourite", async (req, res) => {
+  const user_id = Number(req.params.id);
+  const { tank_id } = req.body;
 
+  if (!tank_id) return res.status(400).json({ error: "tank_id required" });
+
+  try {
+    // Проверка пользователя и танка
+    const user = await prisma.users.findUnique({ where: { user_id } });
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const tank = await prisma.tanks.findUnique({ where: { tank_id: Number(tank_id) } });
+    if (!tank) return res.status(404).json({ error: "Tank not found" });
+
+    // Проверяем, есть ли уже любимый танк
+    const existing = await prisma.favourite_tanks.findFirst({ where: { user_id } });
+    if (existing) {
+      // если есть, обновляем запись
+      const updated = await prisma.favourite_tanks.update({
+        where: { id: existing.id }, // уникальный id записи
+        data: { tank_id: Number(tank_id) }
+      });
+      return res.json({ message: "Favourite tank updated", favourite: updated });
+    }
+
+    // если нет — создаём
+    const favourite = await prisma.favourite_tanks.create({
+      data: { user_id, tank_id: Number(tank_id) }
+    });
+
+    res.json({ message: "Favourite tank set", favourite });
+  } catch (err) {
+    console.error("Favourite tank error:", err);
+    res.status(500).json({ error: "Cannot set favourite tank" });
+  }
+});
 // ===========================================================
 // 7. Удаление любимого танка
 // ===========================================================
-router.delete("/:id/favourite", isAdmin("admin"), async (req, res) => {
+router.delete("/:id/favourite",  async (req, res) => {
   const user_id = Number(req.params.id);
 
   try {
@@ -289,5 +400,88 @@ router.delete("/:id/favourite", isAdmin("admin"), async (req, res) => {
     res.status(500).json({ error: "Cannot remove favourite tank" });
   }
 });
+router.get("/:id/favourite", async (req, res) => {
+  const user_id = Number(req.params.id);
 
+  try {
+    const fav = await prisma.favourite_tanks.findFirst({
+      where: { user_id },
+      include: { tank: true }
+    });
+
+    res.json(fav || null);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Cannot get favourite tank" });
+  }
+});
+
+
+router.post("/send-email-code", async (req, res) => {
+  const { email } = req.body;
+  const code = Math.floor(100000 + Math.random() * 900000).toString();
+
+  codes.set(email, {
+    code,
+    expires: Date.now() + 5 * 60 * 1000, // 5 min
+  });
+
+  try {
+    await sendMail(email, `Your verification code: ${code}`);
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Send code error:", err);
+    res.status(500).json({ error: "Failed to send verification code" });
+  }
+});
+router.put("/:id/favourite", async (req, res) => {
+  const user_id = Number(req.params.id);
+  const { tank_id } = req.body;
+
+  if (!tank_id) return res.status(400).json({ error: "tank_id required" });
+
+  try {
+    // Проверка пользователя и танка
+    const user = await prisma.users.findUnique({ where: { user_id } });
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const tank = await prisma.tanks.findUnique({ where: { tank_id: Number(tank_id) } });
+    if (!tank) return res.status(404).json({ error: "Tank not found" });
+
+    // Удаляем старый любимый танк
+    await prisma.favourite_tanks.deleteMany({ where: { user_id } });
+
+    // Ставим новый
+    const favourite = await prisma.favourite_tanks.create({
+      data: { user_id, tank_id: Number(tank_id) }
+    });
+
+    res.json({ message: "Favourite tank updated", favourite });
+  } catch (err) {
+    console.error("Update favourite tank error:", err);
+    res.status(500).json({ error: "Cannot update favourite tank" });
+  }
+});
+router.post("/verify-email-code", (req, res) => {
+  const { email, code } = req.body;
+  const entry = codes.get(email);
+
+  if (!entry) {
+    return res.status(400).json({ error: "Code not found" });
+  }
+
+  if (Date.now() > entry.expires) {
+    codes.delete(email);
+    return res.status(400).json({ error: "Code expired" });
+  }
+
+  if (entry.code !== code) {
+    return res.status(400).json({ error: "Invalid code" });
+  }
+
+  codes.delete(email);
+  verifiedEmails.add(email.toLowerCase());
+
+  res.json({ success: true });
+});
 module.exports = router;

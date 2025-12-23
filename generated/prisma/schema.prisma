@@ -17,14 +17,15 @@ model battlelocation {
 
   battleCountries battlelocation_country[]
   battleTanks     battlelocation_tank[]
+  photos          battlelocation_photos[]
 }
 
 model battlelocation_country {
   battlelocation_id Int
   country_id        Int
 
-  battlelocation battlelocation @relation(fields: [battlelocation_id], references: [id], onDelete: Cascade)
-  countries      countries      @relation(fields: [country_id], references: [country_id], onDelete: Cascade)
+  battlelocation battlelocation @relation(fields: [battlelocation_id], references: [id])
+  country        countries      @relation(fields: [country_id], references: [country_id])
 
   @@id([battlelocation_id, country_id])
 }
@@ -33,21 +34,20 @@ model battlelocation_tank {
   battlelocation_id Int
   tank_id           Int
 
-  battlelocation battlelocation @relation(fields: [battlelocation_id], references: [id], onDelete: Cascade)
-  tanks          tanks          @relation(fields: [tank_id], references: [tank_id], onDelete: Cascade)
+  battlelocation battlelocation @relation(fields: [battlelocation_id], references: [id])
+  tank           tanks          @relation(fields: [tank_id], references: [tank_id])
 
   @@id([battlelocation_id, tank_id])
 }
 
 model users {
-  user_id    Int     @id @default(autoincrement())
-  nickname   String
-  password   String
-  email      String  @unique
-  role       String  @default("user")
-  avatar_url String? @default("")
-
-  favourite_tanks favourite_tanks[] // <-- массив, НЕ один объект
+  user_id         Int               @id @default(autoincrement())
+  nickname        String            @db.VarChar(100)
+  password        String            @db.VarChar(255)
+  email           String            @unique(map: "email") @db.VarChar(255)
+  role            users_role        @default(user)
+  avatar_url      String?           @default("") @db.VarChar(255)
+  favourite_tanks favourite_tanks[]
 }
 
 model favourite_tanks {
@@ -55,18 +55,41 @@ model favourite_tanks {
   user_id Int
   tank_id Int
 
-  users users @relation(fields: [user_id], references: [user_id], onDelete: Cascade)
-  tanks tanks @relation(fields: [tank_id], references: [tank_id], onDelete: Cascade)
+  user users @relation(fields: [user_id], references: [user_id])
+  tank tanks @relation(fields: [tank_id], references: [tank_id])
 
-  @@unique([user_id, tank_id]) // запрет дублей
+  @@unique([user_id, tank_id])
+  @@index([tank_id], map: "tank_id")
+  @@index([user_id], map: "user_id")
+}
+
+model photos {
+  photo_id Int    @id @default(autoincrement())
+  filename String @db.VarChar(255)
+  filepath String @db.VarChar(255)
+
+  tankPhotos      tank_photos[]
+  battleLocations battlelocation_photos[]
+}
+
+model tank_photos {
+  id       Int @id @default(autoincrement())
+  tank_id  Int
+  photo_id Int
+
+  tank  tanks  @relation(fields: [tank_id], references: [tank_id])
+  photo photos @relation(fields: [photo_id], references: [photo_id])
+
+  @@index([photo_id], map: "photo_id")
+  @@index([tank_id], map: "tank_id")
 }
 
 model countries {
   country_id Int    @id @default(autoincrement())
   name       String @db.VarChar(100)
 
-  battleCountries battlelocation_country[]
   tanks           tanks[]
+  battleLocations battlelocation_country[]
 }
 
 model vehicle_types {
@@ -77,31 +100,44 @@ model vehicle_types {
 }
 
 model tanks {
-  tank_id    Int    @id @default(autoincrement())
-  name       String @db.VarChar(255)
-  country_id Int?
-  type_id    Int?
-
+  tank_id         Int      @id @default(autoincrement())
+  name            String   @db.VarChar(255)
+  country_id      Int?
+  type_id         Int?
   weight_kg       Int?
   crew            Int?
   engine_power_hp Int?
   top_speed_kmh   Decimal? @db.Decimal(5, 2)
-
-  armor_front_mm Int?
-  armor_side_mm  Int?
-  armor_rear_mm  Int?
-
+  armor_front_mm  Int?
+  armor_side_mm   Int?
+  armor_rear_mm   Int?
   gun_caliber_mm  Decimal? @db.Decimal(5, 1)
-  year_introduced Int?
+  year_introduced Int?     @db.Year
+  notes           String?  @db.Text
 
-  notes String? @db.Text
-
-  countries     countries?     @relation(fields: [country_id], references: [country_id], onDelete: SetNull)
-  vehicle_types vehicle_types? @relation(fields: [type_id], references: [type_id], onDelete: SetNull)
-
-  battleTanks     battlelocation_tank[]
+  country         countries?            @relation(fields: [country_id], references: [country_id])
+  vehicle_type    vehicle_types?        @relation(fields: [type_id], references: [type_id])
   favourite_tanks favourite_tanks[]
+  battleLocations battlelocation_tank[]
+  photos          tank_photos[]
 
-  @@index([country_id])
-  @@index([type_id])
+  @@index([country_id], map: "country_id")
+  @@index([type_id], map: "type_id")
+}
+
+model battlelocation_photos {
+  id                Int @id @default(autoincrement())
+  battlelocation_id Int
+  photo_id          Int
+
+  battlelocation battlelocation @relation(fields: [battlelocation_id], references: [id])
+  photo          photos         @relation(fields: [photo_id], references: [photo_id])
+
+  @@index([battlelocation_id], map: "battlelocation_id")
+  @@index([photo_id], map: "photo_id")
+}
+
+enum users_role {
+  user
+  admin
 }

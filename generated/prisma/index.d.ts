@@ -63,6 +63,28 @@ export type vehicle_types = $Result.DefaultSelection<Prisma.$vehicle_typesPayloa
  * 
  */
 export type tanks = $Result.DefaultSelection<Prisma.$tanksPayload>
+/**
+ * Model battlelocation_photos
+ * 
+ */
+export type battlelocation_photos = $Result.DefaultSelection<Prisma.$battlelocation_photosPayload>
+
+/**
+ * Enums
+ */
+export namespace $Enums {
+  export const users_role: {
+  user: 'user',
+  admin: 'admin'
+};
+
+export type users_role = (typeof users_role)[keyof typeof users_role]
+
+}
+
+export type users_role = $Enums.users_role
+
+export const users_role: typeof $Enums.users_role
 
 /**
  * ##  Prisma Client ʲˢ
@@ -281,6 +303,16 @@ export class PrismaClient<
     * ```
     */
   get tanks(): Prisma.tanksDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.battlelocation_photos`: Exposes CRUD operations for the **battlelocation_photos** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Battlelocation_photos
+    * const battlelocation_photos = await prisma.battlelocation_photos.findMany()
+    * ```
+    */
+  get battlelocation_photos(): Prisma.battlelocation_photosDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -730,7 +762,8 @@ export namespace Prisma {
     tank_photos: 'tank_photos',
     countries: 'countries',
     vehicle_types: 'vehicle_types',
-    tanks: 'tanks'
+    tanks: 'tanks',
+    battlelocation_photos: 'battlelocation_photos'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -749,7 +782,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "battlelocation" | "battlelocation_country" | "battlelocation_tank" | "users" | "favourite_tanks" | "photos" | "tank_photos" | "countries" | "vehicle_types" | "tanks"
+      modelProps: "battlelocation" | "battlelocation_country" | "battlelocation_tank" | "users" | "favourite_tanks" | "photos" | "tank_photos" | "countries" | "vehicle_types" | "tanks" | "battlelocation_photos"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1413,6 +1446,72 @@ export namespace Prisma {
           }
         }
       }
+      battlelocation_photos: {
+        payload: Prisma.$battlelocation_photosPayload<ExtArgs>
+        fields: Prisma.battlelocation_photosFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.battlelocation_photosFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$battlelocation_photosPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.battlelocation_photosFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$battlelocation_photosPayload>
+          }
+          findFirst: {
+            args: Prisma.battlelocation_photosFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$battlelocation_photosPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.battlelocation_photosFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$battlelocation_photosPayload>
+          }
+          findMany: {
+            args: Prisma.battlelocation_photosFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$battlelocation_photosPayload>[]
+          }
+          create: {
+            args: Prisma.battlelocation_photosCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$battlelocation_photosPayload>
+          }
+          createMany: {
+            args: Prisma.battlelocation_photosCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          delete: {
+            args: Prisma.battlelocation_photosDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$battlelocation_photosPayload>
+          }
+          update: {
+            args: Prisma.battlelocation_photosUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$battlelocation_photosPayload>
+          }
+          deleteMany: {
+            args: Prisma.battlelocation_photosDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.battlelocation_photosUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          upsert: {
+            args: Prisma.battlelocation_photosUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$battlelocation_photosPayload>
+          }
+          aggregate: {
+            args: Prisma.Battlelocation_photosAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateBattlelocation_photos>
+          }
+          groupBy: {
+            args: Prisma.battlelocation_photosGroupByArgs<ExtArgs>
+            result: $Utils.Optional<Battlelocation_photosGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.battlelocation_photosCountArgs<ExtArgs>
+            result: $Utils.Optional<Battlelocation_photosCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1519,6 +1618,7 @@ export namespace Prisma {
     countries?: countriesOmit
     vehicle_types?: vehicle_typesOmit
     tanks?: tanksOmit
+    battlelocation_photos?: battlelocation_photosOmit
   }
 
   /* Types for Logging */
@@ -1601,11 +1701,13 @@ export namespace Prisma {
   export type BattlelocationCountOutputType = {
     battleCountries: number
     battleTanks: number
+    photos: number
   }
 
   export type BattlelocationCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     battleCountries?: boolean | BattlelocationCountOutputTypeCountBattleCountriesArgs
     battleTanks?: boolean | BattlelocationCountOutputTypeCountBattleTanksArgs
+    photos?: boolean | BattlelocationCountOutputTypeCountPhotosArgs
   }
 
   // Custom InputTypes
@@ -1631,6 +1733,13 @@ export namespace Prisma {
    */
   export type BattlelocationCountOutputTypeCountBattleTanksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: battlelocation_tankWhereInput
+  }
+
+  /**
+   * BattlelocationCountOutputType without action
+   */
+  export type BattlelocationCountOutputTypeCountPhotosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: battlelocation_photosWhereInput
   }
 
 
@@ -1670,11 +1779,13 @@ export namespace Prisma {
    */
 
   export type PhotosCountOutputType = {
-    tanks: number
+    tankPhotos: number
+    battleLocations: number
   }
 
   export type PhotosCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tanks?: boolean | PhotosCountOutputTypeCountTanksArgs
+    tankPhotos?: boolean | PhotosCountOutputTypeCountTankPhotosArgs
+    battleLocations?: boolean | PhotosCountOutputTypeCountBattleLocationsArgs
   }
 
   // Custom InputTypes
@@ -1691,8 +1802,15 @@ export namespace Prisma {
   /**
    * PhotosCountOutputType without action
    */
-  export type PhotosCountOutputTypeCountTanksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type PhotosCountOutputTypeCountTankPhotosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: tank_photosWhereInput
+  }
+
+  /**
+   * PhotosCountOutputType without action
+   */
+  export type PhotosCountOutputTypeCountBattleLocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: battlelocation_photosWhereInput
   }
 
 
@@ -1701,13 +1819,13 @@ export namespace Prisma {
    */
 
   export type CountriesCountOutputType = {
-    battleCountries: number
     tanks: number
+    battleLocations: number
   }
 
   export type CountriesCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    battleCountries?: boolean | CountriesCountOutputTypeCountBattleCountriesArgs
     tanks?: boolean | CountriesCountOutputTypeCountTanksArgs
+    battleLocations?: boolean | CountriesCountOutputTypeCountBattleLocationsArgs
   }
 
   // Custom InputTypes
@@ -1724,15 +1842,15 @@ export namespace Prisma {
   /**
    * CountriesCountOutputType without action
    */
-  export type CountriesCountOutputTypeCountBattleCountriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: battlelocation_countryWhereInput
+  export type CountriesCountOutputTypeCountTanksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: tanksWhereInput
   }
 
   /**
    * CountriesCountOutputType without action
    */
-  export type CountriesCountOutputTypeCountTanksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: tanksWhereInput
+  export type CountriesCountOutputTypeCountBattleLocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: battlelocation_countryWhereInput
   }
 
 
@@ -1772,14 +1890,14 @@ export namespace Prisma {
    */
 
   export type TanksCountOutputType = {
-    battleTanks: number
     favourite_tanks: number
+    battleLocations: number
     photos: number
   }
 
   export type TanksCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    battleTanks?: boolean | TanksCountOutputTypeCountBattleTanksArgs
     favourite_tanks?: boolean | TanksCountOutputTypeCountFavourite_tanksArgs
+    battleLocations?: boolean | TanksCountOutputTypeCountBattleLocationsArgs
     photos?: boolean | TanksCountOutputTypeCountPhotosArgs
   }
 
@@ -1797,15 +1915,15 @@ export namespace Prisma {
   /**
    * TanksCountOutputType without action
    */
-  export type TanksCountOutputTypeCountBattleTanksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: battlelocation_tankWhereInput
+  export type TanksCountOutputTypeCountFavourite_tanksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: favourite_tanksWhereInput
   }
 
   /**
    * TanksCountOutputType without action
    */
-  export type TanksCountOutputTypeCountFavourite_tanksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: favourite_tanksWhereInput
+  export type TanksCountOutputTypeCountBattleLocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: battlelocation_tankWhereInput
   }
 
   /**
@@ -2028,6 +2146,7 @@ export namespace Prisma {
     description?: boolean
     battleCountries?: boolean | battlelocation$battleCountriesArgs<ExtArgs>
     battleTanks?: boolean | battlelocation$battleTanksArgs<ExtArgs>
+    photos?: boolean | battlelocation$photosArgs<ExtArgs>
     _count?: boolean | BattlelocationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["battlelocation"]>
 
@@ -2045,6 +2164,7 @@ export namespace Prisma {
   export type battlelocationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     battleCountries?: boolean | battlelocation$battleCountriesArgs<ExtArgs>
     battleTanks?: boolean | battlelocation$battleTanksArgs<ExtArgs>
+    photos?: boolean | battlelocation$photosArgs<ExtArgs>
     _count?: boolean | BattlelocationCountOutputTypeDefaultArgs<ExtArgs>
   }
 
@@ -2053,6 +2173,7 @@ export namespace Prisma {
     objects: {
       battleCountries: Prisma.$battlelocation_countryPayload<ExtArgs>[]
       battleTanks: Prisma.$battlelocation_tankPayload<ExtArgs>[]
+      photos: Prisma.$battlelocation_photosPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -2402,6 +2523,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     battleCountries<T extends battlelocation$battleCountriesArgs<ExtArgs> = {}>(args?: Subset<T, battlelocation$battleCountriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$battlelocation_countryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     battleTanks<T extends battlelocation$battleTanksArgs<ExtArgs> = {}>(args?: Subset<T, battlelocation$battleTanksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$battlelocation_tankPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    photos<T extends battlelocation$photosArgs<ExtArgs> = {}>(args?: Subset<T, battlelocation$photosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2827,6 +2949,30 @@ export namespace Prisma {
   }
 
   /**
+   * battlelocation.photos
+   */
+  export type battlelocation$photosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    where?: battlelocation_photosWhereInput
+    orderBy?: battlelocation_photosOrderByWithRelationInput | battlelocation_photosOrderByWithRelationInput[]
+    cursor?: battlelocation_photosWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Battlelocation_photosScalarFieldEnum | Battlelocation_photosScalarFieldEnum[]
+  }
+
+  /**
    * battlelocation without action
    */
   export type battlelocationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3024,7 +3170,7 @@ export namespace Prisma {
     battlelocation_id?: boolean
     country_id?: boolean
     battlelocation?: boolean | battlelocationDefaultArgs<ExtArgs>
-    countries?: boolean | countriesDefaultArgs<ExtArgs>
+    country?: boolean | countriesDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["battlelocation_country"]>
 
 
@@ -3037,14 +3183,14 @@ export namespace Prisma {
   export type battlelocation_countryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"battlelocation_id" | "country_id", ExtArgs["result"]["battlelocation_country"]>
   export type battlelocation_countryInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     battlelocation?: boolean | battlelocationDefaultArgs<ExtArgs>
-    countries?: boolean | countriesDefaultArgs<ExtArgs>
+    country?: boolean | countriesDefaultArgs<ExtArgs>
   }
 
   export type $battlelocation_countryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "battlelocation_country"
     objects: {
       battlelocation: Prisma.$battlelocationPayload<ExtArgs>
-      countries: Prisma.$countriesPayload<ExtArgs>
+      country: Prisma.$countriesPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       battlelocation_id: number
@@ -3390,7 +3536,7 @@ export namespace Prisma {
   export interface Prisma__battlelocation_countryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     battlelocation<T extends battlelocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, battlelocationDefaultArgs<ExtArgs>>): Prisma__battlelocationClient<$Result.GetResult<Prisma.$battlelocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    countries<T extends countriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, countriesDefaultArgs<ExtArgs>>): Prisma__countriesClient<$Result.GetResult<Prisma.$countriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    country<T extends countriesDefaultArgs<ExtArgs> = {}>(args?: Subset<T, countriesDefaultArgs<ExtArgs>>): Prisma__countriesClient<$Result.GetResult<Prisma.$countriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3962,7 +4108,7 @@ export namespace Prisma {
     battlelocation_id?: boolean
     tank_id?: boolean
     battlelocation?: boolean | battlelocationDefaultArgs<ExtArgs>
-    tanks?: boolean | tanksDefaultArgs<ExtArgs>
+    tank?: boolean | tanksDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["battlelocation_tank"]>
 
 
@@ -3975,14 +4121,14 @@ export namespace Prisma {
   export type battlelocation_tankOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"battlelocation_id" | "tank_id", ExtArgs["result"]["battlelocation_tank"]>
   export type battlelocation_tankInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     battlelocation?: boolean | battlelocationDefaultArgs<ExtArgs>
-    tanks?: boolean | tanksDefaultArgs<ExtArgs>
+    tank?: boolean | tanksDefaultArgs<ExtArgs>
   }
 
   export type $battlelocation_tankPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "battlelocation_tank"
     objects: {
       battlelocation: Prisma.$battlelocationPayload<ExtArgs>
-      tanks: Prisma.$tanksPayload<ExtArgs>
+      tank: Prisma.$tanksPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       battlelocation_id: number
@@ -4328,7 +4474,7 @@ export namespace Prisma {
   export interface Prisma__battlelocation_tankClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     battlelocation<T extends battlelocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, battlelocationDefaultArgs<ExtArgs>>): Prisma__battlelocationClient<$Result.GetResult<Prisma.$battlelocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tanks<T extends tanksDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tanksDefaultArgs<ExtArgs>>): Prisma__tanksClient<$Result.GetResult<Prisma.$tanksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tank<T extends tanksDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tanksDefaultArgs<ExtArgs>>): Prisma__tanksClient<$Result.GetResult<Prisma.$tanksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4746,7 +4892,7 @@ export namespace Prisma {
     nickname: string | null
     password: string | null
     email: string | null
-    role: string | null
+    role: $Enums.users_role | null
     avatar_url: string | null
   }
 
@@ -4755,7 +4901,7 @@ export namespace Prisma {
     nickname: string | null
     password: string | null
     email: string | null
-    role: string | null
+    role: $Enums.users_role | null
     avatar_url: string | null
   }
 
@@ -4897,7 +5043,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
-    role: string
+    role: $Enums.users_role
     avatar_url: string | null
     _count: UsersCountAggregateOutputType | null
     _avg: UsersAvgAggregateOutputType | null
@@ -4958,7 +5104,7 @@ export namespace Prisma {
       nickname: string
       password: string
       email: string
-      role: string
+      role: $Enums.users_role
       avatar_url: string | null
     }, ExtArgs["result"]["users"]>
     composites: {}
@@ -5334,7 +5480,7 @@ export namespace Prisma {
     readonly nickname: FieldRef<"users", 'String'>
     readonly password: FieldRef<"users", 'String'>
     readonly email: FieldRef<"users", 'String'>
-    readonly role: FieldRef<"users", 'String'>
+    readonly role: FieldRef<"users", 'users_role'>
     readonly avatar_url: FieldRef<"users", 'String'>
   }
     
@@ -5911,8 +6057,8 @@ export namespace Prisma {
     fav_id?: boolean
     user_id?: boolean
     tank_id?: boolean
-    users?: boolean | usersDefaultArgs<ExtArgs>
-    tanks?: boolean | tanksDefaultArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
+    tank?: boolean | tanksDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["favourite_tanks"]>
 
 
@@ -5925,15 +6071,15 @@ export namespace Prisma {
 
   export type favourite_tanksOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"fav_id" | "user_id" | "tank_id", ExtArgs["result"]["favourite_tanks"]>
   export type favourite_tanksInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    users?: boolean | usersDefaultArgs<ExtArgs>
-    tanks?: boolean | tanksDefaultArgs<ExtArgs>
+    user?: boolean | usersDefaultArgs<ExtArgs>
+    tank?: boolean | tanksDefaultArgs<ExtArgs>
   }
 
   export type $favourite_tanksPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "favourite_tanks"
     objects: {
-      users: Prisma.$usersPayload<ExtArgs>
-      tanks: Prisma.$tanksPayload<ExtArgs>
+      user: Prisma.$usersPayload<ExtArgs>
+      tank: Prisma.$tanksPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       fav_id: number
@@ -6279,8 +6425,8 @@ export namespace Prisma {
    */
   export interface Prisma__favourite_tanksClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    users<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    tanks<T extends tanksDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tanksDefaultArgs<ExtArgs>>): Prisma__tanksClient<$Result.GetResult<Prisma.$tanksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends usersDefaultArgs<ExtArgs> = {}>(args?: Subset<T, usersDefaultArgs<ExtArgs>>): Prisma__usersClient<$Result.GetResult<Prisma.$usersPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tank<T extends tanksDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tanksDefaultArgs<ExtArgs>>): Prisma__tanksClient<$Result.GetResult<Prisma.$tanksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6856,7 +7002,8 @@ export namespace Prisma {
     photo_id?: boolean
     filename?: boolean
     filepath?: boolean
-    tanks?: boolean | photos$tanksArgs<ExtArgs>
+    tankPhotos?: boolean | photos$tankPhotosArgs<ExtArgs>
+    battleLocations?: boolean | photos$battleLocationsArgs<ExtArgs>
     _count?: boolean | PhotosCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["photos"]>
 
@@ -6870,14 +7017,16 @@ export namespace Prisma {
 
   export type photosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"photo_id" | "filename" | "filepath", ExtArgs["result"]["photos"]>
   export type photosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tanks?: boolean | photos$tanksArgs<ExtArgs>
+    tankPhotos?: boolean | photos$tankPhotosArgs<ExtArgs>
+    battleLocations?: boolean | photos$battleLocationsArgs<ExtArgs>
     _count?: boolean | PhotosCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $photosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "photos"
     objects: {
-      tanks: Prisma.$tank_photosPayload<ExtArgs>[]
+      tankPhotos: Prisma.$tank_photosPayload<ExtArgs>[]
+      battleLocations: Prisma.$battlelocation_photosPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       photo_id: number
@@ -7223,7 +7372,8 @@ export namespace Prisma {
    */
   export interface Prisma__photosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    tanks<T extends photos$tanksArgs<ExtArgs> = {}>(args?: Subset<T, photos$tanksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tank_photosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    tankPhotos<T extends photos$tankPhotosArgs<ExtArgs> = {}>(args?: Subset<T, photos$tankPhotosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tank_photosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    battleLocations<T extends photos$battleLocationsArgs<ExtArgs> = {}>(args?: Subset<T, photos$battleLocationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -7599,9 +7749,9 @@ export namespace Prisma {
   }
 
   /**
-   * photos.tanks
+   * photos.tankPhotos
    */
-  export type photos$tanksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type photos$tankPhotosArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the tank_photos
      */
@@ -7620,6 +7770,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Tank_photosScalarFieldEnum | Tank_photosScalarFieldEnum[]
+  }
+
+  /**
+   * photos.battleLocations
+   */
+  export type photos$battleLocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    where?: battlelocation_photosWhereInput
+    orderBy?: battlelocation_photosOrderByWithRelationInput | battlelocation_photosOrderByWithRelationInput[]
+    cursor?: battlelocation_photosWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Battlelocation_photosScalarFieldEnum | Battlelocation_photosScalarFieldEnum[]
   }
 
   /**
@@ -7831,8 +8005,8 @@ export namespace Prisma {
     id?: boolean
     tank_id?: boolean
     photo_id?: boolean
-    tanks?: boolean | tanksDefaultArgs<ExtArgs>
-    photos?: boolean | photosDefaultArgs<ExtArgs>
+    tank?: boolean | tanksDefaultArgs<ExtArgs>
+    photo?: boolean | photosDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tank_photos"]>
 
 
@@ -7845,15 +8019,15 @@ export namespace Prisma {
 
   export type tank_photosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tank_id" | "photo_id", ExtArgs["result"]["tank_photos"]>
   export type tank_photosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    tanks?: boolean | tanksDefaultArgs<ExtArgs>
-    photos?: boolean | photosDefaultArgs<ExtArgs>
+    tank?: boolean | tanksDefaultArgs<ExtArgs>
+    photo?: boolean | photosDefaultArgs<ExtArgs>
   }
 
   export type $tank_photosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tank_photos"
     objects: {
-      tanks: Prisma.$tanksPayload<ExtArgs>
-      photos: Prisma.$photosPayload<ExtArgs>
+      tank: Prisma.$tanksPayload<ExtArgs>
+      photo: Prisma.$photosPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: number
@@ -8199,8 +8373,8 @@ export namespace Prisma {
    */
   export interface Prisma__tank_photosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    tanks<T extends tanksDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tanksDefaultArgs<ExtArgs>>): Prisma__tanksClient<$Result.GetResult<Prisma.$tanksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-    photos<T extends photosDefaultArgs<ExtArgs> = {}>(args?: Subset<T, photosDefaultArgs<ExtArgs>>): Prisma__photosClient<$Result.GetResult<Prisma.$photosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tank<T extends tanksDefaultArgs<ExtArgs> = {}>(args?: Subset<T, tanksDefaultArgs<ExtArgs>>): Prisma__tanksClient<$Result.GetResult<Prisma.$tanksPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    photo<T extends photosDefaultArgs<ExtArgs> = {}>(args?: Subset<T, photosDefaultArgs<ExtArgs>>): Prisma__photosClient<$Result.GetResult<Prisma.$photosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -8768,8 +8942,8 @@ export namespace Prisma {
   export type countriesSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     country_id?: boolean
     name?: boolean
-    battleCountries?: boolean | countries$battleCountriesArgs<ExtArgs>
     tanks?: boolean | countries$tanksArgs<ExtArgs>
+    battleLocations?: boolean | countries$battleLocationsArgs<ExtArgs>
     _count?: boolean | CountriesCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["countries"]>
 
@@ -8782,16 +8956,16 @@ export namespace Prisma {
 
   export type countriesOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"country_id" | "name", ExtArgs["result"]["countries"]>
   export type countriesInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    battleCountries?: boolean | countries$battleCountriesArgs<ExtArgs>
     tanks?: boolean | countries$tanksArgs<ExtArgs>
+    battleLocations?: boolean | countries$battleLocationsArgs<ExtArgs>
     _count?: boolean | CountriesCountOutputTypeDefaultArgs<ExtArgs>
   }
 
   export type $countriesPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "countries"
     objects: {
-      battleCountries: Prisma.$battlelocation_countryPayload<ExtArgs>[]
       tanks: Prisma.$tanksPayload<ExtArgs>[]
+      battleLocations: Prisma.$battlelocation_countryPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       country_id: number
@@ -9136,8 +9310,8 @@ export namespace Prisma {
    */
   export interface Prisma__countriesClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    battleCountries<T extends countries$battleCountriesArgs<ExtArgs> = {}>(args?: Subset<T, countries$battleCountriesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$battlelocation_countryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     tanks<T extends countries$tanksArgs<ExtArgs> = {}>(args?: Subset<T, countries$tanksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tanksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    battleLocations<T extends countries$battleLocationsArgs<ExtArgs> = {}>(args?: Subset<T, countries$battleLocationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$battlelocation_countryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9512,30 +9686,6 @@ export namespace Prisma {
   }
 
   /**
-   * countries.battleCountries
-   */
-  export type countries$battleCountriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the battlelocation_country
-     */
-    select?: battlelocation_countrySelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the battlelocation_country
-     */
-    omit?: battlelocation_countryOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: battlelocation_countryInclude<ExtArgs> | null
-    where?: battlelocation_countryWhereInput
-    orderBy?: battlelocation_countryOrderByWithRelationInput | battlelocation_countryOrderByWithRelationInput[]
-    cursor?: battlelocation_countryWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Battlelocation_countryScalarFieldEnum | Battlelocation_countryScalarFieldEnum[]
-  }
-
-  /**
    * countries.tanks
    */
   export type countries$tanksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -9557,6 +9707,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: TanksScalarFieldEnum | TanksScalarFieldEnum[]
+  }
+
+  /**
+   * countries.battleLocations
+   */
+  export type countries$battleLocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_country
+     */
+    select?: battlelocation_countrySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_country
+     */
+    omit?: battlelocation_countryOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_countryInclude<ExtArgs> | null
+    where?: battlelocation_countryWhereInput
+    orderBy?: battlelocation_countryOrderByWithRelationInput | battlelocation_countryOrderByWithRelationInput[]
+    cursor?: battlelocation_countryWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Battlelocation_countryScalarFieldEnum | Battlelocation_countryScalarFieldEnum[]
   }
 
   /**
@@ -10558,6 +10732,7 @@ export namespace Prisma {
     armor_side_mm: number | null
     armor_rear_mm: number | null
     gun_caliber_mm: Decimal | null
+    penetration_mm: number | null
     year_introduced: number | null
   }
 
@@ -10573,6 +10748,7 @@ export namespace Prisma {
     armor_side_mm: number | null
     armor_rear_mm: number | null
     gun_caliber_mm: Decimal | null
+    penetration_mm: number | null
     year_introduced: number | null
   }
 
@@ -10589,8 +10765,10 @@ export namespace Prisma {
     armor_side_mm: number | null
     armor_rear_mm: number | null
     gun_caliber_mm: Decimal | null
+    penetration_mm: number | null
     year_introduced: number | null
     notes: string | null
+    summary: string | null
   }
 
   export type TanksMaxAggregateOutputType = {
@@ -10606,8 +10784,10 @@ export namespace Prisma {
     armor_side_mm: number | null
     armor_rear_mm: number | null
     gun_caliber_mm: Decimal | null
+    penetration_mm: number | null
     year_introduced: number | null
     notes: string | null
+    summary: string | null
   }
 
   export type TanksCountAggregateOutputType = {
@@ -10623,8 +10803,10 @@ export namespace Prisma {
     armor_side_mm: number
     armor_rear_mm: number
     gun_caliber_mm: number
+    penetration_mm: number
     year_introduced: number
     notes: number
+    summary: number
     _all: number
   }
 
@@ -10641,6 +10823,7 @@ export namespace Prisma {
     armor_side_mm?: true
     armor_rear_mm?: true
     gun_caliber_mm?: true
+    penetration_mm?: true
     year_introduced?: true
   }
 
@@ -10656,6 +10839,7 @@ export namespace Prisma {
     armor_side_mm?: true
     armor_rear_mm?: true
     gun_caliber_mm?: true
+    penetration_mm?: true
     year_introduced?: true
   }
 
@@ -10672,8 +10856,10 @@ export namespace Prisma {
     armor_side_mm?: true
     armor_rear_mm?: true
     gun_caliber_mm?: true
+    penetration_mm?: true
     year_introduced?: true
     notes?: true
+    summary?: true
   }
 
   export type TanksMaxAggregateInputType = {
@@ -10689,8 +10875,10 @@ export namespace Prisma {
     armor_side_mm?: true
     armor_rear_mm?: true
     gun_caliber_mm?: true
+    penetration_mm?: true
     year_introduced?: true
     notes?: true
+    summary?: true
   }
 
   export type TanksCountAggregateInputType = {
@@ -10706,8 +10894,10 @@ export namespace Prisma {
     armor_side_mm?: true
     armor_rear_mm?: true
     gun_caliber_mm?: true
+    penetration_mm?: true
     year_introduced?: true
     notes?: true
+    summary?: true
     _all?: true
   }
 
@@ -10810,8 +11000,10 @@ export namespace Prisma {
     armor_side_mm: number | null
     armor_rear_mm: number | null
     gun_caliber_mm: Decimal | null
+    penetration_mm: number | null
     year_introduced: number | null
     notes: string | null
+    summary: string | null
     _count: TanksCountAggregateOutputType | null
     _avg: TanksAvgAggregateOutputType | null
     _sum: TanksSumAggregateOutputType | null
@@ -10846,12 +11038,14 @@ export namespace Prisma {
     armor_side_mm?: boolean
     armor_rear_mm?: boolean
     gun_caliber_mm?: boolean
+    penetration_mm?: boolean
     year_introduced?: boolean
     notes?: boolean
-    countries?: boolean | tanks$countriesArgs<ExtArgs>
-    vehicle_types?: boolean | tanks$vehicle_typesArgs<ExtArgs>
-    battleTanks?: boolean | tanks$battleTanksArgs<ExtArgs>
+    summary?: boolean
+    country?: boolean | tanks$countryArgs<ExtArgs>
+    vehicle_type?: boolean | tanks$vehicle_typeArgs<ExtArgs>
     favourite_tanks?: boolean | tanks$favourite_tanksArgs<ExtArgs>
+    battleLocations?: boolean | tanks$battleLocationsArgs<ExtArgs>
     photos?: boolean | tanks$photosArgs<ExtArgs>
     _count?: boolean | TanksCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["tanks"]>
@@ -10871,16 +11065,18 @@ export namespace Prisma {
     armor_side_mm?: boolean
     armor_rear_mm?: boolean
     gun_caliber_mm?: boolean
+    penetration_mm?: boolean
     year_introduced?: boolean
     notes?: boolean
+    summary?: boolean
   }
 
-  export type tanksOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"tank_id" | "name" | "country_id" | "type_id" | "weight_kg" | "crew" | "engine_power_hp" | "top_speed_kmh" | "armor_front_mm" | "armor_side_mm" | "armor_rear_mm" | "gun_caliber_mm" | "year_introduced" | "notes", ExtArgs["result"]["tanks"]>
+  export type tanksOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"tank_id" | "name" | "country_id" | "type_id" | "weight_kg" | "crew" | "engine_power_hp" | "top_speed_kmh" | "armor_front_mm" | "armor_side_mm" | "armor_rear_mm" | "gun_caliber_mm" | "penetration_mm" | "year_introduced" | "notes" | "summary", ExtArgs["result"]["tanks"]>
   export type tanksInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    countries?: boolean | tanks$countriesArgs<ExtArgs>
-    vehicle_types?: boolean | tanks$vehicle_typesArgs<ExtArgs>
-    battleTanks?: boolean | tanks$battleTanksArgs<ExtArgs>
+    country?: boolean | tanks$countryArgs<ExtArgs>
+    vehicle_type?: boolean | tanks$vehicle_typeArgs<ExtArgs>
     favourite_tanks?: boolean | tanks$favourite_tanksArgs<ExtArgs>
+    battleLocations?: boolean | tanks$battleLocationsArgs<ExtArgs>
     photos?: boolean | tanks$photosArgs<ExtArgs>
     _count?: boolean | TanksCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -10888,10 +11084,10 @@ export namespace Prisma {
   export type $tanksPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "tanks"
     objects: {
-      countries: Prisma.$countriesPayload<ExtArgs> | null
-      vehicle_types: Prisma.$vehicle_typesPayload<ExtArgs> | null
-      battleTanks: Prisma.$battlelocation_tankPayload<ExtArgs>[]
+      country: Prisma.$countriesPayload<ExtArgs> | null
+      vehicle_type: Prisma.$vehicle_typesPayload<ExtArgs> | null
       favourite_tanks: Prisma.$favourite_tanksPayload<ExtArgs>[]
+      battleLocations: Prisma.$battlelocation_tankPayload<ExtArgs>[]
       photos: Prisma.$tank_photosPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -10907,8 +11103,10 @@ export namespace Prisma {
       armor_side_mm: number | null
       armor_rear_mm: number | null
       gun_caliber_mm: Prisma.Decimal | null
+      penetration_mm: number | null
       year_introduced: number | null
       notes: string | null
+      summary: string | null
     }, ExtArgs["result"]["tanks"]>
     composites: {}
   }
@@ -11249,10 +11447,10 @@ export namespace Prisma {
    */
   export interface Prisma__tanksClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    countries<T extends tanks$countriesArgs<ExtArgs> = {}>(args?: Subset<T, tanks$countriesArgs<ExtArgs>>): Prisma__countriesClient<$Result.GetResult<Prisma.$countriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    vehicle_types<T extends tanks$vehicle_typesArgs<ExtArgs> = {}>(args?: Subset<T, tanks$vehicle_typesArgs<ExtArgs>>): Prisma__vehicle_typesClient<$Result.GetResult<Prisma.$vehicle_typesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    battleTanks<T extends tanks$battleTanksArgs<ExtArgs> = {}>(args?: Subset<T, tanks$battleTanksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$battlelocation_tankPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    country<T extends tanks$countryArgs<ExtArgs> = {}>(args?: Subset<T, tanks$countryArgs<ExtArgs>>): Prisma__countriesClient<$Result.GetResult<Prisma.$countriesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    vehicle_type<T extends tanks$vehicle_typeArgs<ExtArgs> = {}>(args?: Subset<T, tanks$vehicle_typeArgs<ExtArgs>>): Prisma__vehicle_typesClient<$Result.GetResult<Prisma.$vehicle_typesPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     favourite_tanks<T extends tanks$favourite_tanksArgs<ExtArgs> = {}>(args?: Subset<T, tanks$favourite_tanksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$favourite_tanksPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    battleLocations<T extends tanks$battleLocationsArgs<ExtArgs> = {}>(args?: Subset<T, tanks$battleLocationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$battlelocation_tankPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     photos<T extends tanks$photosArgs<ExtArgs> = {}>(args?: Subset<T, tanks$photosArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$tank_photosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -11295,8 +11493,10 @@ export namespace Prisma {
     readonly armor_side_mm: FieldRef<"tanks", 'Int'>
     readonly armor_rear_mm: FieldRef<"tanks", 'Int'>
     readonly gun_caliber_mm: FieldRef<"tanks", 'Decimal'>
+    readonly penetration_mm: FieldRef<"tanks", 'Int'>
     readonly year_introduced: FieldRef<"tanks", 'Int'>
     readonly notes: FieldRef<"tanks", 'String'>
+    readonly summary: FieldRef<"tanks", 'String'>
   }
     
 
@@ -11640,9 +11840,9 @@ export namespace Prisma {
   }
 
   /**
-   * tanks.countries
+   * tanks.country
    */
-  export type tanks$countriesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type tanks$countryArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the countries
      */
@@ -11659,9 +11859,9 @@ export namespace Prisma {
   }
 
   /**
-   * tanks.vehicle_types
+   * tanks.vehicle_type
    */
-  export type tanks$vehicle_typesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+  export type tanks$vehicle_typeArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     /**
      * Select specific fields to fetch from the vehicle_types
      */
@@ -11675,30 +11875,6 @@ export namespace Prisma {
      */
     include?: vehicle_typesInclude<ExtArgs> | null
     where?: vehicle_typesWhereInput
-  }
-
-  /**
-   * tanks.battleTanks
-   */
-  export type tanks$battleTanksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the battlelocation_tank
-     */
-    select?: battlelocation_tankSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the battlelocation_tank
-     */
-    omit?: battlelocation_tankOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: battlelocation_tankInclude<ExtArgs> | null
-    where?: battlelocation_tankWhereInput
-    orderBy?: battlelocation_tankOrderByWithRelationInput | battlelocation_tankOrderByWithRelationInput[]
-    cursor?: battlelocation_tankWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: Battlelocation_tankScalarFieldEnum | Battlelocation_tankScalarFieldEnum[]
   }
 
   /**
@@ -11723,6 +11899,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: Favourite_tanksScalarFieldEnum | Favourite_tanksScalarFieldEnum[]
+  }
+
+  /**
+   * tanks.battleLocations
+   */
+  export type tanks$battleLocationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_tank
+     */
+    select?: battlelocation_tankSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_tank
+     */
+    omit?: battlelocation_tankOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_tankInclude<ExtArgs> | null
+    where?: battlelocation_tankWhereInput
+    orderBy?: battlelocation_tankOrderByWithRelationInput | battlelocation_tankOrderByWithRelationInput[]
+    cursor?: battlelocation_tankWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: Battlelocation_tankScalarFieldEnum | Battlelocation_tankScalarFieldEnum[]
   }
 
   /**
@@ -11765,6 +11965,959 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: tanksInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model battlelocation_photos
+   */
+
+  export type AggregateBattlelocation_photos = {
+    _count: Battlelocation_photosCountAggregateOutputType | null
+    _avg: Battlelocation_photosAvgAggregateOutputType | null
+    _sum: Battlelocation_photosSumAggregateOutputType | null
+    _min: Battlelocation_photosMinAggregateOutputType | null
+    _max: Battlelocation_photosMaxAggregateOutputType | null
+  }
+
+  export type Battlelocation_photosAvgAggregateOutputType = {
+    id: number | null
+    battlelocation_id: number | null
+    photo_id: number | null
+  }
+
+  export type Battlelocation_photosSumAggregateOutputType = {
+    id: number | null
+    battlelocation_id: number | null
+    photo_id: number | null
+  }
+
+  export type Battlelocation_photosMinAggregateOutputType = {
+    id: number | null
+    battlelocation_id: number | null
+    photo_id: number | null
+  }
+
+  export type Battlelocation_photosMaxAggregateOutputType = {
+    id: number | null
+    battlelocation_id: number | null
+    photo_id: number | null
+  }
+
+  export type Battlelocation_photosCountAggregateOutputType = {
+    id: number
+    battlelocation_id: number
+    photo_id: number
+    _all: number
+  }
+
+
+  export type Battlelocation_photosAvgAggregateInputType = {
+    id?: true
+    battlelocation_id?: true
+    photo_id?: true
+  }
+
+  export type Battlelocation_photosSumAggregateInputType = {
+    id?: true
+    battlelocation_id?: true
+    photo_id?: true
+  }
+
+  export type Battlelocation_photosMinAggregateInputType = {
+    id?: true
+    battlelocation_id?: true
+    photo_id?: true
+  }
+
+  export type Battlelocation_photosMaxAggregateInputType = {
+    id?: true
+    battlelocation_id?: true
+    photo_id?: true
+  }
+
+  export type Battlelocation_photosCountAggregateInputType = {
+    id?: true
+    battlelocation_id?: true
+    photo_id?: true
+    _all?: true
+  }
+
+  export type Battlelocation_photosAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which battlelocation_photos to aggregate.
+     */
+    where?: battlelocation_photosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of battlelocation_photos to fetch.
+     */
+    orderBy?: battlelocation_photosOrderByWithRelationInput | battlelocation_photosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: battlelocation_photosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` battlelocation_photos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` battlelocation_photos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned battlelocation_photos
+    **/
+    _count?: true | Battlelocation_photosCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: Battlelocation_photosAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: Battlelocation_photosSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: Battlelocation_photosMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: Battlelocation_photosMaxAggregateInputType
+  }
+
+  export type GetBattlelocation_photosAggregateType<T extends Battlelocation_photosAggregateArgs> = {
+        [P in keyof T & keyof AggregateBattlelocation_photos]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateBattlelocation_photos[P]>
+      : GetScalarType<T[P], AggregateBattlelocation_photos[P]>
+  }
+
+
+
+
+  export type battlelocation_photosGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: battlelocation_photosWhereInput
+    orderBy?: battlelocation_photosOrderByWithAggregationInput | battlelocation_photosOrderByWithAggregationInput[]
+    by: Battlelocation_photosScalarFieldEnum[] | Battlelocation_photosScalarFieldEnum
+    having?: battlelocation_photosScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: Battlelocation_photosCountAggregateInputType | true
+    _avg?: Battlelocation_photosAvgAggregateInputType
+    _sum?: Battlelocation_photosSumAggregateInputType
+    _min?: Battlelocation_photosMinAggregateInputType
+    _max?: Battlelocation_photosMaxAggregateInputType
+  }
+
+  export type Battlelocation_photosGroupByOutputType = {
+    id: number
+    battlelocation_id: number
+    photo_id: number
+    _count: Battlelocation_photosCountAggregateOutputType | null
+    _avg: Battlelocation_photosAvgAggregateOutputType | null
+    _sum: Battlelocation_photosSumAggregateOutputType | null
+    _min: Battlelocation_photosMinAggregateOutputType | null
+    _max: Battlelocation_photosMaxAggregateOutputType | null
+  }
+
+  type GetBattlelocation_photosGroupByPayload<T extends battlelocation_photosGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<Battlelocation_photosGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof Battlelocation_photosGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], Battlelocation_photosGroupByOutputType[P]>
+            : GetScalarType<T[P], Battlelocation_photosGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type battlelocation_photosSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    battlelocation_id?: boolean
+    photo_id?: boolean
+    battlelocation?: boolean | battlelocationDefaultArgs<ExtArgs>
+    photo?: boolean | photosDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["battlelocation_photos"]>
+
+
+
+  export type battlelocation_photosSelectScalar = {
+    id?: boolean
+    battlelocation_id?: boolean
+    photo_id?: boolean
+  }
+
+  export type battlelocation_photosOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "battlelocation_id" | "photo_id", ExtArgs["result"]["battlelocation_photos"]>
+  export type battlelocation_photosInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    battlelocation?: boolean | battlelocationDefaultArgs<ExtArgs>
+    photo?: boolean | photosDefaultArgs<ExtArgs>
+  }
+
+  export type $battlelocation_photosPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "battlelocation_photos"
+    objects: {
+      battlelocation: Prisma.$battlelocationPayload<ExtArgs>
+      photo: Prisma.$photosPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      battlelocation_id: number
+      photo_id: number
+    }, ExtArgs["result"]["battlelocation_photos"]>
+    composites: {}
+  }
+
+  type battlelocation_photosGetPayload<S extends boolean | null | undefined | battlelocation_photosDefaultArgs> = $Result.GetResult<Prisma.$battlelocation_photosPayload, S>
+
+  type battlelocation_photosCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<battlelocation_photosFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: Battlelocation_photosCountAggregateInputType | true
+    }
+
+  export interface battlelocation_photosDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['battlelocation_photos'], meta: { name: 'battlelocation_photos' } }
+    /**
+     * Find zero or one Battlelocation_photos that matches the filter.
+     * @param {battlelocation_photosFindUniqueArgs} args - Arguments to find a Battlelocation_photos
+     * @example
+     * // Get one Battlelocation_photos
+     * const battlelocation_photos = await prisma.battlelocation_photos.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends battlelocation_photosFindUniqueArgs>(args: SelectSubset<T, battlelocation_photosFindUniqueArgs<ExtArgs>>): Prisma__battlelocation_photosClient<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Battlelocation_photos that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {battlelocation_photosFindUniqueOrThrowArgs} args - Arguments to find a Battlelocation_photos
+     * @example
+     * // Get one Battlelocation_photos
+     * const battlelocation_photos = await prisma.battlelocation_photos.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends battlelocation_photosFindUniqueOrThrowArgs>(args: SelectSubset<T, battlelocation_photosFindUniqueOrThrowArgs<ExtArgs>>): Prisma__battlelocation_photosClient<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Battlelocation_photos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {battlelocation_photosFindFirstArgs} args - Arguments to find a Battlelocation_photos
+     * @example
+     * // Get one Battlelocation_photos
+     * const battlelocation_photos = await prisma.battlelocation_photos.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends battlelocation_photosFindFirstArgs>(args?: SelectSubset<T, battlelocation_photosFindFirstArgs<ExtArgs>>): Prisma__battlelocation_photosClient<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Battlelocation_photos that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {battlelocation_photosFindFirstOrThrowArgs} args - Arguments to find a Battlelocation_photos
+     * @example
+     * // Get one Battlelocation_photos
+     * const battlelocation_photos = await prisma.battlelocation_photos.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends battlelocation_photosFindFirstOrThrowArgs>(args?: SelectSubset<T, battlelocation_photosFindFirstOrThrowArgs<ExtArgs>>): Prisma__battlelocation_photosClient<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Battlelocation_photos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {battlelocation_photosFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Battlelocation_photos
+     * const battlelocation_photos = await prisma.battlelocation_photos.findMany()
+     * 
+     * // Get first 10 Battlelocation_photos
+     * const battlelocation_photos = await prisma.battlelocation_photos.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const battlelocation_photosWithIdOnly = await prisma.battlelocation_photos.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends battlelocation_photosFindManyArgs>(args?: SelectSubset<T, battlelocation_photosFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Battlelocation_photos.
+     * @param {battlelocation_photosCreateArgs} args - Arguments to create a Battlelocation_photos.
+     * @example
+     * // Create one Battlelocation_photos
+     * const Battlelocation_photos = await prisma.battlelocation_photos.create({
+     *   data: {
+     *     // ... data to create a Battlelocation_photos
+     *   }
+     * })
+     * 
+     */
+    create<T extends battlelocation_photosCreateArgs>(args: SelectSubset<T, battlelocation_photosCreateArgs<ExtArgs>>): Prisma__battlelocation_photosClient<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Battlelocation_photos.
+     * @param {battlelocation_photosCreateManyArgs} args - Arguments to create many Battlelocation_photos.
+     * @example
+     * // Create many Battlelocation_photos
+     * const battlelocation_photos = await prisma.battlelocation_photos.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends battlelocation_photosCreateManyArgs>(args?: SelectSubset<T, battlelocation_photosCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Delete a Battlelocation_photos.
+     * @param {battlelocation_photosDeleteArgs} args - Arguments to delete one Battlelocation_photos.
+     * @example
+     * // Delete one Battlelocation_photos
+     * const Battlelocation_photos = await prisma.battlelocation_photos.delete({
+     *   where: {
+     *     // ... filter to delete one Battlelocation_photos
+     *   }
+     * })
+     * 
+     */
+    delete<T extends battlelocation_photosDeleteArgs>(args: SelectSubset<T, battlelocation_photosDeleteArgs<ExtArgs>>): Prisma__battlelocation_photosClient<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Battlelocation_photos.
+     * @param {battlelocation_photosUpdateArgs} args - Arguments to update one Battlelocation_photos.
+     * @example
+     * // Update one Battlelocation_photos
+     * const battlelocation_photos = await prisma.battlelocation_photos.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends battlelocation_photosUpdateArgs>(args: SelectSubset<T, battlelocation_photosUpdateArgs<ExtArgs>>): Prisma__battlelocation_photosClient<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Battlelocation_photos.
+     * @param {battlelocation_photosDeleteManyArgs} args - Arguments to filter Battlelocation_photos to delete.
+     * @example
+     * // Delete a few Battlelocation_photos
+     * const { count } = await prisma.battlelocation_photos.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends battlelocation_photosDeleteManyArgs>(args?: SelectSubset<T, battlelocation_photosDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Battlelocation_photos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {battlelocation_photosUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Battlelocation_photos
+     * const battlelocation_photos = await prisma.battlelocation_photos.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends battlelocation_photosUpdateManyArgs>(args: SelectSubset<T, battlelocation_photosUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create or update one Battlelocation_photos.
+     * @param {battlelocation_photosUpsertArgs} args - Arguments to update or create a Battlelocation_photos.
+     * @example
+     * // Update or create a Battlelocation_photos
+     * const battlelocation_photos = await prisma.battlelocation_photos.upsert({
+     *   create: {
+     *     // ... data to create a Battlelocation_photos
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Battlelocation_photos we want to update
+     *   }
+     * })
+     */
+    upsert<T extends battlelocation_photosUpsertArgs>(args: SelectSubset<T, battlelocation_photosUpsertArgs<ExtArgs>>): Prisma__battlelocation_photosClient<$Result.GetResult<Prisma.$battlelocation_photosPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Battlelocation_photos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {battlelocation_photosCountArgs} args - Arguments to filter Battlelocation_photos to count.
+     * @example
+     * // Count the number of Battlelocation_photos
+     * const count = await prisma.battlelocation_photos.count({
+     *   where: {
+     *     // ... the filter for the Battlelocation_photos we want to count
+     *   }
+     * })
+    **/
+    count<T extends battlelocation_photosCountArgs>(
+      args?: Subset<T, battlelocation_photosCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], Battlelocation_photosCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Battlelocation_photos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {Battlelocation_photosAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends Battlelocation_photosAggregateArgs>(args: Subset<T, Battlelocation_photosAggregateArgs>): Prisma.PrismaPromise<GetBattlelocation_photosAggregateType<T>>
+
+    /**
+     * Group by Battlelocation_photos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {battlelocation_photosGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends battlelocation_photosGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: battlelocation_photosGroupByArgs['orderBy'] }
+        : { orderBy?: battlelocation_photosGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, battlelocation_photosGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetBattlelocation_photosGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the battlelocation_photos model
+   */
+  readonly fields: battlelocation_photosFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for battlelocation_photos.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__battlelocation_photosClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    battlelocation<T extends battlelocationDefaultArgs<ExtArgs> = {}>(args?: Subset<T, battlelocationDefaultArgs<ExtArgs>>): Prisma__battlelocationClient<$Result.GetResult<Prisma.$battlelocationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    photo<T extends photosDefaultArgs<ExtArgs> = {}>(args?: Subset<T, photosDefaultArgs<ExtArgs>>): Prisma__photosClient<$Result.GetResult<Prisma.$photosPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the battlelocation_photos model
+   */
+  interface battlelocation_photosFieldRefs {
+    readonly id: FieldRef<"battlelocation_photos", 'Int'>
+    readonly battlelocation_id: FieldRef<"battlelocation_photos", 'Int'>
+    readonly photo_id: FieldRef<"battlelocation_photos", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * battlelocation_photos findUnique
+   */
+  export type battlelocation_photosFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    /**
+     * Filter, which battlelocation_photos to fetch.
+     */
+    where: battlelocation_photosWhereUniqueInput
+  }
+
+  /**
+   * battlelocation_photos findUniqueOrThrow
+   */
+  export type battlelocation_photosFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    /**
+     * Filter, which battlelocation_photos to fetch.
+     */
+    where: battlelocation_photosWhereUniqueInput
+  }
+
+  /**
+   * battlelocation_photos findFirst
+   */
+  export type battlelocation_photosFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    /**
+     * Filter, which battlelocation_photos to fetch.
+     */
+    where?: battlelocation_photosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of battlelocation_photos to fetch.
+     */
+    orderBy?: battlelocation_photosOrderByWithRelationInput | battlelocation_photosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for battlelocation_photos.
+     */
+    cursor?: battlelocation_photosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` battlelocation_photos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` battlelocation_photos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of battlelocation_photos.
+     */
+    distinct?: Battlelocation_photosScalarFieldEnum | Battlelocation_photosScalarFieldEnum[]
+  }
+
+  /**
+   * battlelocation_photos findFirstOrThrow
+   */
+  export type battlelocation_photosFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    /**
+     * Filter, which battlelocation_photos to fetch.
+     */
+    where?: battlelocation_photosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of battlelocation_photos to fetch.
+     */
+    orderBy?: battlelocation_photosOrderByWithRelationInput | battlelocation_photosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for battlelocation_photos.
+     */
+    cursor?: battlelocation_photosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` battlelocation_photos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` battlelocation_photos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of battlelocation_photos.
+     */
+    distinct?: Battlelocation_photosScalarFieldEnum | Battlelocation_photosScalarFieldEnum[]
+  }
+
+  /**
+   * battlelocation_photos findMany
+   */
+  export type battlelocation_photosFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    /**
+     * Filter, which battlelocation_photos to fetch.
+     */
+    where?: battlelocation_photosWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of battlelocation_photos to fetch.
+     */
+    orderBy?: battlelocation_photosOrderByWithRelationInput | battlelocation_photosOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing battlelocation_photos.
+     */
+    cursor?: battlelocation_photosWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` battlelocation_photos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` battlelocation_photos.
+     */
+    skip?: number
+    distinct?: Battlelocation_photosScalarFieldEnum | Battlelocation_photosScalarFieldEnum[]
+  }
+
+  /**
+   * battlelocation_photos create
+   */
+  export type battlelocation_photosCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    /**
+     * The data needed to create a battlelocation_photos.
+     */
+    data: XOR<battlelocation_photosCreateInput, battlelocation_photosUncheckedCreateInput>
+  }
+
+  /**
+   * battlelocation_photos createMany
+   */
+  export type battlelocation_photosCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many battlelocation_photos.
+     */
+    data: battlelocation_photosCreateManyInput | battlelocation_photosCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * battlelocation_photos update
+   */
+  export type battlelocation_photosUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    /**
+     * The data needed to update a battlelocation_photos.
+     */
+    data: XOR<battlelocation_photosUpdateInput, battlelocation_photosUncheckedUpdateInput>
+    /**
+     * Choose, which battlelocation_photos to update.
+     */
+    where: battlelocation_photosWhereUniqueInput
+  }
+
+  /**
+   * battlelocation_photos updateMany
+   */
+  export type battlelocation_photosUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update battlelocation_photos.
+     */
+    data: XOR<battlelocation_photosUpdateManyMutationInput, battlelocation_photosUncheckedUpdateManyInput>
+    /**
+     * Filter which battlelocation_photos to update
+     */
+    where?: battlelocation_photosWhereInput
+    /**
+     * Limit how many battlelocation_photos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * battlelocation_photos upsert
+   */
+  export type battlelocation_photosUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    /**
+     * The filter to search for the battlelocation_photos to update in case it exists.
+     */
+    where: battlelocation_photosWhereUniqueInput
+    /**
+     * In case the battlelocation_photos found by the `where` argument doesn't exist, create a new battlelocation_photos with this data.
+     */
+    create: XOR<battlelocation_photosCreateInput, battlelocation_photosUncheckedCreateInput>
+    /**
+     * In case the battlelocation_photos was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<battlelocation_photosUpdateInput, battlelocation_photosUncheckedUpdateInput>
+  }
+
+  /**
+   * battlelocation_photos delete
+   */
+  export type battlelocation_photosDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
+    /**
+     * Filter which battlelocation_photos to delete.
+     */
+    where: battlelocation_photosWhereUniqueInput
+  }
+
+  /**
+   * battlelocation_photos deleteMany
+   */
+  export type battlelocation_photosDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which battlelocation_photos to delete
+     */
+    where?: battlelocation_photosWhereInput
+    /**
+     * Limit how many battlelocation_photos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * battlelocation_photos without action
+   */
+  export type battlelocation_photosDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the battlelocation_photos
+     */
+    select?: battlelocation_photosSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the battlelocation_photos
+     */
+    omit?: battlelocation_photosOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: battlelocation_photosInclude<ExtArgs> | null
   }
 
 
@@ -11877,11 +13030,22 @@ export namespace Prisma {
     armor_side_mm: 'armor_side_mm',
     armor_rear_mm: 'armor_rear_mm',
     gun_caliber_mm: 'gun_caliber_mm',
+    penetration_mm: 'penetration_mm',
     year_introduced: 'year_introduced',
-    notes: 'notes'
+    notes: 'notes',
+    summary: 'summary'
   };
 
   export type TanksScalarFieldEnum = (typeof TanksScalarFieldEnum)[keyof typeof TanksScalarFieldEnum]
+
+
+  export const Battlelocation_photosScalarFieldEnum: {
+    id: 'id',
+    battlelocation_id: 'battlelocation_id',
+    photo_id: 'photo_id'
+  };
+
+  export type Battlelocation_photosScalarFieldEnum = (typeof Battlelocation_photosScalarFieldEnum)[keyof typeof Battlelocation_photosScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -11912,7 +13076,6 @@ export namespace Prisma {
     nickname: 'nickname',
     password: 'password',
     email: 'email',
-    role: 'role',
     avatar_url: 'avatar_url'
   };
 
@@ -11943,7 +13106,8 @@ export namespace Prisma {
 
   export const tanksOrderByRelevanceFieldEnum: {
     name: 'name',
-    notes: 'notes'
+    notes: 'notes',
+    summary: 'summary'
   };
 
   export type tanksOrderByRelevanceFieldEnum = (typeof tanksOrderByRelevanceFieldEnum)[keyof typeof tanksOrderByRelevanceFieldEnum]
@@ -11976,6 +13140,13 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'users_role'
+   */
+  export type Enumusers_roleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'users_role'>
+    
+
+
+  /**
    * Reference to a field of type 'Float'
    */
   export type FloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Float'>
@@ -11996,6 +13167,7 @@ export namespace Prisma {
     description?: StringNullableFilter<"battlelocation"> | string | null
     battleCountries?: Battlelocation_countryListRelationFilter
     battleTanks?: Battlelocation_tankListRelationFilter
+    photos?: Battlelocation_photosListRelationFilter
   }
 
   export type battlelocationOrderByWithRelationInput = {
@@ -12006,6 +13178,7 @@ export namespace Prisma {
     description?: SortOrderInput | SortOrder
     battleCountries?: battlelocation_countryOrderByRelationAggregateInput
     battleTanks?: battlelocation_tankOrderByRelationAggregateInput
+    photos?: battlelocation_photosOrderByRelationAggregateInput
     _relevance?: battlelocationOrderByRelevanceInput
   }
 
@@ -12020,6 +13193,7 @@ export namespace Prisma {
     description?: StringNullableFilter<"battlelocation"> | string | null
     battleCountries?: Battlelocation_countryListRelationFilter
     battleTanks?: Battlelocation_tankListRelationFilter
+    photos?: Battlelocation_photosListRelationFilter
   }, "id">
 
   export type battlelocationOrderByWithAggregationInput = {
@@ -12053,14 +13227,14 @@ export namespace Prisma {
     battlelocation_id?: IntFilter<"battlelocation_country"> | number
     country_id?: IntFilter<"battlelocation_country"> | number
     battlelocation?: XOR<BattlelocationScalarRelationFilter, battlelocationWhereInput>
-    countries?: XOR<CountriesScalarRelationFilter, countriesWhereInput>
+    country?: XOR<CountriesScalarRelationFilter, countriesWhereInput>
   }
 
   export type battlelocation_countryOrderByWithRelationInput = {
     battlelocation_id?: SortOrder
     country_id?: SortOrder
     battlelocation?: battlelocationOrderByWithRelationInput
-    countries?: countriesOrderByWithRelationInput
+    country?: countriesOrderByWithRelationInput
   }
 
   export type battlelocation_countryWhereUniqueInput = Prisma.AtLeast<{
@@ -12071,7 +13245,7 @@ export namespace Prisma {
     battlelocation_id?: IntFilter<"battlelocation_country"> | number
     country_id?: IntFilter<"battlelocation_country"> | number
     battlelocation?: XOR<BattlelocationScalarRelationFilter, battlelocationWhereInput>
-    countries?: XOR<CountriesScalarRelationFilter, countriesWhereInput>
+    country?: XOR<CountriesScalarRelationFilter, countriesWhereInput>
   }, "battlelocation_id_country_id">
 
   export type battlelocation_countryOrderByWithAggregationInput = {
@@ -12099,14 +13273,14 @@ export namespace Prisma {
     battlelocation_id?: IntFilter<"battlelocation_tank"> | number
     tank_id?: IntFilter<"battlelocation_tank"> | number
     battlelocation?: XOR<BattlelocationScalarRelationFilter, battlelocationWhereInput>
-    tanks?: XOR<TanksScalarRelationFilter, tanksWhereInput>
+    tank?: XOR<TanksScalarRelationFilter, tanksWhereInput>
   }
 
   export type battlelocation_tankOrderByWithRelationInput = {
     battlelocation_id?: SortOrder
     tank_id?: SortOrder
     battlelocation?: battlelocationOrderByWithRelationInput
-    tanks?: tanksOrderByWithRelationInput
+    tank?: tanksOrderByWithRelationInput
   }
 
   export type battlelocation_tankWhereUniqueInput = Prisma.AtLeast<{
@@ -12117,7 +13291,7 @@ export namespace Prisma {
     battlelocation_id?: IntFilter<"battlelocation_tank"> | number
     tank_id?: IntFilter<"battlelocation_tank"> | number
     battlelocation?: XOR<BattlelocationScalarRelationFilter, battlelocationWhereInput>
-    tanks?: XOR<TanksScalarRelationFilter, tanksWhereInput>
+    tank?: XOR<TanksScalarRelationFilter, tanksWhereInput>
   }, "battlelocation_id_tank_id">
 
   export type battlelocation_tankOrderByWithAggregationInput = {
@@ -12146,7 +13320,7 @@ export namespace Prisma {
     nickname?: StringFilter<"users"> | string
     password?: StringFilter<"users"> | string
     email?: StringFilter<"users"> | string
-    role?: StringFilter<"users"> | string
+    role?: Enumusers_roleFilter<"users"> | $Enums.users_role
     avatar_url?: StringNullableFilter<"users"> | string | null
     favourite_tanks?: Favourite_tanksListRelationFilter
   }
@@ -12170,7 +13344,7 @@ export namespace Prisma {
     NOT?: usersWhereInput | usersWhereInput[]
     nickname?: StringFilter<"users"> | string
     password?: StringFilter<"users"> | string
-    role?: StringFilter<"users"> | string
+    role?: Enumusers_roleFilter<"users"> | $Enums.users_role
     avatar_url?: StringNullableFilter<"users"> | string | null
     favourite_tanks?: Favourite_tanksListRelationFilter
   }, "user_id" | "email">
@@ -12197,7 +13371,7 @@ export namespace Prisma {
     nickname?: StringWithAggregatesFilter<"users"> | string
     password?: StringWithAggregatesFilter<"users"> | string
     email?: StringWithAggregatesFilter<"users"> | string
-    role?: StringWithAggregatesFilter<"users"> | string
+    role?: Enumusers_roleWithAggregatesFilter<"users"> | $Enums.users_role
     avatar_url?: StringNullableWithAggregatesFilter<"users"> | string | null
   }
 
@@ -12208,16 +13382,16 @@ export namespace Prisma {
     fav_id?: IntFilter<"favourite_tanks"> | number
     user_id?: IntFilter<"favourite_tanks"> | number
     tank_id?: IntFilter<"favourite_tanks"> | number
-    users?: XOR<UsersScalarRelationFilter, usersWhereInput>
-    tanks?: XOR<TanksScalarRelationFilter, tanksWhereInput>
+    user?: XOR<UsersScalarRelationFilter, usersWhereInput>
+    tank?: XOR<TanksScalarRelationFilter, tanksWhereInput>
   }
 
   export type favourite_tanksOrderByWithRelationInput = {
     fav_id?: SortOrder
     user_id?: SortOrder
     tank_id?: SortOrder
-    users?: usersOrderByWithRelationInput
-    tanks?: tanksOrderByWithRelationInput
+    user?: usersOrderByWithRelationInput
+    tank?: tanksOrderByWithRelationInput
   }
 
   export type favourite_tanksWhereUniqueInput = Prisma.AtLeast<{
@@ -12228,8 +13402,8 @@ export namespace Prisma {
     NOT?: favourite_tanksWhereInput | favourite_tanksWhereInput[]
     user_id?: IntFilter<"favourite_tanks"> | number
     tank_id?: IntFilter<"favourite_tanks"> | number
-    users?: XOR<UsersScalarRelationFilter, usersWhereInput>
-    tanks?: XOR<TanksScalarRelationFilter, tanksWhereInput>
+    user?: XOR<UsersScalarRelationFilter, usersWhereInput>
+    tank?: XOR<TanksScalarRelationFilter, tanksWhereInput>
   }, "fav_id" | "user_id_tank_id">
 
   export type favourite_tanksOrderByWithAggregationInput = {
@@ -12259,14 +13433,16 @@ export namespace Prisma {
     photo_id?: IntFilter<"photos"> | number
     filename?: StringFilter<"photos"> | string
     filepath?: StringFilter<"photos"> | string
-    tanks?: Tank_photosListRelationFilter
+    tankPhotos?: Tank_photosListRelationFilter
+    battleLocations?: Battlelocation_photosListRelationFilter
   }
 
   export type photosOrderByWithRelationInput = {
     photo_id?: SortOrder
     filename?: SortOrder
     filepath?: SortOrder
-    tanks?: tank_photosOrderByRelationAggregateInput
+    tankPhotos?: tank_photosOrderByRelationAggregateInput
+    battleLocations?: battlelocation_photosOrderByRelationAggregateInput
     _relevance?: photosOrderByRelevanceInput
   }
 
@@ -12277,7 +13453,8 @@ export namespace Prisma {
     NOT?: photosWhereInput | photosWhereInput[]
     filename?: StringFilter<"photos"> | string
     filepath?: StringFilter<"photos"> | string
-    tanks?: Tank_photosListRelationFilter
+    tankPhotos?: Tank_photosListRelationFilter
+    battleLocations?: Battlelocation_photosListRelationFilter
   }, "photo_id">
 
   export type photosOrderByWithAggregationInput = {
@@ -12307,29 +13484,28 @@ export namespace Prisma {
     id?: IntFilter<"tank_photos"> | number
     tank_id?: IntFilter<"tank_photos"> | number
     photo_id?: IntFilter<"tank_photos"> | number
-    tanks?: XOR<TanksScalarRelationFilter, tanksWhereInput>
-    photos?: XOR<PhotosScalarRelationFilter, photosWhereInput>
+    tank?: XOR<TanksScalarRelationFilter, tanksWhereInput>
+    photo?: XOR<PhotosScalarRelationFilter, photosWhereInput>
   }
 
   export type tank_photosOrderByWithRelationInput = {
     id?: SortOrder
     tank_id?: SortOrder
     photo_id?: SortOrder
-    tanks?: tanksOrderByWithRelationInput
-    photos?: photosOrderByWithRelationInput
+    tank?: tanksOrderByWithRelationInput
+    photo?: photosOrderByWithRelationInput
   }
 
   export type tank_photosWhereUniqueInput = Prisma.AtLeast<{
     id?: number
-    tank_id_photo_id?: tank_photosTank_idPhoto_idCompoundUniqueInput
     AND?: tank_photosWhereInput | tank_photosWhereInput[]
     OR?: tank_photosWhereInput[]
     NOT?: tank_photosWhereInput | tank_photosWhereInput[]
     tank_id?: IntFilter<"tank_photos"> | number
     photo_id?: IntFilter<"tank_photos"> | number
-    tanks?: XOR<TanksScalarRelationFilter, tanksWhereInput>
-    photos?: XOR<PhotosScalarRelationFilter, photosWhereInput>
-  }, "id" | "tank_id_photo_id">
+    tank?: XOR<TanksScalarRelationFilter, tanksWhereInput>
+    photo?: XOR<PhotosScalarRelationFilter, photosWhereInput>
+  }, "id">
 
   export type tank_photosOrderByWithAggregationInput = {
     id?: SortOrder
@@ -12357,15 +13533,15 @@ export namespace Prisma {
     NOT?: countriesWhereInput | countriesWhereInput[]
     country_id?: IntFilter<"countries"> | number
     name?: StringFilter<"countries"> | string
-    battleCountries?: Battlelocation_countryListRelationFilter
     tanks?: TanksListRelationFilter
+    battleLocations?: Battlelocation_countryListRelationFilter
   }
 
   export type countriesOrderByWithRelationInput = {
     country_id?: SortOrder
     name?: SortOrder
-    battleCountries?: battlelocation_countryOrderByRelationAggregateInput
     tanks?: tanksOrderByRelationAggregateInput
+    battleLocations?: battlelocation_countryOrderByRelationAggregateInput
     _relevance?: countriesOrderByRelevanceInput
   }
 
@@ -12375,8 +13551,8 @@ export namespace Prisma {
     OR?: countriesWhereInput[]
     NOT?: countriesWhereInput | countriesWhereInput[]
     name?: StringFilter<"countries"> | string
-    battleCountries?: Battlelocation_countryListRelationFilter
     tanks?: TanksListRelationFilter
+    battleLocations?: Battlelocation_countryListRelationFilter
   }, "country_id">
 
   export type countriesOrderByWithAggregationInput = {
@@ -12456,12 +13632,14 @@ export namespace Prisma {
     armor_side_mm?: IntNullableFilter<"tanks"> | number | null
     armor_rear_mm?: IntNullableFilter<"tanks"> | number | null
     gun_caliber_mm?: DecimalNullableFilter<"tanks"> | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: IntNullableFilter<"tanks"> | number | null
     year_introduced?: IntNullableFilter<"tanks"> | number | null
     notes?: StringNullableFilter<"tanks"> | string | null
-    countries?: XOR<CountriesNullableScalarRelationFilter, countriesWhereInput> | null
-    vehicle_types?: XOR<Vehicle_typesNullableScalarRelationFilter, vehicle_typesWhereInput> | null
-    battleTanks?: Battlelocation_tankListRelationFilter
+    summary?: StringNullableFilter<"tanks"> | string | null
+    country?: XOR<CountriesNullableScalarRelationFilter, countriesWhereInput> | null
+    vehicle_type?: XOR<Vehicle_typesNullableScalarRelationFilter, vehicle_typesWhereInput> | null
     favourite_tanks?: Favourite_tanksListRelationFilter
+    battleLocations?: Battlelocation_tankListRelationFilter
     photos?: Tank_photosListRelationFilter
   }
 
@@ -12478,12 +13656,14 @@ export namespace Prisma {
     armor_side_mm?: SortOrderInput | SortOrder
     armor_rear_mm?: SortOrderInput | SortOrder
     gun_caliber_mm?: SortOrderInput | SortOrder
+    penetration_mm?: SortOrderInput | SortOrder
     year_introduced?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
-    countries?: countriesOrderByWithRelationInput
-    vehicle_types?: vehicle_typesOrderByWithRelationInput
-    battleTanks?: battlelocation_tankOrderByRelationAggregateInput
+    summary?: SortOrderInput | SortOrder
+    country?: countriesOrderByWithRelationInput
+    vehicle_type?: vehicle_typesOrderByWithRelationInput
     favourite_tanks?: favourite_tanksOrderByRelationAggregateInput
+    battleLocations?: battlelocation_tankOrderByRelationAggregateInput
     photos?: tank_photosOrderByRelationAggregateInput
     _relevance?: tanksOrderByRelevanceInput
   }
@@ -12504,12 +13684,14 @@ export namespace Prisma {
     armor_side_mm?: IntNullableFilter<"tanks"> | number | null
     armor_rear_mm?: IntNullableFilter<"tanks"> | number | null
     gun_caliber_mm?: DecimalNullableFilter<"tanks"> | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: IntNullableFilter<"tanks"> | number | null
     year_introduced?: IntNullableFilter<"tanks"> | number | null
     notes?: StringNullableFilter<"tanks"> | string | null
-    countries?: XOR<CountriesNullableScalarRelationFilter, countriesWhereInput> | null
-    vehicle_types?: XOR<Vehicle_typesNullableScalarRelationFilter, vehicle_typesWhereInput> | null
-    battleTanks?: Battlelocation_tankListRelationFilter
+    summary?: StringNullableFilter<"tanks"> | string | null
+    country?: XOR<CountriesNullableScalarRelationFilter, countriesWhereInput> | null
+    vehicle_type?: XOR<Vehicle_typesNullableScalarRelationFilter, vehicle_typesWhereInput> | null
     favourite_tanks?: Favourite_tanksListRelationFilter
+    battleLocations?: Battlelocation_tankListRelationFilter
     photos?: Tank_photosListRelationFilter
   }, "tank_id">
 
@@ -12526,8 +13708,10 @@ export namespace Prisma {
     armor_side_mm?: SortOrderInput | SortOrder
     armor_rear_mm?: SortOrderInput | SortOrder
     gun_caliber_mm?: SortOrderInput | SortOrder
+    penetration_mm?: SortOrderInput | SortOrder
     year_introduced?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
+    summary?: SortOrderInput | SortOrder
     _count?: tanksCountOrderByAggregateInput
     _avg?: tanksAvgOrderByAggregateInput
     _max?: tanksMaxOrderByAggregateInput
@@ -12551,8 +13735,60 @@ export namespace Prisma {
     armor_side_mm?: IntNullableWithAggregatesFilter<"tanks"> | number | null
     armor_rear_mm?: IntNullableWithAggregatesFilter<"tanks"> | number | null
     gun_caliber_mm?: DecimalNullableWithAggregatesFilter<"tanks"> | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: IntNullableWithAggregatesFilter<"tanks"> | number | null
     year_introduced?: IntNullableWithAggregatesFilter<"tanks"> | number | null
     notes?: StringNullableWithAggregatesFilter<"tanks"> | string | null
+    summary?: StringNullableWithAggregatesFilter<"tanks"> | string | null
+  }
+
+  export type battlelocation_photosWhereInput = {
+    AND?: battlelocation_photosWhereInput | battlelocation_photosWhereInput[]
+    OR?: battlelocation_photosWhereInput[]
+    NOT?: battlelocation_photosWhereInput | battlelocation_photosWhereInput[]
+    id?: IntFilter<"battlelocation_photos"> | number
+    battlelocation_id?: IntFilter<"battlelocation_photos"> | number
+    photo_id?: IntFilter<"battlelocation_photos"> | number
+    battlelocation?: XOR<BattlelocationScalarRelationFilter, battlelocationWhereInput>
+    photo?: XOR<PhotosScalarRelationFilter, photosWhereInput>
+  }
+
+  export type battlelocation_photosOrderByWithRelationInput = {
+    id?: SortOrder
+    battlelocation_id?: SortOrder
+    photo_id?: SortOrder
+    battlelocation?: battlelocationOrderByWithRelationInput
+    photo?: photosOrderByWithRelationInput
+  }
+
+  export type battlelocation_photosWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: battlelocation_photosWhereInput | battlelocation_photosWhereInput[]
+    OR?: battlelocation_photosWhereInput[]
+    NOT?: battlelocation_photosWhereInput | battlelocation_photosWhereInput[]
+    battlelocation_id?: IntFilter<"battlelocation_photos"> | number
+    photo_id?: IntFilter<"battlelocation_photos"> | number
+    battlelocation?: XOR<BattlelocationScalarRelationFilter, battlelocationWhereInput>
+    photo?: XOR<PhotosScalarRelationFilter, photosWhereInput>
+  }, "id">
+
+  export type battlelocation_photosOrderByWithAggregationInput = {
+    id?: SortOrder
+    battlelocation_id?: SortOrder
+    photo_id?: SortOrder
+    _count?: battlelocation_photosCountOrderByAggregateInput
+    _avg?: battlelocation_photosAvgOrderByAggregateInput
+    _max?: battlelocation_photosMaxOrderByAggregateInput
+    _min?: battlelocation_photosMinOrderByAggregateInput
+    _sum?: battlelocation_photosSumOrderByAggregateInput
+  }
+
+  export type battlelocation_photosScalarWhereWithAggregatesInput = {
+    AND?: battlelocation_photosScalarWhereWithAggregatesInput | battlelocation_photosScalarWhereWithAggregatesInput[]
+    OR?: battlelocation_photosScalarWhereWithAggregatesInput[]
+    NOT?: battlelocation_photosScalarWhereWithAggregatesInput | battlelocation_photosScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"battlelocation_photos"> | number
+    battlelocation_id?: IntWithAggregatesFilter<"battlelocation_photos"> | number
+    photo_id?: IntWithAggregatesFilter<"battlelocation_photos"> | number
   }
 
   export type battlelocationCreateInput = {
@@ -12562,6 +13798,7 @@ export namespace Prisma {
     description?: string | null
     battleCountries?: battlelocation_countryCreateNestedManyWithoutBattlelocationInput
     battleTanks?: battlelocation_tankCreateNestedManyWithoutBattlelocationInput
+    photos?: battlelocation_photosCreateNestedManyWithoutBattlelocationInput
   }
 
   export type battlelocationUncheckedCreateInput = {
@@ -12572,6 +13809,7 @@ export namespace Prisma {
     description?: string | null
     battleCountries?: battlelocation_countryUncheckedCreateNestedManyWithoutBattlelocationInput
     battleTanks?: battlelocation_tankUncheckedCreateNestedManyWithoutBattlelocationInput
+    photos?: battlelocation_photosUncheckedCreateNestedManyWithoutBattlelocationInput
   }
 
   export type battlelocationUpdateInput = {
@@ -12581,6 +13819,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     battleCountries?: battlelocation_countryUpdateManyWithoutBattlelocationNestedInput
     battleTanks?: battlelocation_tankUpdateManyWithoutBattlelocationNestedInput
+    photos?: battlelocation_photosUpdateManyWithoutBattlelocationNestedInput
   }
 
   export type battlelocationUncheckedUpdateInput = {
@@ -12591,6 +13830,7 @@ export namespace Prisma {
     description?: NullableStringFieldUpdateOperationsInput | string | null
     battleCountries?: battlelocation_countryUncheckedUpdateManyWithoutBattlelocationNestedInput
     battleTanks?: battlelocation_tankUncheckedUpdateManyWithoutBattlelocationNestedInput
+    photos?: battlelocation_photosUncheckedUpdateManyWithoutBattlelocationNestedInput
   }
 
   export type battlelocationCreateManyInput = {
@@ -12618,7 +13858,7 @@ export namespace Prisma {
 
   export type battlelocation_countryCreateInput = {
     battlelocation: battlelocationCreateNestedOneWithoutBattleCountriesInput
-    countries: countriesCreateNestedOneWithoutBattleCountriesInput
+    country: countriesCreateNestedOneWithoutBattleLocationsInput
   }
 
   export type battlelocation_countryUncheckedCreateInput = {
@@ -12628,7 +13868,7 @@ export namespace Prisma {
 
   export type battlelocation_countryUpdateInput = {
     battlelocation?: battlelocationUpdateOneRequiredWithoutBattleCountriesNestedInput
-    countries?: countriesUpdateOneRequiredWithoutBattleCountriesNestedInput
+    country?: countriesUpdateOneRequiredWithoutBattleLocationsNestedInput
   }
 
   export type battlelocation_countryUncheckedUpdateInput = {
@@ -12652,7 +13892,7 @@ export namespace Prisma {
 
   export type battlelocation_tankCreateInput = {
     battlelocation: battlelocationCreateNestedOneWithoutBattleTanksInput
-    tanks: tanksCreateNestedOneWithoutBattleTanksInput
+    tank: tanksCreateNestedOneWithoutBattleLocationsInput
   }
 
   export type battlelocation_tankUncheckedCreateInput = {
@@ -12662,7 +13902,7 @@ export namespace Prisma {
 
   export type battlelocation_tankUpdateInput = {
     battlelocation?: battlelocationUpdateOneRequiredWithoutBattleTanksNestedInput
-    tanks?: tanksUpdateOneRequiredWithoutBattleTanksNestedInput
+    tank?: tanksUpdateOneRequiredWithoutBattleLocationsNestedInput
   }
 
   export type battlelocation_tankUncheckedUpdateInput = {
@@ -12688,9 +13928,9 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
-    role?: string
+    role?: $Enums.users_role
     avatar_url?: string | null
-    favourite_tanks?: favourite_tanksCreateNestedManyWithoutUsersInput
+    favourite_tanks?: favourite_tanksCreateNestedManyWithoutUserInput
   }
 
   export type usersUncheckedCreateInput = {
@@ -12698,18 +13938,18 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
-    role?: string
+    role?: $Enums.users_role
     avatar_url?: string | null
-    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutUsersInput
+    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type usersUpdateInput = {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: Enumusers_roleFieldUpdateOperationsInput | $Enums.users_role
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
-    favourite_tanks?: favourite_tanksUpdateManyWithoutUsersNestedInput
+    favourite_tanks?: favourite_tanksUpdateManyWithoutUserNestedInput
   }
 
   export type usersUncheckedUpdateInput = {
@@ -12717,9 +13957,9 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: Enumusers_roleFieldUpdateOperationsInput | $Enums.users_role
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
-    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutUsersNestedInput
+    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type usersCreateManyInput = {
@@ -12727,7 +13967,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
-    role?: string
+    role?: $Enums.users_role
     avatar_url?: string | null
   }
 
@@ -12735,7 +13975,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: Enumusers_roleFieldUpdateOperationsInput | $Enums.users_role
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -12744,13 +13984,13 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: Enumusers_roleFieldUpdateOperationsInput | $Enums.users_role
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type favourite_tanksCreateInput = {
-    users: usersCreateNestedOneWithoutFavourite_tanksInput
-    tanks: tanksCreateNestedOneWithoutFavourite_tanksInput
+    user: usersCreateNestedOneWithoutFavourite_tanksInput
+    tank: tanksCreateNestedOneWithoutFavourite_tanksInput
   }
 
   export type favourite_tanksUncheckedCreateInput = {
@@ -12760,8 +14000,8 @@ export namespace Prisma {
   }
 
   export type favourite_tanksUpdateInput = {
-    users?: usersUpdateOneRequiredWithoutFavourite_tanksNestedInput
-    tanks?: tanksUpdateOneRequiredWithoutFavourite_tanksNestedInput
+    user?: usersUpdateOneRequiredWithoutFavourite_tanksNestedInput
+    tank?: tanksUpdateOneRequiredWithoutFavourite_tanksNestedInput
   }
 
   export type favourite_tanksUncheckedUpdateInput = {
@@ -12789,27 +14029,31 @@ export namespace Prisma {
   export type photosCreateInput = {
     filename: string
     filepath: string
-    tanks?: tank_photosCreateNestedManyWithoutPhotosInput
+    tankPhotos?: tank_photosCreateNestedManyWithoutPhotoInput
+    battleLocations?: battlelocation_photosCreateNestedManyWithoutPhotoInput
   }
 
   export type photosUncheckedCreateInput = {
     photo_id?: number
     filename: string
     filepath: string
-    tanks?: tank_photosUncheckedCreateNestedManyWithoutPhotosInput
+    tankPhotos?: tank_photosUncheckedCreateNestedManyWithoutPhotoInput
+    battleLocations?: battlelocation_photosUncheckedCreateNestedManyWithoutPhotoInput
   }
 
   export type photosUpdateInput = {
     filename?: StringFieldUpdateOperationsInput | string
     filepath?: StringFieldUpdateOperationsInput | string
-    tanks?: tank_photosUpdateManyWithoutPhotosNestedInput
+    tankPhotos?: tank_photosUpdateManyWithoutPhotoNestedInput
+    battleLocations?: battlelocation_photosUpdateManyWithoutPhotoNestedInput
   }
 
   export type photosUncheckedUpdateInput = {
     photo_id?: IntFieldUpdateOperationsInput | number
     filename?: StringFieldUpdateOperationsInput | string
     filepath?: StringFieldUpdateOperationsInput | string
-    tanks?: tank_photosUncheckedUpdateManyWithoutPhotosNestedInput
+    tankPhotos?: tank_photosUncheckedUpdateManyWithoutPhotoNestedInput
+    battleLocations?: battlelocation_photosUncheckedUpdateManyWithoutPhotoNestedInput
   }
 
   export type photosCreateManyInput = {
@@ -12830,8 +14074,8 @@ export namespace Prisma {
   }
 
   export type tank_photosCreateInput = {
-    tanks: tanksCreateNestedOneWithoutPhotosInput
-    photos: photosCreateNestedOneWithoutTanksInput
+    tank: tanksCreateNestedOneWithoutPhotosInput
+    photo: photosCreateNestedOneWithoutTankPhotosInput
   }
 
   export type tank_photosUncheckedCreateInput = {
@@ -12841,8 +14085,8 @@ export namespace Prisma {
   }
 
   export type tank_photosUpdateInput = {
-    tanks?: tanksUpdateOneRequiredWithoutPhotosNestedInput
-    photos?: photosUpdateOneRequiredWithoutTanksNestedInput
+    tank?: tanksUpdateOneRequiredWithoutPhotosNestedInput
+    photo?: photosUpdateOneRequiredWithoutTankPhotosNestedInput
   }
 
   export type tank_photosUncheckedUpdateInput = {
@@ -12869,28 +14113,28 @@ export namespace Prisma {
 
   export type countriesCreateInput = {
     name: string
-    battleCountries?: battlelocation_countryCreateNestedManyWithoutCountriesInput
-    tanks?: tanksCreateNestedManyWithoutCountriesInput
+    tanks?: tanksCreateNestedManyWithoutCountryInput
+    battleLocations?: battlelocation_countryCreateNestedManyWithoutCountryInput
   }
 
   export type countriesUncheckedCreateInput = {
     country_id?: number
     name: string
-    battleCountries?: battlelocation_countryUncheckedCreateNestedManyWithoutCountriesInput
-    tanks?: tanksUncheckedCreateNestedManyWithoutCountriesInput
+    tanks?: tanksUncheckedCreateNestedManyWithoutCountryInput
+    battleLocations?: battlelocation_countryUncheckedCreateNestedManyWithoutCountryInput
   }
 
   export type countriesUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    battleCountries?: battlelocation_countryUpdateManyWithoutCountriesNestedInput
-    tanks?: tanksUpdateManyWithoutCountriesNestedInput
+    tanks?: tanksUpdateManyWithoutCountryNestedInput
+    battleLocations?: battlelocation_countryUpdateManyWithoutCountryNestedInput
   }
 
   export type countriesUncheckedUpdateInput = {
     country_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    battleCountries?: battlelocation_countryUncheckedUpdateManyWithoutCountriesNestedInput
-    tanks?: tanksUncheckedUpdateManyWithoutCountriesNestedInput
+    tanks?: tanksUncheckedUpdateManyWithoutCountryNestedInput
+    battleLocations?: battlelocation_countryUncheckedUpdateManyWithoutCountryNestedInput
   }
 
   export type countriesCreateManyInput = {
@@ -12909,24 +14153,24 @@ export namespace Prisma {
 
   export type vehicle_typesCreateInput = {
     name: string
-    tanks?: tanksCreateNestedManyWithoutVehicle_typesInput
+    tanks?: tanksCreateNestedManyWithoutVehicle_typeInput
   }
 
   export type vehicle_typesUncheckedCreateInput = {
     type_id?: number
     name: string
-    tanks?: tanksUncheckedCreateNestedManyWithoutVehicle_typesInput
+    tanks?: tanksUncheckedCreateNestedManyWithoutVehicle_typeInput
   }
 
   export type vehicle_typesUpdateInput = {
     name?: StringFieldUpdateOperationsInput | string
-    tanks?: tanksUpdateManyWithoutVehicle_typesNestedInput
+    tanks?: tanksUpdateManyWithoutVehicle_typeNestedInput
   }
 
   export type vehicle_typesUncheckedUpdateInput = {
     type_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    tanks?: tanksUncheckedUpdateManyWithoutVehicle_typesNestedInput
+    tanks?: tanksUncheckedUpdateManyWithoutVehicle_typeNestedInput
   }
 
   export type vehicle_typesCreateManyInput = {
@@ -12953,13 +14197,15 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    countries?: countriesCreateNestedOneWithoutTanksInput
-    vehicle_types?: vehicle_typesCreateNestedOneWithoutTanksInput
-    battleTanks?: battlelocation_tankCreateNestedManyWithoutTanksInput
-    favourite_tanks?: favourite_tanksCreateNestedManyWithoutTanksInput
-    photos?: tank_photosCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    country?: countriesCreateNestedOneWithoutTanksInput
+    vehicle_type?: vehicle_typesCreateNestedOneWithoutTanksInput
+    favourite_tanks?: favourite_tanksCreateNestedManyWithoutTankInput
+    battleLocations?: battlelocation_tankCreateNestedManyWithoutTankInput
+    photos?: tank_photosCreateNestedManyWithoutTankInput
   }
 
   export type tanksUncheckedCreateInput = {
@@ -12975,11 +14221,13 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    battleTanks?: battlelocation_tankUncheckedCreateNestedManyWithoutTanksInput
-    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTanksInput
-    photos?: tank_photosUncheckedCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTankInput
+    battleLocations?: battlelocation_tankUncheckedCreateNestedManyWithoutTankInput
+    photos?: tank_photosUncheckedCreateNestedManyWithoutTankInput
   }
 
   export type tanksUpdateInput = {
@@ -12992,13 +14240,15 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    countries?: countriesUpdateOneWithoutTanksNestedInput
-    vehicle_types?: vehicle_typesUpdateOneWithoutTanksNestedInput
-    battleTanks?: battlelocation_tankUpdateManyWithoutTanksNestedInput
-    favourite_tanks?: favourite_tanksUpdateManyWithoutTanksNestedInput
-    photos?: tank_photosUpdateManyWithoutTanksNestedInput
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: countriesUpdateOneWithoutTanksNestedInput
+    vehicle_type?: vehicle_typesUpdateOneWithoutTanksNestedInput
+    favourite_tanks?: favourite_tanksUpdateManyWithoutTankNestedInput
+    battleLocations?: battlelocation_tankUpdateManyWithoutTankNestedInput
+    photos?: tank_photosUpdateManyWithoutTankNestedInput
   }
 
   export type tanksUncheckedUpdateInput = {
@@ -13014,11 +14264,13 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    battleTanks?: battlelocation_tankUncheckedUpdateManyWithoutTanksNestedInput
-    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTanksNestedInput
-    photos?: tank_photosUncheckedUpdateManyWithoutTanksNestedInput
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTankNestedInput
+    battleLocations?: battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput
+    photos?: tank_photosUncheckedUpdateManyWithoutTankNestedInput
   }
 
   export type tanksCreateManyInput = {
@@ -13034,8 +14286,10 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
+    summary?: string | null
   }
 
   export type tanksUpdateManyMutationInput = {
@@ -13048,8 +14302,10 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type tanksUncheckedUpdateManyInput = {
@@ -13065,8 +14321,48 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type battlelocation_photosCreateInput = {
+    battlelocation: battlelocationCreateNestedOneWithoutPhotosInput
+    photo: photosCreateNestedOneWithoutBattleLocationsInput
+  }
+
+  export type battlelocation_photosUncheckedCreateInput = {
+    id?: number
+    battlelocation_id: number
+    photo_id: number
+  }
+
+  export type battlelocation_photosUpdateInput = {
+    battlelocation?: battlelocationUpdateOneRequiredWithoutPhotosNestedInput
+    photo?: photosUpdateOneRequiredWithoutBattleLocationsNestedInput
+  }
+
+  export type battlelocation_photosUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    battlelocation_id?: IntFieldUpdateOperationsInput | number
+    photo_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type battlelocation_photosCreateManyInput = {
+    id?: number
+    battlelocation_id: number
+    photo_id: number
+  }
+
+  export type battlelocation_photosUpdateManyMutationInput = {
+
+  }
+
+  export type battlelocation_photosUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    battlelocation_id?: IntFieldUpdateOperationsInput | number
+    photo_id?: IntFieldUpdateOperationsInput | number
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -13133,6 +14429,12 @@ export namespace Prisma {
     none?: battlelocation_tankWhereInput
   }
 
+  export type Battlelocation_photosListRelationFilter = {
+    every?: battlelocation_photosWhereInput
+    some?: battlelocation_photosWhereInput
+    none?: battlelocation_photosWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -13143,6 +14445,10 @@ export namespace Prisma {
   }
 
   export type battlelocation_tankOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type battlelocation_photosOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -13331,6 +14637,13 @@ export namespace Prisma {
     tank_id?: SortOrder
   }
 
+  export type Enumusers_roleFilter<$PrismaModel = never> = {
+    equals?: $Enums.users_role | Enumusers_roleFieldRefInput<$PrismaModel>
+    in?: $Enums.users_role[]
+    notIn?: $Enums.users_role[]
+    not?: NestedEnumusers_roleFilter<$PrismaModel> | $Enums.users_role
+  }
+
   export type Favourite_tanksListRelationFilter = {
     every?: favourite_tanksWhereInput
     some?: favourite_tanksWhereInput
@@ -13380,6 +14693,16 @@ export namespace Prisma {
 
   export type usersSumOrderByAggregateInput = {
     user_id?: SortOrder
+  }
+
+  export type Enumusers_roleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.users_role | Enumusers_roleFieldRefInput<$PrismaModel>
+    in?: $Enums.users_role[]
+    notIn?: $Enums.users_role[]
+    not?: NestedEnumusers_roleWithAggregatesFilter<$PrismaModel> | $Enums.users_role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumusers_roleFilter<$PrismaModel>
+    _max?: NestedEnumusers_roleFilter<$PrismaModel>
   }
 
   export type UsersScalarRelationFilter = {
@@ -13467,11 +14790,6 @@ export namespace Prisma {
   export type PhotosScalarRelationFilter = {
     is?: photosWhereInput
     isNot?: photosWhereInput
-  }
-
-  export type tank_photosTank_idPhoto_idCompoundUniqueInput = {
-    tank_id: number
-    photo_id: number
   }
 
   export type tank_photosCountOrderByAggregateInput = {
@@ -13612,8 +14930,10 @@ export namespace Prisma {
     armor_side_mm?: SortOrder
     armor_rear_mm?: SortOrder
     gun_caliber_mm?: SortOrder
+    penetration_mm?: SortOrder
     year_introduced?: SortOrder
     notes?: SortOrder
+    summary?: SortOrder
   }
 
   export type tanksAvgOrderByAggregateInput = {
@@ -13628,6 +14948,7 @@ export namespace Prisma {
     armor_side_mm?: SortOrder
     armor_rear_mm?: SortOrder
     gun_caliber_mm?: SortOrder
+    penetration_mm?: SortOrder
     year_introduced?: SortOrder
   }
 
@@ -13644,8 +14965,10 @@ export namespace Prisma {
     armor_side_mm?: SortOrder
     armor_rear_mm?: SortOrder
     gun_caliber_mm?: SortOrder
+    penetration_mm?: SortOrder
     year_introduced?: SortOrder
     notes?: SortOrder
+    summary?: SortOrder
   }
 
   export type tanksMinOrderByAggregateInput = {
@@ -13661,8 +14984,10 @@ export namespace Prisma {
     armor_side_mm?: SortOrder
     armor_rear_mm?: SortOrder
     gun_caliber_mm?: SortOrder
+    penetration_mm?: SortOrder
     year_introduced?: SortOrder
     notes?: SortOrder
+    summary?: SortOrder
   }
 
   export type tanksSumOrderByAggregateInput = {
@@ -13677,6 +15002,7 @@ export namespace Prisma {
     armor_side_mm?: SortOrder
     armor_rear_mm?: SortOrder
     gun_caliber_mm?: SortOrder
+    penetration_mm?: SortOrder
     year_introduced?: SortOrder
   }
 
@@ -13696,6 +15022,36 @@ export namespace Prisma {
     _max?: NestedIntNullableFilter<$PrismaModel>
   }
 
+  export type battlelocation_photosCountOrderByAggregateInput = {
+    id?: SortOrder
+    battlelocation_id?: SortOrder
+    photo_id?: SortOrder
+  }
+
+  export type battlelocation_photosAvgOrderByAggregateInput = {
+    id?: SortOrder
+    battlelocation_id?: SortOrder
+    photo_id?: SortOrder
+  }
+
+  export type battlelocation_photosMaxOrderByAggregateInput = {
+    id?: SortOrder
+    battlelocation_id?: SortOrder
+    photo_id?: SortOrder
+  }
+
+  export type battlelocation_photosMinOrderByAggregateInput = {
+    id?: SortOrder
+    battlelocation_id?: SortOrder
+    photo_id?: SortOrder
+  }
+
+  export type battlelocation_photosSumOrderByAggregateInput = {
+    id?: SortOrder
+    battlelocation_id?: SortOrder
+    photo_id?: SortOrder
+  }
+
   export type battlelocation_countryCreateNestedManyWithoutBattlelocationInput = {
     create?: XOR<battlelocation_countryCreateWithoutBattlelocationInput, battlelocation_countryUncheckedCreateWithoutBattlelocationInput> | battlelocation_countryCreateWithoutBattlelocationInput[] | battlelocation_countryUncheckedCreateWithoutBattlelocationInput[]
     connectOrCreate?: battlelocation_countryCreateOrConnectWithoutBattlelocationInput | battlelocation_countryCreateOrConnectWithoutBattlelocationInput[]
@@ -13710,6 +15066,13 @@ export namespace Prisma {
     connect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
   }
 
+  export type battlelocation_photosCreateNestedManyWithoutBattlelocationInput = {
+    create?: XOR<battlelocation_photosCreateWithoutBattlelocationInput, battlelocation_photosUncheckedCreateWithoutBattlelocationInput> | battlelocation_photosCreateWithoutBattlelocationInput[] | battlelocation_photosUncheckedCreateWithoutBattlelocationInput[]
+    connectOrCreate?: battlelocation_photosCreateOrConnectWithoutBattlelocationInput | battlelocation_photosCreateOrConnectWithoutBattlelocationInput[]
+    createMany?: battlelocation_photosCreateManyBattlelocationInputEnvelope
+    connect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+  }
+
   export type battlelocation_countryUncheckedCreateNestedManyWithoutBattlelocationInput = {
     create?: XOR<battlelocation_countryCreateWithoutBattlelocationInput, battlelocation_countryUncheckedCreateWithoutBattlelocationInput> | battlelocation_countryCreateWithoutBattlelocationInput[] | battlelocation_countryUncheckedCreateWithoutBattlelocationInput[]
     connectOrCreate?: battlelocation_countryCreateOrConnectWithoutBattlelocationInput | battlelocation_countryCreateOrConnectWithoutBattlelocationInput[]
@@ -13722,6 +15085,13 @@ export namespace Prisma {
     connectOrCreate?: battlelocation_tankCreateOrConnectWithoutBattlelocationInput | battlelocation_tankCreateOrConnectWithoutBattlelocationInput[]
     createMany?: battlelocation_tankCreateManyBattlelocationInputEnvelope
     connect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
+  }
+
+  export type battlelocation_photosUncheckedCreateNestedManyWithoutBattlelocationInput = {
+    create?: XOR<battlelocation_photosCreateWithoutBattlelocationInput, battlelocation_photosUncheckedCreateWithoutBattlelocationInput> | battlelocation_photosCreateWithoutBattlelocationInput[] | battlelocation_photosUncheckedCreateWithoutBattlelocationInput[]
+    connectOrCreate?: battlelocation_photosCreateOrConnectWithoutBattlelocationInput | battlelocation_photosCreateOrConnectWithoutBattlelocationInput[]
+    createMany?: battlelocation_photosCreateManyBattlelocationInputEnvelope
+    connect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -13768,6 +15138,20 @@ export namespace Prisma {
     deleteMany?: battlelocation_tankScalarWhereInput | battlelocation_tankScalarWhereInput[]
   }
 
+  export type battlelocation_photosUpdateManyWithoutBattlelocationNestedInput = {
+    create?: XOR<battlelocation_photosCreateWithoutBattlelocationInput, battlelocation_photosUncheckedCreateWithoutBattlelocationInput> | battlelocation_photosCreateWithoutBattlelocationInput[] | battlelocation_photosUncheckedCreateWithoutBattlelocationInput[]
+    connectOrCreate?: battlelocation_photosCreateOrConnectWithoutBattlelocationInput | battlelocation_photosCreateOrConnectWithoutBattlelocationInput[]
+    upsert?: battlelocation_photosUpsertWithWhereUniqueWithoutBattlelocationInput | battlelocation_photosUpsertWithWhereUniqueWithoutBattlelocationInput[]
+    createMany?: battlelocation_photosCreateManyBattlelocationInputEnvelope
+    set?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    disconnect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    delete?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    connect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    update?: battlelocation_photosUpdateWithWhereUniqueWithoutBattlelocationInput | battlelocation_photosUpdateWithWhereUniqueWithoutBattlelocationInput[]
+    updateMany?: battlelocation_photosUpdateManyWithWhereWithoutBattlelocationInput | battlelocation_photosUpdateManyWithWhereWithoutBattlelocationInput[]
+    deleteMany?: battlelocation_photosScalarWhereInput | battlelocation_photosScalarWhereInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
@@ -13804,15 +15188,29 @@ export namespace Prisma {
     deleteMany?: battlelocation_tankScalarWhereInput | battlelocation_tankScalarWhereInput[]
   }
 
+  export type battlelocation_photosUncheckedUpdateManyWithoutBattlelocationNestedInput = {
+    create?: XOR<battlelocation_photosCreateWithoutBattlelocationInput, battlelocation_photosUncheckedCreateWithoutBattlelocationInput> | battlelocation_photosCreateWithoutBattlelocationInput[] | battlelocation_photosUncheckedCreateWithoutBattlelocationInput[]
+    connectOrCreate?: battlelocation_photosCreateOrConnectWithoutBattlelocationInput | battlelocation_photosCreateOrConnectWithoutBattlelocationInput[]
+    upsert?: battlelocation_photosUpsertWithWhereUniqueWithoutBattlelocationInput | battlelocation_photosUpsertWithWhereUniqueWithoutBattlelocationInput[]
+    createMany?: battlelocation_photosCreateManyBattlelocationInputEnvelope
+    set?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    disconnect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    delete?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    connect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    update?: battlelocation_photosUpdateWithWhereUniqueWithoutBattlelocationInput | battlelocation_photosUpdateWithWhereUniqueWithoutBattlelocationInput[]
+    updateMany?: battlelocation_photosUpdateManyWithWhereWithoutBattlelocationInput | battlelocation_photosUpdateManyWithWhereWithoutBattlelocationInput[]
+    deleteMany?: battlelocation_photosScalarWhereInput | battlelocation_photosScalarWhereInput[]
+  }
+
   export type battlelocationCreateNestedOneWithoutBattleCountriesInput = {
     create?: XOR<battlelocationCreateWithoutBattleCountriesInput, battlelocationUncheckedCreateWithoutBattleCountriesInput>
     connectOrCreate?: battlelocationCreateOrConnectWithoutBattleCountriesInput
     connect?: battlelocationWhereUniqueInput
   }
 
-  export type countriesCreateNestedOneWithoutBattleCountriesInput = {
-    create?: XOR<countriesCreateWithoutBattleCountriesInput, countriesUncheckedCreateWithoutBattleCountriesInput>
-    connectOrCreate?: countriesCreateOrConnectWithoutBattleCountriesInput
+  export type countriesCreateNestedOneWithoutBattleLocationsInput = {
+    create?: XOR<countriesCreateWithoutBattleLocationsInput, countriesUncheckedCreateWithoutBattleLocationsInput>
+    connectOrCreate?: countriesCreateOrConnectWithoutBattleLocationsInput
     connect?: countriesWhereUniqueInput
   }
 
@@ -13824,12 +15222,12 @@ export namespace Prisma {
     update?: XOR<XOR<battlelocationUpdateToOneWithWhereWithoutBattleCountriesInput, battlelocationUpdateWithoutBattleCountriesInput>, battlelocationUncheckedUpdateWithoutBattleCountriesInput>
   }
 
-  export type countriesUpdateOneRequiredWithoutBattleCountriesNestedInput = {
-    create?: XOR<countriesCreateWithoutBattleCountriesInput, countriesUncheckedCreateWithoutBattleCountriesInput>
-    connectOrCreate?: countriesCreateOrConnectWithoutBattleCountriesInput
-    upsert?: countriesUpsertWithoutBattleCountriesInput
+  export type countriesUpdateOneRequiredWithoutBattleLocationsNestedInput = {
+    create?: XOR<countriesCreateWithoutBattleLocationsInput, countriesUncheckedCreateWithoutBattleLocationsInput>
+    connectOrCreate?: countriesCreateOrConnectWithoutBattleLocationsInput
+    upsert?: countriesUpsertWithoutBattleLocationsInput
     connect?: countriesWhereUniqueInput
-    update?: XOR<XOR<countriesUpdateToOneWithWhereWithoutBattleCountriesInput, countriesUpdateWithoutBattleCountriesInput>, countriesUncheckedUpdateWithoutBattleCountriesInput>
+    update?: XOR<XOR<countriesUpdateToOneWithWhereWithoutBattleLocationsInput, countriesUpdateWithoutBattleLocationsInput>, countriesUncheckedUpdateWithoutBattleLocationsInput>
   }
 
   export type battlelocationCreateNestedOneWithoutBattleTanksInput = {
@@ -13838,9 +15236,9 @@ export namespace Prisma {
     connect?: battlelocationWhereUniqueInput
   }
 
-  export type tanksCreateNestedOneWithoutBattleTanksInput = {
-    create?: XOR<tanksCreateWithoutBattleTanksInput, tanksUncheckedCreateWithoutBattleTanksInput>
-    connectOrCreate?: tanksCreateOrConnectWithoutBattleTanksInput
+  export type tanksCreateNestedOneWithoutBattleLocationsInput = {
+    create?: XOR<tanksCreateWithoutBattleLocationsInput, tanksUncheckedCreateWithoutBattleLocationsInput>
+    connectOrCreate?: tanksCreateOrConnectWithoutBattleLocationsInput
     connect?: tanksWhereUniqueInput
   }
 
@@ -13852,53 +15250,57 @@ export namespace Prisma {
     update?: XOR<XOR<battlelocationUpdateToOneWithWhereWithoutBattleTanksInput, battlelocationUpdateWithoutBattleTanksInput>, battlelocationUncheckedUpdateWithoutBattleTanksInput>
   }
 
-  export type tanksUpdateOneRequiredWithoutBattleTanksNestedInput = {
-    create?: XOR<tanksCreateWithoutBattleTanksInput, tanksUncheckedCreateWithoutBattleTanksInput>
-    connectOrCreate?: tanksCreateOrConnectWithoutBattleTanksInput
-    upsert?: tanksUpsertWithoutBattleTanksInput
+  export type tanksUpdateOneRequiredWithoutBattleLocationsNestedInput = {
+    create?: XOR<tanksCreateWithoutBattleLocationsInput, tanksUncheckedCreateWithoutBattleLocationsInput>
+    connectOrCreate?: tanksCreateOrConnectWithoutBattleLocationsInput
+    upsert?: tanksUpsertWithoutBattleLocationsInput
     connect?: tanksWhereUniqueInput
-    update?: XOR<XOR<tanksUpdateToOneWithWhereWithoutBattleTanksInput, tanksUpdateWithoutBattleTanksInput>, tanksUncheckedUpdateWithoutBattleTanksInput>
+    update?: XOR<XOR<tanksUpdateToOneWithWhereWithoutBattleLocationsInput, tanksUpdateWithoutBattleLocationsInput>, tanksUncheckedUpdateWithoutBattleLocationsInput>
   }
 
-  export type favourite_tanksCreateNestedManyWithoutUsersInput = {
-    create?: XOR<favourite_tanksCreateWithoutUsersInput, favourite_tanksUncheckedCreateWithoutUsersInput> | favourite_tanksCreateWithoutUsersInput[] | favourite_tanksUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: favourite_tanksCreateOrConnectWithoutUsersInput | favourite_tanksCreateOrConnectWithoutUsersInput[]
-    createMany?: favourite_tanksCreateManyUsersInputEnvelope
+  export type favourite_tanksCreateNestedManyWithoutUserInput = {
+    create?: XOR<favourite_tanksCreateWithoutUserInput, favourite_tanksUncheckedCreateWithoutUserInput> | favourite_tanksCreateWithoutUserInput[] | favourite_tanksUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: favourite_tanksCreateOrConnectWithoutUserInput | favourite_tanksCreateOrConnectWithoutUserInput[]
+    createMany?: favourite_tanksCreateManyUserInputEnvelope
     connect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
   }
 
-  export type favourite_tanksUncheckedCreateNestedManyWithoutUsersInput = {
-    create?: XOR<favourite_tanksCreateWithoutUsersInput, favourite_tanksUncheckedCreateWithoutUsersInput> | favourite_tanksCreateWithoutUsersInput[] | favourite_tanksUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: favourite_tanksCreateOrConnectWithoutUsersInput | favourite_tanksCreateOrConnectWithoutUsersInput[]
-    createMany?: favourite_tanksCreateManyUsersInputEnvelope
+  export type favourite_tanksUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<favourite_tanksCreateWithoutUserInput, favourite_tanksUncheckedCreateWithoutUserInput> | favourite_tanksCreateWithoutUserInput[] | favourite_tanksUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: favourite_tanksCreateOrConnectWithoutUserInput | favourite_tanksCreateOrConnectWithoutUserInput[]
+    createMany?: favourite_tanksCreateManyUserInputEnvelope
     connect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
   }
 
-  export type favourite_tanksUpdateManyWithoutUsersNestedInput = {
-    create?: XOR<favourite_tanksCreateWithoutUsersInput, favourite_tanksUncheckedCreateWithoutUsersInput> | favourite_tanksCreateWithoutUsersInput[] | favourite_tanksUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: favourite_tanksCreateOrConnectWithoutUsersInput | favourite_tanksCreateOrConnectWithoutUsersInput[]
-    upsert?: favourite_tanksUpsertWithWhereUniqueWithoutUsersInput | favourite_tanksUpsertWithWhereUniqueWithoutUsersInput[]
-    createMany?: favourite_tanksCreateManyUsersInputEnvelope
+  export type Enumusers_roleFieldUpdateOperationsInput = {
+    set?: $Enums.users_role
+  }
+
+  export type favourite_tanksUpdateManyWithoutUserNestedInput = {
+    create?: XOR<favourite_tanksCreateWithoutUserInput, favourite_tanksUncheckedCreateWithoutUserInput> | favourite_tanksCreateWithoutUserInput[] | favourite_tanksUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: favourite_tanksCreateOrConnectWithoutUserInput | favourite_tanksCreateOrConnectWithoutUserInput[]
+    upsert?: favourite_tanksUpsertWithWhereUniqueWithoutUserInput | favourite_tanksUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: favourite_tanksCreateManyUserInputEnvelope
     set?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
     disconnect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
     delete?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
     connect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
-    update?: favourite_tanksUpdateWithWhereUniqueWithoutUsersInput | favourite_tanksUpdateWithWhereUniqueWithoutUsersInput[]
-    updateMany?: favourite_tanksUpdateManyWithWhereWithoutUsersInput | favourite_tanksUpdateManyWithWhereWithoutUsersInput[]
+    update?: favourite_tanksUpdateWithWhereUniqueWithoutUserInput | favourite_tanksUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: favourite_tanksUpdateManyWithWhereWithoutUserInput | favourite_tanksUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: favourite_tanksScalarWhereInput | favourite_tanksScalarWhereInput[]
   }
 
-  export type favourite_tanksUncheckedUpdateManyWithoutUsersNestedInput = {
-    create?: XOR<favourite_tanksCreateWithoutUsersInput, favourite_tanksUncheckedCreateWithoutUsersInput> | favourite_tanksCreateWithoutUsersInput[] | favourite_tanksUncheckedCreateWithoutUsersInput[]
-    connectOrCreate?: favourite_tanksCreateOrConnectWithoutUsersInput | favourite_tanksCreateOrConnectWithoutUsersInput[]
-    upsert?: favourite_tanksUpsertWithWhereUniqueWithoutUsersInput | favourite_tanksUpsertWithWhereUniqueWithoutUsersInput[]
-    createMany?: favourite_tanksCreateManyUsersInputEnvelope
+  export type favourite_tanksUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<favourite_tanksCreateWithoutUserInput, favourite_tanksUncheckedCreateWithoutUserInput> | favourite_tanksCreateWithoutUserInput[] | favourite_tanksUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: favourite_tanksCreateOrConnectWithoutUserInput | favourite_tanksCreateOrConnectWithoutUserInput[]
+    upsert?: favourite_tanksUpsertWithWhereUniqueWithoutUserInput | favourite_tanksUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: favourite_tanksCreateManyUserInputEnvelope
     set?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
     disconnect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
     delete?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
     connect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
-    update?: favourite_tanksUpdateWithWhereUniqueWithoutUsersInput | favourite_tanksUpdateWithWhereUniqueWithoutUsersInput[]
-    updateMany?: favourite_tanksUpdateManyWithWhereWithoutUsersInput | favourite_tanksUpdateManyWithWhereWithoutUsersInput[]
+    update?: favourite_tanksUpdateWithWhereUniqueWithoutUserInput | favourite_tanksUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: favourite_tanksUpdateManyWithWhereWithoutUserInput | favourite_tanksUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: favourite_tanksScalarWhereInput | favourite_tanksScalarWhereInput[]
   }
 
@@ -13930,46 +15332,88 @@ export namespace Prisma {
     update?: XOR<XOR<tanksUpdateToOneWithWhereWithoutFavourite_tanksInput, tanksUpdateWithoutFavourite_tanksInput>, tanksUncheckedUpdateWithoutFavourite_tanksInput>
   }
 
-  export type tank_photosCreateNestedManyWithoutPhotosInput = {
-    create?: XOR<tank_photosCreateWithoutPhotosInput, tank_photosUncheckedCreateWithoutPhotosInput> | tank_photosCreateWithoutPhotosInput[] | tank_photosUncheckedCreateWithoutPhotosInput[]
-    connectOrCreate?: tank_photosCreateOrConnectWithoutPhotosInput | tank_photosCreateOrConnectWithoutPhotosInput[]
-    createMany?: tank_photosCreateManyPhotosInputEnvelope
+  export type tank_photosCreateNestedManyWithoutPhotoInput = {
+    create?: XOR<tank_photosCreateWithoutPhotoInput, tank_photosUncheckedCreateWithoutPhotoInput> | tank_photosCreateWithoutPhotoInput[] | tank_photosUncheckedCreateWithoutPhotoInput[]
+    connectOrCreate?: tank_photosCreateOrConnectWithoutPhotoInput | tank_photosCreateOrConnectWithoutPhotoInput[]
+    createMany?: tank_photosCreateManyPhotoInputEnvelope
     connect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
   }
 
-  export type tank_photosUncheckedCreateNestedManyWithoutPhotosInput = {
-    create?: XOR<tank_photosCreateWithoutPhotosInput, tank_photosUncheckedCreateWithoutPhotosInput> | tank_photosCreateWithoutPhotosInput[] | tank_photosUncheckedCreateWithoutPhotosInput[]
-    connectOrCreate?: tank_photosCreateOrConnectWithoutPhotosInput | tank_photosCreateOrConnectWithoutPhotosInput[]
-    createMany?: tank_photosCreateManyPhotosInputEnvelope
+  export type battlelocation_photosCreateNestedManyWithoutPhotoInput = {
+    create?: XOR<battlelocation_photosCreateWithoutPhotoInput, battlelocation_photosUncheckedCreateWithoutPhotoInput> | battlelocation_photosCreateWithoutPhotoInput[] | battlelocation_photosUncheckedCreateWithoutPhotoInput[]
+    connectOrCreate?: battlelocation_photosCreateOrConnectWithoutPhotoInput | battlelocation_photosCreateOrConnectWithoutPhotoInput[]
+    createMany?: battlelocation_photosCreateManyPhotoInputEnvelope
+    connect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+  }
+
+  export type tank_photosUncheckedCreateNestedManyWithoutPhotoInput = {
+    create?: XOR<tank_photosCreateWithoutPhotoInput, tank_photosUncheckedCreateWithoutPhotoInput> | tank_photosCreateWithoutPhotoInput[] | tank_photosUncheckedCreateWithoutPhotoInput[]
+    connectOrCreate?: tank_photosCreateOrConnectWithoutPhotoInput | tank_photosCreateOrConnectWithoutPhotoInput[]
+    createMany?: tank_photosCreateManyPhotoInputEnvelope
     connect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
   }
 
-  export type tank_photosUpdateManyWithoutPhotosNestedInput = {
-    create?: XOR<tank_photosCreateWithoutPhotosInput, tank_photosUncheckedCreateWithoutPhotosInput> | tank_photosCreateWithoutPhotosInput[] | tank_photosUncheckedCreateWithoutPhotosInput[]
-    connectOrCreate?: tank_photosCreateOrConnectWithoutPhotosInput | tank_photosCreateOrConnectWithoutPhotosInput[]
-    upsert?: tank_photosUpsertWithWhereUniqueWithoutPhotosInput | tank_photosUpsertWithWhereUniqueWithoutPhotosInput[]
-    createMany?: tank_photosCreateManyPhotosInputEnvelope
+  export type battlelocation_photosUncheckedCreateNestedManyWithoutPhotoInput = {
+    create?: XOR<battlelocation_photosCreateWithoutPhotoInput, battlelocation_photosUncheckedCreateWithoutPhotoInput> | battlelocation_photosCreateWithoutPhotoInput[] | battlelocation_photosUncheckedCreateWithoutPhotoInput[]
+    connectOrCreate?: battlelocation_photosCreateOrConnectWithoutPhotoInput | battlelocation_photosCreateOrConnectWithoutPhotoInput[]
+    createMany?: battlelocation_photosCreateManyPhotoInputEnvelope
+    connect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+  }
+
+  export type tank_photosUpdateManyWithoutPhotoNestedInput = {
+    create?: XOR<tank_photosCreateWithoutPhotoInput, tank_photosUncheckedCreateWithoutPhotoInput> | tank_photosCreateWithoutPhotoInput[] | tank_photosUncheckedCreateWithoutPhotoInput[]
+    connectOrCreate?: tank_photosCreateOrConnectWithoutPhotoInput | tank_photosCreateOrConnectWithoutPhotoInput[]
+    upsert?: tank_photosUpsertWithWhereUniqueWithoutPhotoInput | tank_photosUpsertWithWhereUniqueWithoutPhotoInput[]
+    createMany?: tank_photosCreateManyPhotoInputEnvelope
     set?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
     disconnect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
     delete?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
     connect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
-    update?: tank_photosUpdateWithWhereUniqueWithoutPhotosInput | tank_photosUpdateWithWhereUniqueWithoutPhotosInput[]
-    updateMany?: tank_photosUpdateManyWithWhereWithoutPhotosInput | tank_photosUpdateManyWithWhereWithoutPhotosInput[]
+    update?: tank_photosUpdateWithWhereUniqueWithoutPhotoInput | tank_photosUpdateWithWhereUniqueWithoutPhotoInput[]
+    updateMany?: tank_photosUpdateManyWithWhereWithoutPhotoInput | tank_photosUpdateManyWithWhereWithoutPhotoInput[]
     deleteMany?: tank_photosScalarWhereInput | tank_photosScalarWhereInput[]
   }
 
-  export type tank_photosUncheckedUpdateManyWithoutPhotosNestedInput = {
-    create?: XOR<tank_photosCreateWithoutPhotosInput, tank_photosUncheckedCreateWithoutPhotosInput> | tank_photosCreateWithoutPhotosInput[] | tank_photosUncheckedCreateWithoutPhotosInput[]
-    connectOrCreate?: tank_photosCreateOrConnectWithoutPhotosInput | tank_photosCreateOrConnectWithoutPhotosInput[]
-    upsert?: tank_photosUpsertWithWhereUniqueWithoutPhotosInput | tank_photosUpsertWithWhereUniqueWithoutPhotosInput[]
-    createMany?: tank_photosCreateManyPhotosInputEnvelope
+  export type battlelocation_photosUpdateManyWithoutPhotoNestedInput = {
+    create?: XOR<battlelocation_photosCreateWithoutPhotoInput, battlelocation_photosUncheckedCreateWithoutPhotoInput> | battlelocation_photosCreateWithoutPhotoInput[] | battlelocation_photosUncheckedCreateWithoutPhotoInput[]
+    connectOrCreate?: battlelocation_photosCreateOrConnectWithoutPhotoInput | battlelocation_photosCreateOrConnectWithoutPhotoInput[]
+    upsert?: battlelocation_photosUpsertWithWhereUniqueWithoutPhotoInput | battlelocation_photosUpsertWithWhereUniqueWithoutPhotoInput[]
+    createMany?: battlelocation_photosCreateManyPhotoInputEnvelope
+    set?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    disconnect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    delete?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    connect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    update?: battlelocation_photosUpdateWithWhereUniqueWithoutPhotoInput | battlelocation_photosUpdateWithWhereUniqueWithoutPhotoInput[]
+    updateMany?: battlelocation_photosUpdateManyWithWhereWithoutPhotoInput | battlelocation_photosUpdateManyWithWhereWithoutPhotoInput[]
+    deleteMany?: battlelocation_photosScalarWhereInput | battlelocation_photosScalarWhereInput[]
+  }
+
+  export type tank_photosUncheckedUpdateManyWithoutPhotoNestedInput = {
+    create?: XOR<tank_photosCreateWithoutPhotoInput, tank_photosUncheckedCreateWithoutPhotoInput> | tank_photosCreateWithoutPhotoInput[] | tank_photosUncheckedCreateWithoutPhotoInput[]
+    connectOrCreate?: tank_photosCreateOrConnectWithoutPhotoInput | tank_photosCreateOrConnectWithoutPhotoInput[]
+    upsert?: tank_photosUpsertWithWhereUniqueWithoutPhotoInput | tank_photosUpsertWithWhereUniqueWithoutPhotoInput[]
+    createMany?: tank_photosCreateManyPhotoInputEnvelope
     set?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
     disconnect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
     delete?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
     connect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
-    update?: tank_photosUpdateWithWhereUniqueWithoutPhotosInput | tank_photosUpdateWithWhereUniqueWithoutPhotosInput[]
-    updateMany?: tank_photosUpdateManyWithWhereWithoutPhotosInput | tank_photosUpdateManyWithWhereWithoutPhotosInput[]
+    update?: tank_photosUpdateWithWhereUniqueWithoutPhotoInput | tank_photosUpdateWithWhereUniqueWithoutPhotoInput[]
+    updateMany?: tank_photosUpdateManyWithWhereWithoutPhotoInput | tank_photosUpdateManyWithWhereWithoutPhotoInput[]
     deleteMany?: tank_photosScalarWhereInput | tank_photosScalarWhereInput[]
+  }
+
+  export type battlelocation_photosUncheckedUpdateManyWithoutPhotoNestedInput = {
+    create?: XOR<battlelocation_photosCreateWithoutPhotoInput, battlelocation_photosUncheckedCreateWithoutPhotoInput> | battlelocation_photosCreateWithoutPhotoInput[] | battlelocation_photosUncheckedCreateWithoutPhotoInput[]
+    connectOrCreate?: battlelocation_photosCreateOrConnectWithoutPhotoInput | battlelocation_photosCreateOrConnectWithoutPhotoInput[]
+    upsert?: battlelocation_photosUpsertWithWhereUniqueWithoutPhotoInput | battlelocation_photosUpsertWithWhereUniqueWithoutPhotoInput[]
+    createMany?: battlelocation_photosCreateManyPhotoInputEnvelope
+    set?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    disconnect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    delete?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    connect?: battlelocation_photosWhereUniqueInput | battlelocation_photosWhereUniqueInput[]
+    update?: battlelocation_photosUpdateWithWhereUniqueWithoutPhotoInput | battlelocation_photosUpdateWithWhereUniqueWithoutPhotoInput[]
+    updateMany?: battlelocation_photosUpdateManyWithWhereWithoutPhotoInput | battlelocation_photosUpdateManyWithWhereWithoutPhotoInput[]
+    deleteMany?: battlelocation_photosScalarWhereInput | battlelocation_photosScalarWhereInput[]
   }
 
   export type tanksCreateNestedOneWithoutPhotosInput = {
@@ -13978,9 +15422,9 @@ export namespace Prisma {
     connect?: tanksWhereUniqueInput
   }
 
-  export type photosCreateNestedOneWithoutTanksInput = {
-    create?: XOR<photosCreateWithoutTanksInput, photosUncheckedCreateWithoutTanksInput>
-    connectOrCreate?: photosCreateOrConnectWithoutTanksInput
+  export type photosCreateNestedOneWithoutTankPhotosInput = {
+    create?: XOR<photosCreateWithoutTankPhotosInput, photosUncheckedCreateWithoutTankPhotosInput>
+    connectOrCreate?: photosCreateOrConnectWithoutTankPhotosInput
     connect?: photosWhereUniqueInput
   }
 
@@ -13992,137 +15436,137 @@ export namespace Prisma {
     update?: XOR<XOR<tanksUpdateToOneWithWhereWithoutPhotosInput, tanksUpdateWithoutPhotosInput>, tanksUncheckedUpdateWithoutPhotosInput>
   }
 
-  export type photosUpdateOneRequiredWithoutTanksNestedInput = {
-    create?: XOR<photosCreateWithoutTanksInput, photosUncheckedCreateWithoutTanksInput>
-    connectOrCreate?: photosCreateOrConnectWithoutTanksInput
-    upsert?: photosUpsertWithoutTanksInput
+  export type photosUpdateOneRequiredWithoutTankPhotosNestedInput = {
+    create?: XOR<photosCreateWithoutTankPhotosInput, photosUncheckedCreateWithoutTankPhotosInput>
+    connectOrCreate?: photosCreateOrConnectWithoutTankPhotosInput
+    upsert?: photosUpsertWithoutTankPhotosInput
     connect?: photosWhereUniqueInput
-    update?: XOR<XOR<photosUpdateToOneWithWhereWithoutTanksInput, photosUpdateWithoutTanksInput>, photosUncheckedUpdateWithoutTanksInput>
+    update?: XOR<XOR<photosUpdateToOneWithWhereWithoutTankPhotosInput, photosUpdateWithoutTankPhotosInput>, photosUncheckedUpdateWithoutTankPhotosInput>
   }
 
-  export type battlelocation_countryCreateNestedManyWithoutCountriesInput = {
-    create?: XOR<battlelocation_countryCreateWithoutCountriesInput, battlelocation_countryUncheckedCreateWithoutCountriesInput> | battlelocation_countryCreateWithoutCountriesInput[] | battlelocation_countryUncheckedCreateWithoutCountriesInput[]
-    connectOrCreate?: battlelocation_countryCreateOrConnectWithoutCountriesInput | battlelocation_countryCreateOrConnectWithoutCountriesInput[]
-    createMany?: battlelocation_countryCreateManyCountriesInputEnvelope
-    connect?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
-  }
-
-  export type tanksCreateNestedManyWithoutCountriesInput = {
-    create?: XOR<tanksCreateWithoutCountriesInput, tanksUncheckedCreateWithoutCountriesInput> | tanksCreateWithoutCountriesInput[] | tanksUncheckedCreateWithoutCountriesInput[]
-    connectOrCreate?: tanksCreateOrConnectWithoutCountriesInput | tanksCreateOrConnectWithoutCountriesInput[]
-    createMany?: tanksCreateManyCountriesInputEnvelope
+  export type tanksCreateNestedManyWithoutCountryInput = {
+    create?: XOR<tanksCreateWithoutCountryInput, tanksUncheckedCreateWithoutCountryInput> | tanksCreateWithoutCountryInput[] | tanksUncheckedCreateWithoutCountryInput[]
+    connectOrCreate?: tanksCreateOrConnectWithoutCountryInput | tanksCreateOrConnectWithoutCountryInput[]
+    createMany?: tanksCreateManyCountryInputEnvelope
     connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
   }
 
-  export type battlelocation_countryUncheckedCreateNestedManyWithoutCountriesInput = {
-    create?: XOR<battlelocation_countryCreateWithoutCountriesInput, battlelocation_countryUncheckedCreateWithoutCountriesInput> | battlelocation_countryCreateWithoutCountriesInput[] | battlelocation_countryUncheckedCreateWithoutCountriesInput[]
-    connectOrCreate?: battlelocation_countryCreateOrConnectWithoutCountriesInput | battlelocation_countryCreateOrConnectWithoutCountriesInput[]
-    createMany?: battlelocation_countryCreateManyCountriesInputEnvelope
+  export type battlelocation_countryCreateNestedManyWithoutCountryInput = {
+    create?: XOR<battlelocation_countryCreateWithoutCountryInput, battlelocation_countryUncheckedCreateWithoutCountryInput> | battlelocation_countryCreateWithoutCountryInput[] | battlelocation_countryUncheckedCreateWithoutCountryInput[]
+    connectOrCreate?: battlelocation_countryCreateOrConnectWithoutCountryInput | battlelocation_countryCreateOrConnectWithoutCountryInput[]
+    createMany?: battlelocation_countryCreateManyCountryInputEnvelope
     connect?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
   }
 
-  export type tanksUncheckedCreateNestedManyWithoutCountriesInput = {
-    create?: XOR<tanksCreateWithoutCountriesInput, tanksUncheckedCreateWithoutCountriesInput> | tanksCreateWithoutCountriesInput[] | tanksUncheckedCreateWithoutCountriesInput[]
-    connectOrCreate?: tanksCreateOrConnectWithoutCountriesInput | tanksCreateOrConnectWithoutCountriesInput[]
-    createMany?: tanksCreateManyCountriesInputEnvelope
+  export type tanksUncheckedCreateNestedManyWithoutCountryInput = {
+    create?: XOR<tanksCreateWithoutCountryInput, tanksUncheckedCreateWithoutCountryInput> | tanksCreateWithoutCountryInput[] | tanksUncheckedCreateWithoutCountryInput[]
+    connectOrCreate?: tanksCreateOrConnectWithoutCountryInput | tanksCreateOrConnectWithoutCountryInput[]
+    createMany?: tanksCreateManyCountryInputEnvelope
     connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
   }
 
-  export type battlelocation_countryUpdateManyWithoutCountriesNestedInput = {
-    create?: XOR<battlelocation_countryCreateWithoutCountriesInput, battlelocation_countryUncheckedCreateWithoutCountriesInput> | battlelocation_countryCreateWithoutCountriesInput[] | battlelocation_countryUncheckedCreateWithoutCountriesInput[]
-    connectOrCreate?: battlelocation_countryCreateOrConnectWithoutCountriesInput | battlelocation_countryCreateOrConnectWithoutCountriesInput[]
-    upsert?: battlelocation_countryUpsertWithWhereUniqueWithoutCountriesInput | battlelocation_countryUpsertWithWhereUniqueWithoutCountriesInput[]
-    createMany?: battlelocation_countryCreateManyCountriesInputEnvelope
+  export type battlelocation_countryUncheckedCreateNestedManyWithoutCountryInput = {
+    create?: XOR<battlelocation_countryCreateWithoutCountryInput, battlelocation_countryUncheckedCreateWithoutCountryInput> | battlelocation_countryCreateWithoutCountryInput[] | battlelocation_countryUncheckedCreateWithoutCountryInput[]
+    connectOrCreate?: battlelocation_countryCreateOrConnectWithoutCountryInput | battlelocation_countryCreateOrConnectWithoutCountryInput[]
+    createMany?: battlelocation_countryCreateManyCountryInputEnvelope
+    connect?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
+  }
+
+  export type tanksUpdateManyWithoutCountryNestedInput = {
+    create?: XOR<tanksCreateWithoutCountryInput, tanksUncheckedCreateWithoutCountryInput> | tanksCreateWithoutCountryInput[] | tanksUncheckedCreateWithoutCountryInput[]
+    connectOrCreate?: tanksCreateOrConnectWithoutCountryInput | tanksCreateOrConnectWithoutCountryInput[]
+    upsert?: tanksUpsertWithWhereUniqueWithoutCountryInput | tanksUpsertWithWhereUniqueWithoutCountryInput[]
+    createMany?: tanksCreateManyCountryInputEnvelope
+    set?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
+    disconnect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
+    delete?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
+    connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
+    update?: tanksUpdateWithWhereUniqueWithoutCountryInput | tanksUpdateWithWhereUniqueWithoutCountryInput[]
+    updateMany?: tanksUpdateManyWithWhereWithoutCountryInput | tanksUpdateManyWithWhereWithoutCountryInput[]
+    deleteMany?: tanksScalarWhereInput | tanksScalarWhereInput[]
+  }
+
+  export type battlelocation_countryUpdateManyWithoutCountryNestedInput = {
+    create?: XOR<battlelocation_countryCreateWithoutCountryInput, battlelocation_countryUncheckedCreateWithoutCountryInput> | battlelocation_countryCreateWithoutCountryInput[] | battlelocation_countryUncheckedCreateWithoutCountryInput[]
+    connectOrCreate?: battlelocation_countryCreateOrConnectWithoutCountryInput | battlelocation_countryCreateOrConnectWithoutCountryInput[]
+    upsert?: battlelocation_countryUpsertWithWhereUniqueWithoutCountryInput | battlelocation_countryUpsertWithWhereUniqueWithoutCountryInput[]
+    createMany?: battlelocation_countryCreateManyCountryInputEnvelope
     set?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
     disconnect?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
     delete?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
     connect?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
-    update?: battlelocation_countryUpdateWithWhereUniqueWithoutCountriesInput | battlelocation_countryUpdateWithWhereUniqueWithoutCountriesInput[]
-    updateMany?: battlelocation_countryUpdateManyWithWhereWithoutCountriesInput | battlelocation_countryUpdateManyWithWhereWithoutCountriesInput[]
+    update?: battlelocation_countryUpdateWithWhereUniqueWithoutCountryInput | battlelocation_countryUpdateWithWhereUniqueWithoutCountryInput[]
+    updateMany?: battlelocation_countryUpdateManyWithWhereWithoutCountryInput | battlelocation_countryUpdateManyWithWhereWithoutCountryInput[]
     deleteMany?: battlelocation_countryScalarWhereInput | battlelocation_countryScalarWhereInput[]
   }
 
-  export type tanksUpdateManyWithoutCountriesNestedInput = {
-    create?: XOR<tanksCreateWithoutCountriesInput, tanksUncheckedCreateWithoutCountriesInput> | tanksCreateWithoutCountriesInput[] | tanksUncheckedCreateWithoutCountriesInput[]
-    connectOrCreate?: tanksCreateOrConnectWithoutCountriesInput | tanksCreateOrConnectWithoutCountriesInput[]
-    upsert?: tanksUpsertWithWhereUniqueWithoutCountriesInput | tanksUpsertWithWhereUniqueWithoutCountriesInput[]
-    createMany?: tanksCreateManyCountriesInputEnvelope
+  export type tanksUncheckedUpdateManyWithoutCountryNestedInput = {
+    create?: XOR<tanksCreateWithoutCountryInput, tanksUncheckedCreateWithoutCountryInput> | tanksCreateWithoutCountryInput[] | tanksUncheckedCreateWithoutCountryInput[]
+    connectOrCreate?: tanksCreateOrConnectWithoutCountryInput | tanksCreateOrConnectWithoutCountryInput[]
+    upsert?: tanksUpsertWithWhereUniqueWithoutCountryInput | tanksUpsertWithWhereUniqueWithoutCountryInput[]
+    createMany?: tanksCreateManyCountryInputEnvelope
     set?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
     disconnect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
     delete?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
     connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
-    update?: tanksUpdateWithWhereUniqueWithoutCountriesInput | tanksUpdateWithWhereUniqueWithoutCountriesInput[]
-    updateMany?: tanksUpdateManyWithWhereWithoutCountriesInput | tanksUpdateManyWithWhereWithoutCountriesInput[]
+    update?: tanksUpdateWithWhereUniqueWithoutCountryInput | tanksUpdateWithWhereUniqueWithoutCountryInput[]
+    updateMany?: tanksUpdateManyWithWhereWithoutCountryInput | tanksUpdateManyWithWhereWithoutCountryInput[]
     deleteMany?: tanksScalarWhereInput | tanksScalarWhereInput[]
   }
 
-  export type battlelocation_countryUncheckedUpdateManyWithoutCountriesNestedInput = {
-    create?: XOR<battlelocation_countryCreateWithoutCountriesInput, battlelocation_countryUncheckedCreateWithoutCountriesInput> | battlelocation_countryCreateWithoutCountriesInput[] | battlelocation_countryUncheckedCreateWithoutCountriesInput[]
-    connectOrCreate?: battlelocation_countryCreateOrConnectWithoutCountriesInput | battlelocation_countryCreateOrConnectWithoutCountriesInput[]
-    upsert?: battlelocation_countryUpsertWithWhereUniqueWithoutCountriesInput | battlelocation_countryUpsertWithWhereUniqueWithoutCountriesInput[]
-    createMany?: battlelocation_countryCreateManyCountriesInputEnvelope
+  export type battlelocation_countryUncheckedUpdateManyWithoutCountryNestedInput = {
+    create?: XOR<battlelocation_countryCreateWithoutCountryInput, battlelocation_countryUncheckedCreateWithoutCountryInput> | battlelocation_countryCreateWithoutCountryInput[] | battlelocation_countryUncheckedCreateWithoutCountryInput[]
+    connectOrCreate?: battlelocation_countryCreateOrConnectWithoutCountryInput | battlelocation_countryCreateOrConnectWithoutCountryInput[]
+    upsert?: battlelocation_countryUpsertWithWhereUniqueWithoutCountryInput | battlelocation_countryUpsertWithWhereUniqueWithoutCountryInput[]
+    createMany?: battlelocation_countryCreateManyCountryInputEnvelope
     set?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
     disconnect?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
     delete?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
     connect?: battlelocation_countryWhereUniqueInput | battlelocation_countryWhereUniqueInput[]
-    update?: battlelocation_countryUpdateWithWhereUniqueWithoutCountriesInput | battlelocation_countryUpdateWithWhereUniqueWithoutCountriesInput[]
-    updateMany?: battlelocation_countryUpdateManyWithWhereWithoutCountriesInput | battlelocation_countryUpdateManyWithWhereWithoutCountriesInput[]
+    update?: battlelocation_countryUpdateWithWhereUniqueWithoutCountryInput | battlelocation_countryUpdateWithWhereUniqueWithoutCountryInput[]
+    updateMany?: battlelocation_countryUpdateManyWithWhereWithoutCountryInput | battlelocation_countryUpdateManyWithWhereWithoutCountryInput[]
     deleteMany?: battlelocation_countryScalarWhereInput | battlelocation_countryScalarWhereInput[]
   }
 
-  export type tanksUncheckedUpdateManyWithoutCountriesNestedInput = {
-    create?: XOR<tanksCreateWithoutCountriesInput, tanksUncheckedCreateWithoutCountriesInput> | tanksCreateWithoutCountriesInput[] | tanksUncheckedCreateWithoutCountriesInput[]
-    connectOrCreate?: tanksCreateOrConnectWithoutCountriesInput | tanksCreateOrConnectWithoutCountriesInput[]
-    upsert?: tanksUpsertWithWhereUniqueWithoutCountriesInput | tanksUpsertWithWhereUniqueWithoutCountriesInput[]
-    createMany?: tanksCreateManyCountriesInputEnvelope
+  export type tanksCreateNestedManyWithoutVehicle_typeInput = {
+    create?: XOR<tanksCreateWithoutVehicle_typeInput, tanksUncheckedCreateWithoutVehicle_typeInput> | tanksCreateWithoutVehicle_typeInput[] | tanksUncheckedCreateWithoutVehicle_typeInput[]
+    connectOrCreate?: tanksCreateOrConnectWithoutVehicle_typeInput | tanksCreateOrConnectWithoutVehicle_typeInput[]
+    createMany?: tanksCreateManyVehicle_typeInputEnvelope
+    connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
+  }
+
+  export type tanksUncheckedCreateNestedManyWithoutVehicle_typeInput = {
+    create?: XOR<tanksCreateWithoutVehicle_typeInput, tanksUncheckedCreateWithoutVehicle_typeInput> | tanksCreateWithoutVehicle_typeInput[] | tanksUncheckedCreateWithoutVehicle_typeInput[]
+    connectOrCreate?: tanksCreateOrConnectWithoutVehicle_typeInput | tanksCreateOrConnectWithoutVehicle_typeInput[]
+    createMany?: tanksCreateManyVehicle_typeInputEnvelope
+    connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
+  }
+
+  export type tanksUpdateManyWithoutVehicle_typeNestedInput = {
+    create?: XOR<tanksCreateWithoutVehicle_typeInput, tanksUncheckedCreateWithoutVehicle_typeInput> | tanksCreateWithoutVehicle_typeInput[] | tanksUncheckedCreateWithoutVehicle_typeInput[]
+    connectOrCreate?: tanksCreateOrConnectWithoutVehicle_typeInput | tanksCreateOrConnectWithoutVehicle_typeInput[]
+    upsert?: tanksUpsertWithWhereUniqueWithoutVehicle_typeInput | tanksUpsertWithWhereUniqueWithoutVehicle_typeInput[]
+    createMany?: tanksCreateManyVehicle_typeInputEnvelope
     set?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
     disconnect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
     delete?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
     connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
-    update?: tanksUpdateWithWhereUniqueWithoutCountriesInput | tanksUpdateWithWhereUniqueWithoutCountriesInput[]
-    updateMany?: tanksUpdateManyWithWhereWithoutCountriesInput | tanksUpdateManyWithWhereWithoutCountriesInput[]
+    update?: tanksUpdateWithWhereUniqueWithoutVehicle_typeInput | tanksUpdateWithWhereUniqueWithoutVehicle_typeInput[]
+    updateMany?: tanksUpdateManyWithWhereWithoutVehicle_typeInput | tanksUpdateManyWithWhereWithoutVehicle_typeInput[]
     deleteMany?: tanksScalarWhereInput | tanksScalarWhereInput[]
   }
 
-  export type tanksCreateNestedManyWithoutVehicle_typesInput = {
-    create?: XOR<tanksCreateWithoutVehicle_typesInput, tanksUncheckedCreateWithoutVehicle_typesInput> | tanksCreateWithoutVehicle_typesInput[] | tanksUncheckedCreateWithoutVehicle_typesInput[]
-    connectOrCreate?: tanksCreateOrConnectWithoutVehicle_typesInput | tanksCreateOrConnectWithoutVehicle_typesInput[]
-    createMany?: tanksCreateManyVehicle_typesInputEnvelope
-    connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
-  }
-
-  export type tanksUncheckedCreateNestedManyWithoutVehicle_typesInput = {
-    create?: XOR<tanksCreateWithoutVehicle_typesInput, tanksUncheckedCreateWithoutVehicle_typesInput> | tanksCreateWithoutVehicle_typesInput[] | tanksUncheckedCreateWithoutVehicle_typesInput[]
-    connectOrCreate?: tanksCreateOrConnectWithoutVehicle_typesInput | tanksCreateOrConnectWithoutVehicle_typesInput[]
-    createMany?: tanksCreateManyVehicle_typesInputEnvelope
-    connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
-  }
-
-  export type tanksUpdateManyWithoutVehicle_typesNestedInput = {
-    create?: XOR<tanksCreateWithoutVehicle_typesInput, tanksUncheckedCreateWithoutVehicle_typesInput> | tanksCreateWithoutVehicle_typesInput[] | tanksUncheckedCreateWithoutVehicle_typesInput[]
-    connectOrCreate?: tanksCreateOrConnectWithoutVehicle_typesInput | tanksCreateOrConnectWithoutVehicle_typesInput[]
-    upsert?: tanksUpsertWithWhereUniqueWithoutVehicle_typesInput | tanksUpsertWithWhereUniqueWithoutVehicle_typesInput[]
-    createMany?: tanksCreateManyVehicle_typesInputEnvelope
+  export type tanksUncheckedUpdateManyWithoutVehicle_typeNestedInput = {
+    create?: XOR<tanksCreateWithoutVehicle_typeInput, tanksUncheckedCreateWithoutVehicle_typeInput> | tanksCreateWithoutVehicle_typeInput[] | tanksUncheckedCreateWithoutVehicle_typeInput[]
+    connectOrCreate?: tanksCreateOrConnectWithoutVehicle_typeInput | tanksCreateOrConnectWithoutVehicle_typeInput[]
+    upsert?: tanksUpsertWithWhereUniqueWithoutVehicle_typeInput | tanksUpsertWithWhereUniqueWithoutVehicle_typeInput[]
+    createMany?: tanksCreateManyVehicle_typeInputEnvelope
     set?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
     disconnect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
     delete?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
     connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
-    update?: tanksUpdateWithWhereUniqueWithoutVehicle_typesInput | tanksUpdateWithWhereUniqueWithoutVehicle_typesInput[]
-    updateMany?: tanksUpdateManyWithWhereWithoutVehicle_typesInput | tanksUpdateManyWithWhereWithoutVehicle_typesInput[]
-    deleteMany?: tanksScalarWhereInput | tanksScalarWhereInput[]
-  }
-
-  export type tanksUncheckedUpdateManyWithoutVehicle_typesNestedInput = {
-    create?: XOR<tanksCreateWithoutVehicle_typesInput, tanksUncheckedCreateWithoutVehicle_typesInput> | tanksCreateWithoutVehicle_typesInput[] | tanksUncheckedCreateWithoutVehicle_typesInput[]
-    connectOrCreate?: tanksCreateOrConnectWithoutVehicle_typesInput | tanksCreateOrConnectWithoutVehicle_typesInput[]
-    upsert?: tanksUpsertWithWhereUniqueWithoutVehicle_typesInput | tanksUpsertWithWhereUniqueWithoutVehicle_typesInput[]
-    createMany?: tanksCreateManyVehicle_typesInputEnvelope
-    set?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
-    disconnect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
-    delete?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
-    connect?: tanksWhereUniqueInput | tanksWhereUniqueInput[]
-    update?: tanksUpdateWithWhereUniqueWithoutVehicle_typesInput | tanksUpdateWithWhereUniqueWithoutVehicle_typesInput[]
-    updateMany?: tanksUpdateManyWithWhereWithoutVehicle_typesInput | tanksUpdateManyWithWhereWithoutVehicle_typesInput[]
+    update?: tanksUpdateWithWhereUniqueWithoutVehicle_typeInput | tanksUpdateWithWhereUniqueWithoutVehicle_typeInput[]
+    updateMany?: tanksUpdateManyWithWhereWithoutVehicle_typeInput | tanksUpdateManyWithWhereWithoutVehicle_typeInput[]
     deleteMany?: tanksScalarWhereInput | tanksScalarWhereInput[]
   }
 
@@ -14138,45 +15582,45 @@ export namespace Prisma {
     connect?: vehicle_typesWhereUniqueInput
   }
 
-  export type battlelocation_tankCreateNestedManyWithoutTanksInput = {
-    create?: XOR<battlelocation_tankCreateWithoutTanksInput, battlelocation_tankUncheckedCreateWithoutTanksInput> | battlelocation_tankCreateWithoutTanksInput[] | battlelocation_tankUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: battlelocation_tankCreateOrConnectWithoutTanksInput | battlelocation_tankCreateOrConnectWithoutTanksInput[]
-    createMany?: battlelocation_tankCreateManyTanksInputEnvelope
-    connect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
-  }
-
-  export type favourite_tanksCreateNestedManyWithoutTanksInput = {
-    create?: XOR<favourite_tanksCreateWithoutTanksInput, favourite_tanksUncheckedCreateWithoutTanksInput> | favourite_tanksCreateWithoutTanksInput[] | favourite_tanksUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: favourite_tanksCreateOrConnectWithoutTanksInput | favourite_tanksCreateOrConnectWithoutTanksInput[]
-    createMany?: favourite_tanksCreateManyTanksInputEnvelope
+  export type favourite_tanksCreateNestedManyWithoutTankInput = {
+    create?: XOR<favourite_tanksCreateWithoutTankInput, favourite_tanksUncheckedCreateWithoutTankInput> | favourite_tanksCreateWithoutTankInput[] | favourite_tanksUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: favourite_tanksCreateOrConnectWithoutTankInput | favourite_tanksCreateOrConnectWithoutTankInput[]
+    createMany?: favourite_tanksCreateManyTankInputEnvelope
     connect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
   }
 
-  export type tank_photosCreateNestedManyWithoutTanksInput = {
-    create?: XOR<tank_photosCreateWithoutTanksInput, tank_photosUncheckedCreateWithoutTanksInput> | tank_photosCreateWithoutTanksInput[] | tank_photosUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: tank_photosCreateOrConnectWithoutTanksInput | tank_photosCreateOrConnectWithoutTanksInput[]
-    createMany?: tank_photosCreateManyTanksInputEnvelope
+  export type battlelocation_tankCreateNestedManyWithoutTankInput = {
+    create?: XOR<battlelocation_tankCreateWithoutTankInput, battlelocation_tankUncheckedCreateWithoutTankInput> | battlelocation_tankCreateWithoutTankInput[] | battlelocation_tankUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: battlelocation_tankCreateOrConnectWithoutTankInput | battlelocation_tankCreateOrConnectWithoutTankInput[]
+    createMany?: battlelocation_tankCreateManyTankInputEnvelope
+    connect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
+  }
+
+  export type tank_photosCreateNestedManyWithoutTankInput = {
+    create?: XOR<tank_photosCreateWithoutTankInput, tank_photosUncheckedCreateWithoutTankInput> | tank_photosCreateWithoutTankInput[] | tank_photosUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: tank_photosCreateOrConnectWithoutTankInput | tank_photosCreateOrConnectWithoutTankInput[]
+    createMany?: tank_photosCreateManyTankInputEnvelope
     connect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
   }
 
-  export type battlelocation_tankUncheckedCreateNestedManyWithoutTanksInput = {
-    create?: XOR<battlelocation_tankCreateWithoutTanksInput, battlelocation_tankUncheckedCreateWithoutTanksInput> | battlelocation_tankCreateWithoutTanksInput[] | battlelocation_tankUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: battlelocation_tankCreateOrConnectWithoutTanksInput | battlelocation_tankCreateOrConnectWithoutTanksInput[]
-    createMany?: battlelocation_tankCreateManyTanksInputEnvelope
-    connect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
-  }
-
-  export type favourite_tanksUncheckedCreateNestedManyWithoutTanksInput = {
-    create?: XOR<favourite_tanksCreateWithoutTanksInput, favourite_tanksUncheckedCreateWithoutTanksInput> | favourite_tanksCreateWithoutTanksInput[] | favourite_tanksUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: favourite_tanksCreateOrConnectWithoutTanksInput | favourite_tanksCreateOrConnectWithoutTanksInput[]
-    createMany?: favourite_tanksCreateManyTanksInputEnvelope
+  export type favourite_tanksUncheckedCreateNestedManyWithoutTankInput = {
+    create?: XOR<favourite_tanksCreateWithoutTankInput, favourite_tanksUncheckedCreateWithoutTankInput> | favourite_tanksCreateWithoutTankInput[] | favourite_tanksUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: favourite_tanksCreateOrConnectWithoutTankInput | favourite_tanksCreateOrConnectWithoutTankInput[]
+    createMany?: favourite_tanksCreateManyTankInputEnvelope
     connect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
   }
 
-  export type tank_photosUncheckedCreateNestedManyWithoutTanksInput = {
-    create?: XOR<tank_photosCreateWithoutTanksInput, tank_photosUncheckedCreateWithoutTanksInput> | tank_photosCreateWithoutTanksInput[] | tank_photosUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: tank_photosCreateOrConnectWithoutTanksInput | tank_photosCreateOrConnectWithoutTanksInput[]
-    createMany?: tank_photosCreateManyTanksInputEnvelope
+  export type battlelocation_tankUncheckedCreateNestedManyWithoutTankInput = {
+    create?: XOR<battlelocation_tankCreateWithoutTankInput, battlelocation_tankUncheckedCreateWithoutTankInput> | battlelocation_tankCreateWithoutTankInput[] | battlelocation_tankUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: battlelocation_tankCreateOrConnectWithoutTankInput | battlelocation_tankCreateOrConnectWithoutTankInput[]
+    createMany?: battlelocation_tankCreateManyTankInputEnvelope
+    connect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
+  }
+
+  export type tank_photosUncheckedCreateNestedManyWithoutTankInput = {
+    create?: XOR<tank_photosCreateWithoutTankInput, tank_photosUncheckedCreateWithoutTankInput> | tank_photosCreateWithoutTankInput[] | tank_photosUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: tank_photosCreateOrConnectWithoutTankInput | tank_photosCreateOrConnectWithoutTankInput[]
+    createMany?: tank_photosCreateManyTankInputEnvelope
     connect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
   }
 
@@ -14208,88 +15652,116 @@ export namespace Prisma {
     update?: XOR<XOR<vehicle_typesUpdateToOneWithWhereWithoutTanksInput, vehicle_typesUpdateWithoutTanksInput>, vehicle_typesUncheckedUpdateWithoutTanksInput>
   }
 
-  export type battlelocation_tankUpdateManyWithoutTanksNestedInput = {
-    create?: XOR<battlelocation_tankCreateWithoutTanksInput, battlelocation_tankUncheckedCreateWithoutTanksInput> | battlelocation_tankCreateWithoutTanksInput[] | battlelocation_tankUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: battlelocation_tankCreateOrConnectWithoutTanksInput | battlelocation_tankCreateOrConnectWithoutTanksInput[]
-    upsert?: battlelocation_tankUpsertWithWhereUniqueWithoutTanksInput | battlelocation_tankUpsertWithWhereUniqueWithoutTanksInput[]
-    createMany?: battlelocation_tankCreateManyTanksInputEnvelope
-    set?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
-    disconnect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
-    delete?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
-    connect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
-    update?: battlelocation_tankUpdateWithWhereUniqueWithoutTanksInput | battlelocation_tankUpdateWithWhereUniqueWithoutTanksInput[]
-    updateMany?: battlelocation_tankUpdateManyWithWhereWithoutTanksInput | battlelocation_tankUpdateManyWithWhereWithoutTanksInput[]
-    deleteMany?: battlelocation_tankScalarWhereInput | battlelocation_tankScalarWhereInput[]
-  }
-
-  export type favourite_tanksUpdateManyWithoutTanksNestedInput = {
-    create?: XOR<favourite_tanksCreateWithoutTanksInput, favourite_tanksUncheckedCreateWithoutTanksInput> | favourite_tanksCreateWithoutTanksInput[] | favourite_tanksUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: favourite_tanksCreateOrConnectWithoutTanksInput | favourite_tanksCreateOrConnectWithoutTanksInput[]
-    upsert?: favourite_tanksUpsertWithWhereUniqueWithoutTanksInput | favourite_tanksUpsertWithWhereUniqueWithoutTanksInput[]
-    createMany?: favourite_tanksCreateManyTanksInputEnvelope
+  export type favourite_tanksUpdateManyWithoutTankNestedInput = {
+    create?: XOR<favourite_tanksCreateWithoutTankInput, favourite_tanksUncheckedCreateWithoutTankInput> | favourite_tanksCreateWithoutTankInput[] | favourite_tanksUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: favourite_tanksCreateOrConnectWithoutTankInput | favourite_tanksCreateOrConnectWithoutTankInput[]
+    upsert?: favourite_tanksUpsertWithWhereUniqueWithoutTankInput | favourite_tanksUpsertWithWhereUniqueWithoutTankInput[]
+    createMany?: favourite_tanksCreateManyTankInputEnvelope
     set?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
     disconnect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
     delete?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
     connect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
-    update?: favourite_tanksUpdateWithWhereUniqueWithoutTanksInput | favourite_tanksUpdateWithWhereUniqueWithoutTanksInput[]
-    updateMany?: favourite_tanksUpdateManyWithWhereWithoutTanksInput | favourite_tanksUpdateManyWithWhereWithoutTanksInput[]
+    update?: favourite_tanksUpdateWithWhereUniqueWithoutTankInput | favourite_tanksUpdateWithWhereUniqueWithoutTankInput[]
+    updateMany?: favourite_tanksUpdateManyWithWhereWithoutTankInput | favourite_tanksUpdateManyWithWhereWithoutTankInput[]
     deleteMany?: favourite_tanksScalarWhereInput | favourite_tanksScalarWhereInput[]
   }
 
-  export type tank_photosUpdateManyWithoutTanksNestedInput = {
-    create?: XOR<tank_photosCreateWithoutTanksInput, tank_photosUncheckedCreateWithoutTanksInput> | tank_photosCreateWithoutTanksInput[] | tank_photosUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: tank_photosCreateOrConnectWithoutTanksInput | tank_photosCreateOrConnectWithoutTanksInput[]
-    upsert?: tank_photosUpsertWithWhereUniqueWithoutTanksInput | tank_photosUpsertWithWhereUniqueWithoutTanksInput[]
-    createMany?: tank_photosCreateManyTanksInputEnvelope
-    set?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
-    disconnect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
-    delete?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
-    connect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
-    update?: tank_photosUpdateWithWhereUniqueWithoutTanksInput | tank_photosUpdateWithWhereUniqueWithoutTanksInput[]
-    updateMany?: tank_photosUpdateManyWithWhereWithoutTanksInput | tank_photosUpdateManyWithWhereWithoutTanksInput[]
-    deleteMany?: tank_photosScalarWhereInput | tank_photosScalarWhereInput[]
-  }
-
-  export type battlelocation_tankUncheckedUpdateManyWithoutTanksNestedInput = {
-    create?: XOR<battlelocation_tankCreateWithoutTanksInput, battlelocation_tankUncheckedCreateWithoutTanksInput> | battlelocation_tankCreateWithoutTanksInput[] | battlelocation_tankUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: battlelocation_tankCreateOrConnectWithoutTanksInput | battlelocation_tankCreateOrConnectWithoutTanksInput[]
-    upsert?: battlelocation_tankUpsertWithWhereUniqueWithoutTanksInput | battlelocation_tankUpsertWithWhereUniqueWithoutTanksInput[]
-    createMany?: battlelocation_tankCreateManyTanksInputEnvelope
+  export type battlelocation_tankUpdateManyWithoutTankNestedInput = {
+    create?: XOR<battlelocation_tankCreateWithoutTankInput, battlelocation_tankUncheckedCreateWithoutTankInput> | battlelocation_tankCreateWithoutTankInput[] | battlelocation_tankUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: battlelocation_tankCreateOrConnectWithoutTankInput | battlelocation_tankCreateOrConnectWithoutTankInput[]
+    upsert?: battlelocation_tankUpsertWithWhereUniqueWithoutTankInput | battlelocation_tankUpsertWithWhereUniqueWithoutTankInput[]
+    createMany?: battlelocation_tankCreateManyTankInputEnvelope
     set?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
     disconnect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
     delete?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
     connect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
-    update?: battlelocation_tankUpdateWithWhereUniqueWithoutTanksInput | battlelocation_tankUpdateWithWhereUniqueWithoutTanksInput[]
-    updateMany?: battlelocation_tankUpdateManyWithWhereWithoutTanksInput | battlelocation_tankUpdateManyWithWhereWithoutTanksInput[]
+    update?: battlelocation_tankUpdateWithWhereUniqueWithoutTankInput | battlelocation_tankUpdateWithWhereUniqueWithoutTankInput[]
+    updateMany?: battlelocation_tankUpdateManyWithWhereWithoutTankInput | battlelocation_tankUpdateManyWithWhereWithoutTankInput[]
     deleteMany?: battlelocation_tankScalarWhereInput | battlelocation_tankScalarWhereInput[]
   }
 
-  export type favourite_tanksUncheckedUpdateManyWithoutTanksNestedInput = {
-    create?: XOR<favourite_tanksCreateWithoutTanksInput, favourite_tanksUncheckedCreateWithoutTanksInput> | favourite_tanksCreateWithoutTanksInput[] | favourite_tanksUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: favourite_tanksCreateOrConnectWithoutTanksInput | favourite_tanksCreateOrConnectWithoutTanksInput[]
-    upsert?: favourite_tanksUpsertWithWhereUniqueWithoutTanksInput | favourite_tanksUpsertWithWhereUniqueWithoutTanksInput[]
-    createMany?: favourite_tanksCreateManyTanksInputEnvelope
-    set?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
-    disconnect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
-    delete?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
-    connect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
-    update?: favourite_tanksUpdateWithWhereUniqueWithoutTanksInput | favourite_tanksUpdateWithWhereUniqueWithoutTanksInput[]
-    updateMany?: favourite_tanksUpdateManyWithWhereWithoutTanksInput | favourite_tanksUpdateManyWithWhereWithoutTanksInput[]
-    deleteMany?: favourite_tanksScalarWhereInput | favourite_tanksScalarWhereInput[]
-  }
-
-  export type tank_photosUncheckedUpdateManyWithoutTanksNestedInput = {
-    create?: XOR<tank_photosCreateWithoutTanksInput, tank_photosUncheckedCreateWithoutTanksInput> | tank_photosCreateWithoutTanksInput[] | tank_photosUncheckedCreateWithoutTanksInput[]
-    connectOrCreate?: tank_photosCreateOrConnectWithoutTanksInput | tank_photosCreateOrConnectWithoutTanksInput[]
-    upsert?: tank_photosUpsertWithWhereUniqueWithoutTanksInput | tank_photosUpsertWithWhereUniqueWithoutTanksInput[]
-    createMany?: tank_photosCreateManyTanksInputEnvelope
+  export type tank_photosUpdateManyWithoutTankNestedInput = {
+    create?: XOR<tank_photosCreateWithoutTankInput, tank_photosUncheckedCreateWithoutTankInput> | tank_photosCreateWithoutTankInput[] | tank_photosUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: tank_photosCreateOrConnectWithoutTankInput | tank_photosCreateOrConnectWithoutTankInput[]
+    upsert?: tank_photosUpsertWithWhereUniqueWithoutTankInput | tank_photosUpsertWithWhereUniqueWithoutTankInput[]
+    createMany?: tank_photosCreateManyTankInputEnvelope
     set?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
     disconnect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
     delete?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
     connect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
-    update?: tank_photosUpdateWithWhereUniqueWithoutTanksInput | tank_photosUpdateWithWhereUniqueWithoutTanksInput[]
-    updateMany?: tank_photosUpdateManyWithWhereWithoutTanksInput | tank_photosUpdateManyWithWhereWithoutTanksInput[]
+    update?: tank_photosUpdateWithWhereUniqueWithoutTankInput | tank_photosUpdateWithWhereUniqueWithoutTankInput[]
+    updateMany?: tank_photosUpdateManyWithWhereWithoutTankInput | tank_photosUpdateManyWithWhereWithoutTankInput[]
     deleteMany?: tank_photosScalarWhereInput | tank_photosScalarWhereInput[]
+  }
+
+  export type favourite_tanksUncheckedUpdateManyWithoutTankNestedInput = {
+    create?: XOR<favourite_tanksCreateWithoutTankInput, favourite_tanksUncheckedCreateWithoutTankInput> | favourite_tanksCreateWithoutTankInput[] | favourite_tanksUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: favourite_tanksCreateOrConnectWithoutTankInput | favourite_tanksCreateOrConnectWithoutTankInput[]
+    upsert?: favourite_tanksUpsertWithWhereUniqueWithoutTankInput | favourite_tanksUpsertWithWhereUniqueWithoutTankInput[]
+    createMany?: favourite_tanksCreateManyTankInputEnvelope
+    set?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
+    disconnect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
+    delete?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
+    connect?: favourite_tanksWhereUniqueInput | favourite_tanksWhereUniqueInput[]
+    update?: favourite_tanksUpdateWithWhereUniqueWithoutTankInput | favourite_tanksUpdateWithWhereUniqueWithoutTankInput[]
+    updateMany?: favourite_tanksUpdateManyWithWhereWithoutTankInput | favourite_tanksUpdateManyWithWhereWithoutTankInput[]
+    deleteMany?: favourite_tanksScalarWhereInput | favourite_tanksScalarWhereInput[]
+  }
+
+  export type battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput = {
+    create?: XOR<battlelocation_tankCreateWithoutTankInput, battlelocation_tankUncheckedCreateWithoutTankInput> | battlelocation_tankCreateWithoutTankInput[] | battlelocation_tankUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: battlelocation_tankCreateOrConnectWithoutTankInput | battlelocation_tankCreateOrConnectWithoutTankInput[]
+    upsert?: battlelocation_tankUpsertWithWhereUniqueWithoutTankInput | battlelocation_tankUpsertWithWhereUniqueWithoutTankInput[]
+    createMany?: battlelocation_tankCreateManyTankInputEnvelope
+    set?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
+    disconnect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
+    delete?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
+    connect?: battlelocation_tankWhereUniqueInput | battlelocation_tankWhereUniqueInput[]
+    update?: battlelocation_tankUpdateWithWhereUniqueWithoutTankInput | battlelocation_tankUpdateWithWhereUniqueWithoutTankInput[]
+    updateMany?: battlelocation_tankUpdateManyWithWhereWithoutTankInput | battlelocation_tankUpdateManyWithWhereWithoutTankInput[]
+    deleteMany?: battlelocation_tankScalarWhereInput | battlelocation_tankScalarWhereInput[]
+  }
+
+  export type tank_photosUncheckedUpdateManyWithoutTankNestedInput = {
+    create?: XOR<tank_photosCreateWithoutTankInput, tank_photosUncheckedCreateWithoutTankInput> | tank_photosCreateWithoutTankInput[] | tank_photosUncheckedCreateWithoutTankInput[]
+    connectOrCreate?: tank_photosCreateOrConnectWithoutTankInput | tank_photosCreateOrConnectWithoutTankInput[]
+    upsert?: tank_photosUpsertWithWhereUniqueWithoutTankInput | tank_photosUpsertWithWhereUniqueWithoutTankInput[]
+    createMany?: tank_photosCreateManyTankInputEnvelope
+    set?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
+    disconnect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
+    delete?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
+    connect?: tank_photosWhereUniqueInput | tank_photosWhereUniqueInput[]
+    update?: tank_photosUpdateWithWhereUniqueWithoutTankInput | tank_photosUpdateWithWhereUniqueWithoutTankInput[]
+    updateMany?: tank_photosUpdateManyWithWhereWithoutTankInput | tank_photosUpdateManyWithWhereWithoutTankInput[]
+    deleteMany?: tank_photosScalarWhereInput | tank_photosScalarWhereInput[]
+  }
+
+  export type battlelocationCreateNestedOneWithoutPhotosInput = {
+    create?: XOR<battlelocationCreateWithoutPhotosInput, battlelocationUncheckedCreateWithoutPhotosInput>
+    connectOrCreate?: battlelocationCreateOrConnectWithoutPhotosInput
+    connect?: battlelocationWhereUniqueInput
+  }
+
+  export type photosCreateNestedOneWithoutBattleLocationsInput = {
+    create?: XOR<photosCreateWithoutBattleLocationsInput, photosUncheckedCreateWithoutBattleLocationsInput>
+    connectOrCreate?: photosCreateOrConnectWithoutBattleLocationsInput
+    connect?: photosWhereUniqueInput
+  }
+
+  export type battlelocationUpdateOneRequiredWithoutPhotosNestedInput = {
+    create?: XOR<battlelocationCreateWithoutPhotosInput, battlelocationUncheckedCreateWithoutPhotosInput>
+    connectOrCreate?: battlelocationCreateOrConnectWithoutPhotosInput
+    upsert?: battlelocationUpsertWithoutPhotosInput
+    connect?: battlelocationWhereUniqueInput
+    update?: XOR<XOR<battlelocationUpdateToOneWithWhereWithoutPhotosInput, battlelocationUpdateWithoutPhotosInput>, battlelocationUncheckedUpdateWithoutPhotosInput>
+  }
+
+  export type photosUpdateOneRequiredWithoutBattleLocationsNestedInput = {
+    create?: XOR<photosCreateWithoutBattleLocationsInput, photosUncheckedCreateWithoutBattleLocationsInput>
+    connectOrCreate?: photosCreateOrConnectWithoutBattleLocationsInput
+    upsert?: photosUpsertWithoutBattleLocationsInput
+    connect?: photosWhereUniqueInput
+    update?: XOR<XOR<photosUpdateToOneWithWhereWithoutBattleLocationsInput, photosUpdateWithoutBattleLocationsInput>, photosUncheckedUpdateWithoutBattleLocationsInput>
   }
 
   export type NestedIntFilter<$PrismaModel = never> = {
@@ -14434,6 +15906,23 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
+  export type NestedEnumusers_roleFilter<$PrismaModel = never> = {
+    equals?: $Enums.users_role | Enumusers_roleFieldRefInput<$PrismaModel>
+    in?: $Enums.users_role[]
+    notIn?: $Enums.users_role[]
+    not?: NestedEnumusers_roleFilter<$PrismaModel> | $Enums.users_role
+  }
+
+  export type NestedEnumusers_roleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.users_role | Enumusers_roleFieldRefInput<$PrismaModel>
+    in?: $Enums.users_role[]
+    notIn?: $Enums.users_role[]
+    not?: NestedEnumusers_roleWithAggregatesFilter<$PrismaModel> | $Enums.users_role
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumusers_roleFilter<$PrismaModel>
+    _max?: NestedEnumusers_roleFilter<$PrismaModel>
+  }
+
   export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel> | null
     in?: number[] | null
@@ -14462,7 +15951,7 @@ export namespace Prisma {
   }
 
   export type battlelocation_countryCreateWithoutBattlelocationInput = {
-    countries: countriesCreateNestedOneWithoutBattleCountriesInput
+    country: countriesCreateNestedOneWithoutBattleLocationsInput
   }
 
   export type battlelocation_countryUncheckedCreateWithoutBattlelocationInput = {
@@ -14480,7 +15969,7 @@ export namespace Prisma {
   }
 
   export type battlelocation_tankCreateWithoutBattlelocationInput = {
-    tanks: tanksCreateNestedOneWithoutBattleTanksInput
+    tank: tanksCreateNestedOneWithoutBattleLocationsInput
   }
 
   export type battlelocation_tankUncheckedCreateWithoutBattlelocationInput = {
@@ -14494,6 +15983,25 @@ export namespace Prisma {
 
   export type battlelocation_tankCreateManyBattlelocationInputEnvelope = {
     data: battlelocation_tankCreateManyBattlelocationInput | battlelocation_tankCreateManyBattlelocationInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type battlelocation_photosCreateWithoutBattlelocationInput = {
+    photo: photosCreateNestedOneWithoutBattleLocationsInput
+  }
+
+  export type battlelocation_photosUncheckedCreateWithoutBattlelocationInput = {
+    id?: number
+    photo_id: number
+  }
+
+  export type battlelocation_photosCreateOrConnectWithoutBattlelocationInput = {
+    where: battlelocation_photosWhereUniqueInput
+    create: XOR<battlelocation_photosCreateWithoutBattlelocationInput, battlelocation_photosUncheckedCreateWithoutBattlelocationInput>
+  }
+
+  export type battlelocation_photosCreateManyBattlelocationInputEnvelope = {
+    data: battlelocation_photosCreateManyBattlelocationInput | battlelocation_photosCreateManyBattlelocationInput[]
     skipDuplicates?: boolean
   }
 
@@ -14545,12 +16053,38 @@ export namespace Prisma {
     tank_id?: IntFilter<"battlelocation_tank"> | number
   }
 
+  export type battlelocation_photosUpsertWithWhereUniqueWithoutBattlelocationInput = {
+    where: battlelocation_photosWhereUniqueInput
+    update: XOR<battlelocation_photosUpdateWithoutBattlelocationInput, battlelocation_photosUncheckedUpdateWithoutBattlelocationInput>
+    create: XOR<battlelocation_photosCreateWithoutBattlelocationInput, battlelocation_photosUncheckedCreateWithoutBattlelocationInput>
+  }
+
+  export type battlelocation_photosUpdateWithWhereUniqueWithoutBattlelocationInput = {
+    where: battlelocation_photosWhereUniqueInput
+    data: XOR<battlelocation_photosUpdateWithoutBattlelocationInput, battlelocation_photosUncheckedUpdateWithoutBattlelocationInput>
+  }
+
+  export type battlelocation_photosUpdateManyWithWhereWithoutBattlelocationInput = {
+    where: battlelocation_photosScalarWhereInput
+    data: XOR<battlelocation_photosUpdateManyMutationInput, battlelocation_photosUncheckedUpdateManyWithoutBattlelocationInput>
+  }
+
+  export type battlelocation_photosScalarWhereInput = {
+    AND?: battlelocation_photosScalarWhereInput | battlelocation_photosScalarWhereInput[]
+    OR?: battlelocation_photosScalarWhereInput[]
+    NOT?: battlelocation_photosScalarWhereInput | battlelocation_photosScalarWhereInput[]
+    id?: IntFilter<"battlelocation_photos"> | number
+    battlelocation_id?: IntFilter<"battlelocation_photos"> | number
+    photo_id?: IntFilter<"battlelocation_photos"> | number
+  }
+
   export type battlelocationCreateWithoutBattleCountriesInput = {
     name: string
     latitude?: Decimal | DecimalJsLike | number | string | null
     longitude?: Decimal | DecimalJsLike | number | string | null
     description?: string | null
     battleTanks?: battlelocation_tankCreateNestedManyWithoutBattlelocationInput
+    photos?: battlelocation_photosCreateNestedManyWithoutBattlelocationInput
   }
 
   export type battlelocationUncheckedCreateWithoutBattleCountriesInput = {
@@ -14560,6 +16094,7 @@ export namespace Prisma {
     longitude?: Decimal | DecimalJsLike | number | string | null
     description?: string | null
     battleTanks?: battlelocation_tankUncheckedCreateNestedManyWithoutBattlelocationInput
+    photos?: battlelocation_photosUncheckedCreateNestedManyWithoutBattlelocationInput
   }
 
   export type battlelocationCreateOrConnectWithoutBattleCountriesInput = {
@@ -14567,20 +16102,20 @@ export namespace Prisma {
     create: XOR<battlelocationCreateWithoutBattleCountriesInput, battlelocationUncheckedCreateWithoutBattleCountriesInput>
   }
 
-  export type countriesCreateWithoutBattleCountriesInput = {
+  export type countriesCreateWithoutBattleLocationsInput = {
     name: string
-    tanks?: tanksCreateNestedManyWithoutCountriesInput
+    tanks?: tanksCreateNestedManyWithoutCountryInput
   }
 
-  export type countriesUncheckedCreateWithoutBattleCountriesInput = {
+  export type countriesUncheckedCreateWithoutBattleLocationsInput = {
     country_id?: number
     name: string
-    tanks?: tanksUncheckedCreateNestedManyWithoutCountriesInput
+    tanks?: tanksUncheckedCreateNestedManyWithoutCountryInput
   }
 
-  export type countriesCreateOrConnectWithoutBattleCountriesInput = {
+  export type countriesCreateOrConnectWithoutBattleLocationsInput = {
     where: countriesWhereUniqueInput
-    create: XOR<countriesCreateWithoutBattleCountriesInput, countriesUncheckedCreateWithoutBattleCountriesInput>
+    create: XOR<countriesCreateWithoutBattleLocationsInput, countriesUncheckedCreateWithoutBattleLocationsInput>
   }
 
   export type battlelocationUpsertWithoutBattleCountriesInput = {
@@ -14600,6 +16135,7 @@ export namespace Prisma {
     longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     battleTanks?: battlelocation_tankUpdateManyWithoutBattlelocationNestedInput
+    photos?: battlelocation_photosUpdateManyWithoutBattlelocationNestedInput
   }
 
   export type battlelocationUncheckedUpdateWithoutBattleCountriesInput = {
@@ -14609,28 +16145,29 @@ export namespace Prisma {
     longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     battleTanks?: battlelocation_tankUncheckedUpdateManyWithoutBattlelocationNestedInput
+    photos?: battlelocation_photosUncheckedUpdateManyWithoutBattlelocationNestedInput
   }
 
-  export type countriesUpsertWithoutBattleCountriesInput = {
-    update: XOR<countriesUpdateWithoutBattleCountriesInput, countriesUncheckedUpdateWithoutBattleCountriesInput>
-    create: XOR<countriesCreateWithoutBattleCountriesInput, countriesUncheckedCreateWithoutBattleCountriesInput>
+  export type countriesUpsertWithoutBattleLocationsInput = {
+    update: XOR<countriesUpdateWithoutBattleLocationsInput, countriesUncheckedUpdateWithoutBattleLocationsInput>
+    create: XOR<countriesCreateWithoutBattleLocationsInput, countriesUncheckedCreateWithoutBattleLocationsInput>
     where?: countriesWhereInput
   }
 
-  export type countriesUpdateToOneWithWhereWithoutBattleCountriesInput = {
+  export type countriesUpdateToOneWithWhereWithoutBattleLocationsInput = {
     where?: countriesWhereInput
-    data: XOR<countriesUpdateWithoutBattleCountriesInput, countriesUncheckedUpdateWithoutBattleCountriesInput>
+    data: XOR<countriesUpdateWithoutBattleLocationsInput, countriesUncheckedUpdateWithoutBattleLocationsInput>
   }
 
-  export type countriesUpdateWithoutBattleCountriesInput = {
+  export type countriesUpdateWithoutBattleLocationsInput = {
     name?: StringFieldUpdateOperationsInput | string
-    tanks?: tanksUpdateManyWithoutCountriesNestedInput
+    tanks?: tanksUpdateManyWithoutCountryNestedInput
   }
 
-  export type countriesUncheckedUpdateWithoutBattleCountriesInput = {
+  export type countriesUncheckedUpdateWithoutBattleLocationsInput = {
     country_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    tanks?: tanksUncheckedUpdateManyWithoutCountriesNestedInput
+    tanks?: tanksUncheckedUpdateManyWithoutCountryNestedInput
   }
 
   export type battlelocationCreateWithoutBattleTanksInput = {
@@ -14639,6 +16176,7 @@ export namespace Prisma {
     longitude?: Decimal | DecimalJsLike | number | string | null
     description?: string | null
     battleCountries?: battlelocation_countryCreateNestedManyWithoutBattlelocationInput
+    photos?: battlelocation_photosCreateNestedManyWithoutBattlelocationInput
   }
 
   export type battlelocationUncheckedCreateWithoutBattleTanksInput = {
@@ -14648,6 +16186,7 @@ export namespace Prisma {
     longitude?: Decimal | DecimalJsLike | number | string | null
     description?: string | null
     battleCountries?: battlelocation_countryUncheckedCreateNestedManyWithoutBattlelocationInput
+    photos?: battlelocation_photosUncheckedCreateNestedManyWithoutBattlelocationInput
   }
 
   export type battlelocationCreateOrConnectWithoutBattleTanksInput = {
@@ -14655,7 +16194,7 @@ export namespace Prisma {
     create: XOR<battlelocationCreateWithoutBattleTanksInput, battlelocationUncheckedCreateWithoutBattleTanksInput>
   }
 
-  export type tanksCreateWithoutBattleTanksInput = {
+  export type tanksCreateWithoutBattleLocationsInput = {
     name: string
     weight_kg?: number | null
     crew?: number | null
@@ -14665,15 +16204,17 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    countries?: countriesCreateNestedOneWithoutTanksInput
-    vehicle_types?: vehicle_typesCreateNestedOneWithoutTanksInput
-    favourite_tanks?: favourite_tanksCreateNestedManyWithoutTanksInput
-    photos?: tank_photosCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    country?: countriesCreateNestedOneWithoutTanksInput
+    vehicle_type?: vehicle_typesCreateNestedOneWithoutTanksInput
+    favourite_tanks?: favourite_tanksCreateNestedManyWithoutTankInput
+    photos?: tank_photosCreateNestedManyWithoutTankInput
   }
 
-  export type tanksUncheckedCreateWithoutBattleTanksInput = {
+  export type tanksUncheckedCreateWithoutBattleLocationsInput = {
     tank_id?: number
     name: string
     country_id?: number | null
@@ -14686,15 +16227,17 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTanksInput
-    photos?: tank_photosUncheckedCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTankInput
+    photos?: tank_photosUncheckedCreateNestedManyWithoutTankInput
   }
 
-  export type tanksCreateOrConnectWithoutBattleTanksInput = {
+  export type tanksCreateOrConnectWithoutBattleLocationsInput = {
     where: tanksWhereUniqueInput
-    create: XOR<tanksCreateWithoutBattleTanksInput, tanksUncheckedCreateWithoutBattleTanksInput>
+    create: XOR<tanksCreateWithoutBattleLocationsInput, tanksUncheckedCreateWithoutBattleLocationsInput>
   }
 
   export type battlelocationUpsertWithoutBattleTanksInput = {
@@ -14714,6 +16257,7 @@ export namespace Prisma {
     longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     battleCountries?: battlelocation_countryUpdateManyWithoutBattlelocationNestedInput
+    photos?: battlelocation_photosUpdateManyWithoutBattlelocationNestedInput
   }
 
   export type battlelocationUncheckedUpdateWithoutBattleTanksInput = {
@@ -14723,20 +16267,21 @@ export namespace Prisma {
     longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     battleCountries?: battlelocation_countryUncheckedUpdateManyWithoutBattlelocationNestedInput
+    photos?: battlelocation_photosUncheckedUpdateManyWithoutBattlelocationNestedInput
   }
 
-  export type tanksUpsertWithoutBattleTanksInput = {
-    update: XOR<tanksUpdateWithoutBattleTanksInput, tanksUncheckedUpdateWithoutBattleTanksInput>
-    create: XOR<tanksCreateWithoutBattleTanksInput, tanksUncheckedCreateWithoutBattleTanksInput>
+  export type tanksUpsertWithoutBattleLocationsInput = {
+    update: XOR<tanksUpdateWithoutBattleLocationsInput, tanksUncheckedUpdateWithoutBattleLocationsInput>
+    create: XOR<tanksCreateWithoutBattleLocationsInput, tanksUncheckedCreateWithoutBattleLocationsInput>
     where?: tanksWhereInput
   }
 
-  export type tanksUpdateToOneWithWhereWithoutBattleTanksInput = {
+  export type tanksUpdateToOneWithWhereWithoutBattleLocationsInput = {
     where?: tanksWhereInput
-    data: XOR<tanksUpdateWithoutBattleTanksInput, tanksUncheckedUpdateWithoutBattleTanksInput>
+    data: XOR<tanksUpdateWithoutBattleLocationsInput, tanksUncheckedUpdateWithoutBattleLocationsInput>
   }
 
-  export type tanksUpdateWithoutBattleTanksInput = {
+  export type tanksUpdateWithoutBattleLocationsInput = {
     name?: StringFieldUpdateOperationsInput | string
     weight_kg?: NullableIntFieldUpdateOperationsInput | number | null
     crew?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14746,15 +16291,17 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    countries?: countriesUpdateOneWithoutTanksNestedInput
-    vehicle_types?: vehicle_typesUpdateOneWithoutTanksNestedInput
-    favourite_tanks?: favourite_tanksUpdateManyWithoutTanksNestedInput
-    photos?: tank_photosUpdateManyWithoutTanksNestedInput
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: countriesUpdateOneWithoutTanksNestedInput
+    vehicle_type?: vehicle_typesUpdateOneWithoutTanksNestedInput
+    favourite_tanks?: favourite_tanksUpdateManyWithoutTankNestedInput
+    photos?: tank_photosUpdateManyWithoutTankNestedInput
   }
 
-  export type tanksUncheckedUpdateWithoutBattleTanksInput = {
+  export type tanksUncheckedUpdateWithoutBattleLocationsInput = {
     tank_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
@@ -14767,45 +16314,47 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTanksNestedInput
-    photos?: tank_photosUncheckedUpdateManyWithoutTanksNestedInput
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTankNestedInput
+    photos?: tank_photosUncheckedUpdateManyWithoutTankNestedInput
   }
 
-  export type favourite_tanksCreateWithoutUsersInput = {
-    tanks: tanksCreateNestedOneWithoutFavourite_tanksInput
+  export type favourite_tanksCreateWithoutUserInput = {
+    tank: tanksCreateNestedOneWithoutFavourite_tanksInput
   }
 
-  export type favourite_tanksUncheckedCreateWithoutUsersInput = {
+  export type favourite_tanksUncheckedCreateWithoutUserInput = {
     fav_id?: number
     tank_id: number
   }
 
-  export type favourite_tanksCreateOrConnectWithoutUsersInput = {
+  export type favourite_tanksCreateOrConnectWithoutUserInput = {
     where: favourite_tanksWhereUniqueInput
-    create: XOR<favourite_tanksCreateWithoutUsersInput, favourite_tanksUncheckedCreateWithoutUsersInput>
+    create: XOR<favourite_tanksCreateWithoutUserInput, favourite_tanksUncheckedCreateWithoutUserInput>
   }
 
-  export type favourite_tanksCreateManyUsersInputEnvelope = {
-    data: favourite_tanksCreateManyUsersInput | favourite_tanksCreateManyUsersInput[]
+  export type favourite_tanksCreateManyUserInputEnvelope = {
+    data: favourite_tanksCreateManyUserInput | favourite_tanksCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
-  export type favourite_tanksUpsertWithWhereUniqueWithoutUsersInput = {
+  export type favourite_tanksUpsertWithWhereUniqueWithoutUserInput = {
     where: favourite_tanksWhereUniqueInput
-    update: XOR<favourite_tanksUpdateWithoutUsersInput, favourite_tanksUncheckedUpdateWithoutUsersInput>
-    create: XOR<favourite_tanksCreateWithoutUsersInput, favourite_tanksUncheckedCreateWithoutUsersInput>
+    update: XOR<favourite_tanksUpdateWithoutUserInput, favourite_tanksUncheckedUpdateWithoutUserInput>
+    create: XOR<favourite_tanksCreateWithoutUserInput, favourite_tanksUncheckedCreateWithoutUserInput>
   }
 
-  export type favourite_tanksUpdateWithWhereUniqueWithoutUsersInput = {
+  export type favourite_tanksUpdateWithWhereUniqueWithoutUserInput = {
     where: favourite_tanksWhereUniqueInput
-    data: XOR<favourite_tanksUpdateWithoutUsersInput, favourite_tanksUncheckedUpdateWithoutUsersInput>
+    data: XOR<favourite_tanksUpdateWithoutUserInput, favourite_tanksUncheckedUpdateWithoutUserInput>
   }
 
-  export type favourite_tanksUpdateManyWithWhereWithoutUsersInput = {
+  export type favourite_tanksUpdateManyWithWhereWithoutUserInput = {
     where: favourite_tanksScalarWhereInput
-    data: XOR<favourite_tanksUpdateManyMutationInput, favourite_tanksUncheckedUpdateManyWithoutUsersInput>
+    data: XOR<favourite_tanksUpdateManyMutationInput, favourite_tanksUncheckedUpdateManyWithoutUserInput>
   }
 
   export type favourite_tanksScalarWhereInput = {
@@ -14821,7 +16370,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
-    role?: string
+    role?: $Enums.users_role
     avatar_url?: string | null
   }
 
@@ -14830,7 +16379,7 @@ export namespace Prisma {
     nickname: string
     password: string
     email: string
-    role?: string
+    role?: $Enums.users_role
     avatar_url?: string | null
   }
 
@@ -14849,12 +16398,14 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    countries?: countriesCreateNestedOneWithoutTanksInput
-    vehicle_types?: vehicle_typesCreateNestedOneWithoutTanksInput
-    battleTanks?: battlelocation_tankCreateNestedManyWithoutTanksInput
-    photos?: tank_photosCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    country?: countriesCreateNestedOneWithoutTanksInput
+    vehicle_type?: vehicle_typesCreateNestedOneWithoutTanksInput
+    battleLocations?: battlelocation_tankCreateNestedManyWithoutTankInput
+    photos?: tank_photosCreateNestedManyWithoutTankInput
   }
 
   export type tanksUncheckedCreateWithoutFavourite_tanksInput = {
@@ -14870,10 +16421,12 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    battleTanks?: battlelocation_tankUncheckedCreateNestedManyWithoutTanksInput
-    photos?: tank_photosUncheckedCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    battleLocations?: battlelocation_tankUncheckedCreateNestedManyWithoutTankInput
+    photos?: tank_photosUncheckedCreateNestedManyWithoutTankInput
   }
 
   export type tanksCreateOrConnectWithoutFavourite_tanksInput = {
@@ -14896,7 +16449,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: Enumusers_roleFieldUpdateOperationsInput | $Enums.users_role
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -14905,7 +16458,7 @@ export namespace Prisma {
     nickname?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    role?: StringFieldUpdateOperationsInput | string
+    role?: Enumusers_roleFieldUpdateOperationsInput | $Enums.users_role
     avatar_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
@@ -14930,12 +16483,14 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    countries?: countriesUpdateOneWithoutTanksNestedInput
-    vehicle_types?: vehicle_typesUpdateOneWithoutTanksNestedInput
-    battleTanks?: battlelocation_tankUpdateManyWithoutTanksNestedInput
-    photos?: tank_photosUpdateManyWithoutTanksNestedInput
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: countriesUpdateOneWithoutTanksNestedInput
+    vehicle_type?: vehicle_typesUpdateOneWithoutTanksNestedInput
+    battleLocations?: battlelocation_tankUpdateManyWithoutTankNestedInput
+    photos?: tank_photosUpdateManyWithoutTankNestedInput
   }
 
   export type tanksUncheckedUpdateWithoutFavourite_tanksInput = {
@@ -14951,45 +16506,66 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    battleTanks?: battlelocation_tankUncheckedUpdateManyWithoutTanksNestedInput
-    photos?: tank_photosUncheckedUpdateManyWithoutTanksNestedInput
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    battleLocations?: battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput
+    photos?: tank_photosUncheckedUpdateManyWithoutTankNestedInput
   }
 
-  export type tank_photosCreateWithoutPhotosInput = {
-    tanks: tanksCreateNestedOneWithoutPhotosInput
+  export type tank_photosCreateWithoutPhotoInput = {
+    tank: tanksCreateNestedOneWithoutPhotosInput
   }
 
-  export type tank_photosUncheckedCreateWithoutPhotosInput = {
+  export type tank_photosUncheckedCreateWithoutPhotoInput = {
     id?: number
     tank_id: number
   }
 
-  export type tank_photosCreateOrConnectWithoutPhotosInput = {
+  export type tank_photosCreateOrConnectWithoutPhotoInput = {
     where: tank_photosWhereUniqueInput
-    create: XOR<tank_photosCreateWithoutPhotosInput, tank_photosUncheckedCreateWithoutPhotosInput>
+    create: XOR<tank_photosCreateWithoutPhotoInput, tank_photosUncheckedCreateWithoutPhotoInput>
   }
 
-  export type tank_photosCreateManyPhotosInputEnvelope = {
-    data: tank_photosCreateManyPhotosInput | tank_photosCreateManyPhotosInput[]
+  export type tank_photosCreateManyPhotoInputEnvelope = {
+    data: tank_photosCreateManyPhotoInput | tank_photosCreateManyPhotoInput[]
     skipDuplicates?: boolean
   }
 
-  export type tank_photosUpsertWithWhereUniqueWithoutPhotosInput = {
-    where: tank_photosWhereUniqueInput
-    update: XOR<tank_photosUpdateWithoutPhotosInput, tank_photosUncheckedUpdateWithoutPhotosInput>
-    create: XOR<tank_photosCreateWithoutPhotosInput, tank_photosUncheckedCreateWithoutPhotosInput>
+  export type battlelocation_photosCreateWithoutPhotoInput = {
+    battlelocation: battlelocationCreateNestedOneWithoutPhotosInput
   }
 
-  export type tank_photosUpdateWithWhereUniqueWithoutPhotosInput = {
-    where: tank_photosWhereUniqueInput
-    data: XOR<tank_photosUpdateWithoutPhotosInput, tank_photosUncheckedUpdateWithoutPhotosInput>
+  export type battlelocation_photosUncheckedCreateWithoutPhotoInput = {
+    id?: number
+    battlelocation_id: number
   }
 
-  export type tank_photosUpdateManyWithWhereWithoutPhotosInput = {
+  export type battlelocation_photosCreateOrConnectWithoutPhotoInput = {
+    where: battlelocation_photosWhereUniqueInput
+    create: XOR<battlelocation_photosCreateWithoutPhotoInput, battlelocation_photosUncheckedCreateWithoutPhotoInput>
+  }
+
+  export type battlelocation_photosCreateManyPhotoInputEnvelope = {
+    data: battlelocation_photosCreateManyPhotoInput | battlelocation_photosCreateManyPhotoInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type tank_photosUpsertWithWhereUniqueWithoutPhotoInput = {
+    where: tank_photosWhereUniqueInput
+    update: XOR<tank_photosUpdateWithoutPhotoInput, tank_photosUncheckedUpdateWithoutPhotoInput>
+    create: XOR<tank_photosCreateWithoutPhotoInput, tank_photosUncheckedCreateWithoutPhotoInput>
+  }
+
+  export type tank_photosUpdateWithWhereUniqueWithoutPhotoInput = {
+    where: tank_photosWhereUniqueInput
+    data: XOR<tank_photosUpdateWithoutPhotoInput, tank_photosUncheckedUpdateWithoutPhotoInput>
+  }
+
+  export type tank_photosUpdateManyWithWhereWithoutPhotoInput = {
     where: tank_photosScalarWhereInput
-    data: XOR<tank_photosUpdateManyMutationInput, tank_photosUncheckedUpdateManyWithoutPhotosInput>
+    data: XOR<tank_photosUpdateManyMutationInput, tank_photosUncheckedUpdateManyWithoutPhotoInput>
   }
 
   export type tank_photosScalarWhereInput = {
@@ -14999,6 +16575,22 @@ export namespace Prisma {
     id?: IntFilter<"tank_photos"> | number
     tank_id?: IntFilter<"tank_photos"> | number
     photo_id?: IntFilter<"tank_photos"> | number
+  }
+
+  export type battlelocation_photosUpsertWithWhereUniqueWithoutPhotoInput = {
+    where: battlelocation_photosWhereUniqueInput
+    update: XOR<battlelocation_photosUpdateWithoutPhotoInput, battlelocation_photosUncheckedUpdateWithoutPhotoInput>
+    create: XOR<battlelocation_photosCreateWithoutPhotoInput, battlelocation_photosUncheckedCreateWithoutPhotoInput>
+  }
+
+  export type battlelocation_photosUpdateWithWhereUniqueWithoutPhotoInput = {
+    where: battlelocation_photosWhereUniqueInput
+    data: XOR<battlelocation_photosUpdateWithoutPhotoInput, battlelocation_photosUncheckedUpdateWithoutPhotoInput>
+  }
+
+  export type battlelocation_photosUpdateManyWithWhereWithoutPhotoInput = {
+    where: battlelocation_photosScalarWhereInput
+    data: XOR<battlelocation_photosUpdateManyMutationInput, battlelocation_photosUncheckedUpdateManyWithoutPhotoInput>
   }
 
   export type tanksCreateWithoutPhotosInput = {
@@ -15011,12 +16603,14 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    countries?: countriesCreateNestedOneWithoutTanksInput
-    vehicle_types?: vehicle_typesCreateNestedOneWithoutTanksInput
-    battleTanks?: battlelocation_tankCreateNestedManyWithoutTanksInput
-    favourite_tanks?: favourite_tanksCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    country?: countriesCreateNestedOneWithoutTanksInput
+    vehicle_type?: vehicle_typesCreateNestedOneWithoutTanksInput
+    favourite_tanks?: favourite_tanksCreateNestedManyWithoutTankInput
+    battleLocations?: battlelocation_tankCreateNestedManyWithoutTankInput
   }
 
   export type tanksUncheckedCreateWithoutPhotosInput = {
@@ -15032,10 +16626,12 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    battleTanks?: battlelocation_tankUncheckedCreateNestedManyWithoutTanksInput
-    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTankInput
+    battleLocations?: battlelocation_tankUncheckedCreateNestedManyWithoutTankInput
   }
 
   export type tanksCreateOrConnectWithoutPhotosInput = {
@@ -15043,20 +16639,22 @@ export namespace Prisma {
     create: XOR<tanksCreateWithoutPhotosInput, tanksUncheckedCreateWithoutPhotosInput>
   }
 
-  export type photosCreateWithoutTanksInput = {
+  export type photosCreateWithoutTankPhotosInput = {
     filename: string
     filepath: string
+    battleLocations?: battlelocation_photosCreateNestedManyWithoutPhotoInput
   }
 
-  export type photosUncheckedCreateWithoutTanksInput = {
+  export type photosUncheckedCreateWithoutTankPhotosInput = {
     photo_id?: number
     filename: string
     filepath: string
+    battleLocations?: battlelocation_photosUncheckedCreateNestedManyWithoutPhotoInput
   }
 
-  export type photosCreateOrConnectWithoutTanksInput = {
+  export type photosCreateOrConnectWithoutTankPhotosInput = {
     where: photosWhereUniqueInput
-    create: XOR<photosCreateWithoutTanksInput, photosUncheckedCreateWithoutTanksInput>
+    create: XOR<photosCreateWithoutTankPhotosInput, photosUncheckedCreateWithoutTankPhotosInput>
   }
 
   export type tanksUpsertWithoutPhotosInput = {
@@ -15080,12 +16678,14 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    countries?: countriesUpdateOneWithoutTanksNestedInput
-    vehicle_types?: vehicle_typesUpdateOneWithoutTanksNestedInput
-    battleTanks?: battlelocation_tankUpdateManyWithoutTanksNestedInput
-    favourite_tanks?: favourite_tanksUpdateManyWithoutTanksNestedInput
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: countriesUpdateOneWithoutTanksNestedInput
+    vehicle_type?: vehicle_typesUpdateOneWithoutTanksNestedInput
+    favourite_tanks?: favourite_tanksUpdateManyWithoutTankNestedInput
+    battleLocations?: battlelocation_tankUpdateManyWithoutTankNestedInput
   }
 
   export type tanksUncheckedUpdateWithoutPhotosInput = {
@@ -15101,53 +16701,39 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    battleTanks?: battlelocation_tankUncheckedUpdateManyWithoutTanksNestedInput
-    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTanksNestedInput
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTankNestedInput
+    battleLocations?: battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput
   }
 
-  export type photosUpsertWithoutTanksInput = {
-    update: XOR<photosUpdateWithoutTanksInput, photosUncheckedUpdateWithoutTanksInput>
-    create: XOR<photosCreateWithoutTanksInput, photosUncheckedCreateWithoutTanksInput>
+  export type photosUpsertWithoutTankPhotosInput = {
+    update: XOR<photosUpdateWithoutTankPhotosInput, photosUncheckedUpdateWithoutTankPhotosInput>
+    create: XOR<photosCreateWithoutTankPhotosInput, photosUncheckedCreateWithoutTankPhotosInput>
     where?: photosWhereInput
   }
 
-  export type photosUpdateToOneWithWhereWithoutTanksInput = {
+  export type photosUpdateToOneWithWhereWithoutTankPhotosInput = {
     where?: photosWhereInput
-    data: XOR<photosUpdateWithoutTanksInput, photosUncheckedUpdateWithoutTanksInput>
+    data: XOR<photosUpdateWithoutTankPhotosInput, photosUncheckedUpdateWithoutTankPhotosInput>
   }
 
-  export type photosUpdateWithoutTanksInput = {
+  export type photosUpdateWithoutTankPhotosInput = {
     filename?: StringFieldUpdateOperationsInput | string
     filepath?: StringFieldUpdateOperationsInput | string
+    battleLocations?: battlelocation_photosUpdateManyWithoutPhotoNestedInput
   }
 
-  export type photosUncheckedUpdateWithoutTanksInput = {
+  export type photosUncheckedUpdateWithoutTankPhotosInput = {
     photo_id?: IntFieldUpdateOperationsInput | number
     filename?: StringFieldUpdateOperationsInput | string
     filepath?: StringFieldUpdateOperationsInput | string
+    battleLocations?: battlelocation_photosUncheckedUpdateManyWithoutPhotoNestedInput
   }
 
-  export type battlelocation_countryCreateWithoutCountriesInput = {
-    battlelocation: battlelocationCreateNestedOneWithoutBattleCountriesInput
-  }
-
-  export type battlelocation_countryUncheckedCreateWithoutCountriesInput = {
-    battlelocation_id: number
-  }
-
-  export type battlelocation_countryCreateOrConnectWithoutCountriesInput = {
-    where: battlelocation_countryWhereUniqueInput
-    create: XOR<battlelocation_countryCreateWithoutCountriesInput, battlelocation_countryUncheckedCreateWithoutCountriesInput>
-  }
-
-  export type battlelocation_countryCreateManyCountriesInputEnvelope = {
-    data: battlelocation_countryCreateManyCountriesInput | battlelocation_countryCreateManyCountriesInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type tanksCreateWithoutCountriesInput = {
+  export type tanksCreateWithoutCountryInput = {
     name: string
     weight_kg?: number | null
     crew?: number | null
@@ -15157,15 +16743,17 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    vehicle_types?: vehicle_typesCreateNestedOneWithoutTanksInput
-    battleTanks?: battlelocation_tankCreateNestedManyWithoutTanksInput
-    favourite_tanks?: favourite_tanksCreateNestedManyWithoutTanksInput
-    photos?: tank_photosCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    vehicle_type?: vehicle_typesCreateNestedOneWithoutTanksInput
+    favourite_tanks?: favourite_tanksCreateNestedManyWithoutTankInput
+    battleLocations?: battlelocation_tankCreateNestedManyWithoutTankInput
+    photos?: tank_photosCreateNestedManyWithoutTankInput
   }
 
-  export type tanksUncheckedCreateWithoutCountriesInput = {
+  export type tanksUncheckedCreateWithoutCountryInput = {
     tank_id?: number
     name: string
     type_id?: number | null
@@ -15177,53 +16765,57 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    battleTanks?: battlelocation_tankUncheckedCreateNestedManyWithoutTanksInput
-    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTanksInput
-    photos?: tank_photosUncheckedCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTankInput
+    battleLocations?: battlelocation_tankUncheckedCreateNestedManyWithoutTankInput
+    photos?: tank_photosUncheckedCreateNestedManyWithoutTankInput
   }
 
-  export type tanksCreateOrConnectWithoutCountriesInput = {
+  export type tanksCreateOrConnectWithoutCountryInput = {
     where: tanksWhereUniqueInput
-    create: XOR<tanksCreateWithoutCountriesInput, tanksUncheckedCreateWithoutCountriesInput>
+    create: XOR<tanksCreateWithoutCountryInput, tanksUncheckedCreateWithoutCountryInput>
   }
 
-  export type tanksCreateManyCountriesInputEnvelope = {
-    data: tanksCreateManyCountriesInput | tanksCreateManyCountriesInput[]
+  export type tanksCreateManyCountryInputEnvelope = {
+    data: tanksCreateManyCountryInput | tanksCreateManyCountryInput[]
     skipDuplicates?: boolean
   }
 
-  export type battlelocation_countryUpsertWithWhereUniqueWithoutCountriesInput = {
+  export type battlelocation_countryCreateWithoutCountryInput = {
+    battlelocation: battlelocationCreateNestedOneWithoutBattleCountriesInput
+  }
+
+  export type battlelocation_countryUncheckedCreateWithoutCountryInput = {
+    battlelocation_id: number
+  }
+
+  export type battlelocation_countryCreateOrConnectWithoutCountryInput = {
     where: battlelocation_countryWhereUniqueInput
-    update: XOR<battlelocation_countryUpdateWithoutCountriesInput, battlelocation_countryUncheckedUpdateWithoutCountriesInput>
-    create: XOR<battlelocation_countryCreateWithoutCountriesInput, battlelocation_countryUncheckedCreateWithoutCountriesInput>
+    create: XOR<battlelocation_countryCreateWithoutCountryInput, battlelocation_countryUncheckedCreateWithoutCountryInput>
   }
 
-  export type battlelocation_countryUpdateWithWhereUniqueWithoutCountriesInput = {
-    where: battlelocation_countryWhereUniqueInput
-    data: XOR<battlelocation_countryUpdateWithoutCountriesInput, battlelocation_countryUncheckedUpdateWithoutCountriesInput>
+  export type battlelocation_countryCreateManyCountryInputEnvelope = {
+    data: battlelocation_countryCreateManyCountryInput | battlelocation_countryCreateManyCountryInput[]
+    skipDuplicates?: boolean
   }
 
-  export type battlelocation_countryUpdateManyWithWhereWithoutCountriesInput = {
-    where: battlelocation_countryScalarWhereInput
-    data: XOR<battlelocation_countryUpdateManyMutationInput, battlelocation_countryUncheckedUpdateManyWithoutCountriesInput>
-  }
-
-  export type tanksUpsertWithWhereUniqueWithoutCountriesInput = {
+  export type tanksUpsertWithWhereUniqueWithoutCountryInput = {
     where: tanksWhereUniqueInput
-    update: XOR<tanksUpdateWithoutCountriesInput, tanksUncheckedUpdateWithoutCountriesInput>
-    create: XOR<tanksCreateWithoutCountriesInput, tanksUncheckedCreateWithoutCountriesInput>
+    update: XOR<tanksUpdateWithoutCountryInput, tanksUncheckedUpdateWithoutCountryInput>
+    create: XOR<tanksCreateWithoutCountryInput, tanksUncheckedCreateWithoutCountryInput>
   }
 
-  export type tanksUpdateWithWhereUniqueWithoutCountriesInput = {
+  export type tanksUpdateWithWhereUniqueWithoutCountryInput = {
     where: tanksWhereUniqueInput
-    data: XOR<tanksUpdateWithoutCountriesInput, tanksUncheckedUpdateWithoutCountriesInput>
+    data: XOR<tanksUpdateWithoutCountryInput, tanksUncheckedUpdateWithoutCountryInput>
   }
 
-  export type tanksUpdateManyWithWhereWithoutCountriesInput = {
+  export type tanksUpdateManyWithWhereWithoutCountryInput = {
     where: tanksScalarWhereInput
-    data: XOR<tanksUpdateManyMutationInput, tanksUncheckedUpdateManyWithoutCountriesInput>
+    data: XOR<tanksUpdateManyMutationInput, tanksUncheckedUpdateManyWithoutCountryInput>
   }
 
   export type tanksScalarWhereInput = {
@@ -15242,11 +16834,29 @@ export namespace Prisma {
     armor_side_mm?: IntNullableFilter<"tanks"> | number | null
     armor_rear_mm?: IntNullableFilter<"tanks"> | number | null
     gun_caliber_mm?: DecimalNullableFilter<"tanks"> | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: IntNullableFilter<"tanks"> | number | null
     year_introduced?: IntNullableFilter<"tanks"> | number | null
     notes?: StringNullableFilter<"tanks"> | string | null
+    summary?: StringNullableFilter<"tanks"> | string | null
   }
 
-  export type tanksCreateWithoutVehicle_typesInput = {
+  export type battlelocation_countryUpsertWithWhereUniqueWithoutCountryInput = {
+    where: battlelocation_countryWhereUniqueInput
+    update: XOR<battlelocation_countryUpdateWithoutCountryInput, battlelocation_countryUncheckedUpdateWithoutCountryInput>
+    create: XOR<battlelocation_countryCreateWithoutCountryInput, battlelocation_countryUncheckedCreateWithoutCountryInput>
+  }
+
+  export type battlelocation_countryUpdateWithWhereUniqueWithoutCountryInput = {
+    where: battlelocation_countryWhereUniqueInput
+    data: XOR<battlelocation_countryUpdateWithoutCountryInput, battlelocation_countryUncheckedUpdateWithoutCountryInput>
+  }
+
+  export type battlelocation_countryUpdateManyWithWhereWithoutCountryInput = {
+    where: battlelocation_countryScalarWhereInput
+    data: XOR<battlelocation_countryUpdateManyMutationInput, battlelocation_countryUncheckedUpdateManyWithoutCountryInput>
+  }
+
+  export type tanksCreateWithoutVehicle_typeInput = {
     name: string
     weight_kg?: number | null
     crew?: number | null
@@ -15256,15 +16866,17 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    countries?: countriesCreateNestedOneWithoutTanksInput
-    battleTanks?: battlelocation_tankCreateNestedManyWithoutTanksInput
-    favourite_tanks?: favourite_tanksCreateNestedManyWithoutTanksInput
-    photos?: tank_photosCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    country?: countriesCreateNestedOneWithoutTanksInput
+    favourite_tanks?: favourite_tanksCreateNestedManyWithoutTankInput
+    battleLocations?: battlelocation_tankCreateNestedManyWithoutTankInput
+    photos?: tank_photosCreateNestedManyWithoutTankInput
   }
 
-  export type tanksUncheckedCreateWithoutVehicle_typesInput = {
+  export type tanksUncheckedCreateWithoutVehicle_typeInput = {
     tank_id?: number
     name: string
     country_id?: number | null
@@ -15276,48 +16888,50 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
-    battleTanks?: battlelocation_tankUncheckedCreateNestedManyWithoutTanksInput
-    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTanksInput
-    photos?: tank_photosUncheckedCreateNestedManyWithoutTanksInput
+    summary?: string | null
+    favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTankInput
+    battleLocations?: battlelocation_tankUncheckedCreateNestedManyWithoutTankInput
+    photos?: tank_photosUncheckedCreateNestedManyWithoutTankInput
   }
 
-  export type tanksCreateOrConnectWithoutVehicle_typesInput = {
+  export type tanksCreateOrConnectWithoutVehicle_typeInput = {
     where: tanksWhereUniqueInput
-    create: XOR<tanksCreateWithoutVehicle_typesInput, tanksUncheckedCreateWithoutVehicle_typesInput>
+    create: XOR<tanksCreateWithoutVehicle_typeInput, tanksUncheckedCreateWithoutVehicle_typeInput>
   }
 
-  export type tanksCreateManyVehicle_typesInputEnvelope = {
-    data: tanksCreateManyVehicle_typesInput | tanksCreateManyVehicle_typesInput[]
+  export type tanksCreateManyVehicle_typeInputEnvelope = {
+    data: tanksCreateManyVehicle_typeInput | tanksCreateManyVehicle_typeInput[]
     skipDuplicates?: boolean
   }
 
-  export type tanksUpsertWithWhereUniqueWithoutVehicle_typesInput = {
+  export type tanksUpsertWithWhereUniqueWithoutVehicle_typeInput = {
     where: tanksWhereUniqueInput
-    update: XOR<tanksUpdateWithoutVehicle_typesInput, tanksUncheckedUpdateWithoutVehicle_typesInput>
-    create: XOR<tanksCreateWithoutVehicle_typesInput, tanksUncheckedCreateWithoutVehicle_typesInput>
+    update: XOR<tanksUpdateWithoutVehicle_typeInput, tanksUncheckedUpdateWithoutVehicle_typeInput>
+    create: XOR<tanksCreateWithoutVehicle_typeInput, tanksUncheckedCreateWithoutVehicle_typeInput>
   }
 
-  export type tanksUpdateWithWhereUniqueWithoutVehicle_typesInput = {
+  export type tanksUpdateWithWhereUniqueWithoutVehicle_typeInput = {
     where: tanksWhereUniqueInput
-    data: XOR<tanksUpdateWithoutVehicle_typesInput, tanksUncheckedUpdateWithoutVehicle_typesInput>
+    data: XOR<tanksUpdateWithoutVehicle_typeInput, tanksUncheckedUpdateWithoutVehicle_typeInput>
   }
 
-  export type tanksUpdateManyWithWhereWithoutVehicle_typesInput = {
+  export type tanksUpdateManyWithWhereWithoutVehicle_typeInput = {
     where: tanksScalarWhereInput
-    data: XOR<tanksUpdateManyMutationInput, tanksUncheckedUpdateManyWithoutVehicle_typesInput>
+    data: XOR<tanksUpdateManyMutationInput, tanksUncheckedUpdateManyWithoutVehicle_typeInput>
   }
 
   export type countriesCreateWithoutTanksInput = {
     name: string
-    battleCountries?: battlelocation_countryCreateNestedManyWithoutCountriesInput
+    battleLocations?: battlelocation_countryCreateNestedManyWithoutCountryInput
   }
 
   export type countriesUncheckedCreateWithoutTanksInput = {
     country_id?: number
     name: string
-    battleCountries?: battlelocation_countryUncheckedCreateNestedManyWithoutCountriesInput
+    battleLocations?: battlelocation_countryUncheckedCreateNestedManyWithoutCountryInput
   }
 
   export type countriesCreateOrConnectWithoutTanksInput = {
@@ -15339,59 +16953,59 @@ export namespace Prisma {
     create: XOR<vehicle_typesCreateWithoutTanksInput, vehicle_typesUncheckedCreateWithoutTanksInput>
   }
 
-  export type battlelocation_tankCreateWithoutTanksInput = {
-    battlelocation: battlelocationCreateNestedOneWithoutBattleTanksInput
+  export type favourite_tanksCreateWithoutTankInput = {
+    user: usersCreateNestedOneWithoutFavourite_tanksInput
   }
 
-  export type battlelocation_tankUncheckedCreateWithoutTanksInput = {
-    battlelocation_id: number
-  }
-
-  export type battlelocation_tankCreateOrConnectWithoutTanksInput = {
-    where: battlelocation_tankWhereUniqueInput
-    create: XOR<battlelocation_tankCreateWithoutTanksInput, battlelocation_tankUncheckedCreateWithoutTanksInput>
-  }
-
-  export type battlelocation_tankCreateManyTanksInputEnvelope = {
-    data: battlelocation_tankCreateManyTanksInput | battlelocation_tankCreateManyTanksInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type favourite_tanksCreateWithoutTanksInput = {
-    users: usersCreateNestedOneWithoutFavourite_tanksInput
-  }
-
-  export type favourite_tanksUncheckedCreateWithoutTanksInput = {
+  export type favourite_tanksUncheckedCreateWithoutTankInput = {
     fav_id?: number
     user_id: number
   }
 
-  export type favourite_tanksCreateOrConnectWithoutTanksInput = {
+  export type favourite_tanksCreateOrConnectWithoutTankInput = {
     where: favourite_tanksWhereUniqueInput
-    create: XOR<favourite_tanksCreateWithoutTanksInput, favourite_tanksUncheckedCreateWithoutTanksInput>
+    create: XOR<favourite_tanksCreateWithoutTankInput, favourite_tanksUncheckedCreateWithoutTankInput>
   }
 
-  export type favourite_tanksCreateManyTanksInputEnvelope = {
-    data: favourite_tanksCreateManyTanksInput | favourite_tanksCreateManyTanksInput[]
+  export type favourite_tanksCreateManyTankInputEnvelope = {
+    data: favourite_tanksCreateManyTankInput | favourite_tanksCreateManyTankInput[]
     skipDuplicates?: boolean
   }
 
-  export type tank_photosCreateWithoutTanksInput = {
-    photos: photosCreateNestedOneWithoutTanksInput
+  export type battlelocation_tankCreateWithoutTankInput = {
+    battlelocation: battlelocationCreateNestedOneWithoutBattleTanksInput
   }
 
-  export type tank_photosUncheckedCreateWithoutTanksInput = {
+  export type battlelocation_tankUncheckedCreateWithoutTankInput = {
+    battlelocation_id: number
+  }
+
+  export type battlelocation_tankCreateOrConnectWithoutTankInput = {
+    where: battlelocation_tankWhereUniqueInput
+    create: XOR<battlelocation_tankCreateWithoutTankInput, battlelocation_tankUncheckedCreateWithoutTankInput>
+  }
+
+  export type battlelocation_tankCreateManyTankInputEnvelope = {
+    data: battlelocation_tankCreateManyTankInput | battlelocation_tankCreateManyTankInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type tank_photosCreateWithoutTankInput = {
+    photo: photosCreateNestedOneWithoutTankPhotosInput
+  }
+
+  export type tank_photosUncheckedCreateWithoutTankInput = {
     id?: number
     photo_id: number
   }
 
-  export type tank_photosCreateOrConnectWithoutTanksInput = {
+  export type tank_photosCreateOrConnectWithoutTankInput = {
     where: tank_photosWhereUniqueInput
-    create: XOR<tank_photosCreateWithoutTanksInput, tank_photosUncheckedCreateWithoutTanksInput>
+    create: XOR<tank_photosCreateWithoutTankInput, tank_photosUncheckedCreateWithoutTankInput>
   }
 
-  export type tank_photosCreateManyTanksInputEnvelope = {
-    data: tank_photosCreateManyTanksInput | tank_photosCreateManyTanksInput[]
+  export type tank_photosCreateManyTankInputEnvelope = {
+    data: tank_photosCreateManyTankInput | tank_photosCreateManyTankInput[]
     skipDuplicates?: boolean
   }
 
@@ -15408,13 +17022,13 @@ export namespace Prisma {
 
   export type countriesUpdateWithoutTanksInput = {
     name?: StringFieldUpdateOperationsInput | string
-    battleCountries?: battlelocation_countryUpdateManyWithoutCountriesNestedInput
+    battleLocations?: battlelocation_countryUpdateManyWithoutCountryNestedInput
   }
 
   export type countriesUncheckedUpdateWithoutTanksInput = {
     country_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
-    battleCountries?: battlelocation_countryUncheckedUpdateManyWithoutCountriesNestedInput
+    battleLocations?: battlelocation_countryUncheckedUpdateManyWithoutCountryNestedInput
   }
 
   export type vehicle_typesUpsertWithoutTanksInput = {
@@ -15437,52 +17051,148 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
   }
 
-  export type battlelocation_tankUpsertWithWhereUniqueWithoutTanksInput = {
-    where: battlelocation_tankWhereUniqueInput
-    update: XOR<battlelocation_tankUpdateWithoutTanksInput, battlelocation_tankUncheckedUpdateWithoutTanksInput>
-    create: XOR<battlelocation_tankCreateWithoutTanksInput, battlelocation_tankUncheckedCreateWithoutTanksInput>
-  }
-
-  export type battlelocation_tankUpdateWithWhereUniqueWithoutTanksInput = {
-    where: battlelocation_tankWhereUniqueInput
-    data: XOR<battlelocation_tankUpdateWithoutTanksInput, battlelocation_tankUncheckedUpdateWithoutTanksInput>
-  }
-
-  export type battlelocation_tankUpdateManyWithWhereWithoutTanksInput = {
-    where: battlelocation_tankScalarWhereInput
-    data: XOR<battlelocation_tankUpdateManyMutationInput, battlelocation_tankUncheckedUpdateManyWithoutTanksInput>
-  }
-
-  export type favourite_tanksUpsertWithWhereUniqueWithoutTanksInput = {
+  export type favourite_tanksUpsertWithWhereUniqueWithoutTankInput = {
     where: favourite_tanksWhereUniqueInput
-    update: XOR<favourite_tanksUpdateWithoutTanksInput, favourite_tanksUncheckedUpdateWithoutTanksInput>
-    create: XOR<favourite_tanksCreateWithoutTanksInput, favourite_tanksUncheckedCreateWithoutTanksInput>
+    update: XOR<favourite_tanksUpdateWithoutTankInput, favourite_tanksUncheckedUpdateWithoutTankInput>
+    create: XOR<favourite_tanksCreateWithoutTankInput, favourite_tanksUncheckedCreateWithoutTankInput>
   }
 
-  export type favourite_tanksUpdateWithWhereUniqueWithoutTanksInput = {
+  export type favourite_tanksUpdateWithWhereUniqueWithoutTankInput = {
     where: favourite_tanksWhereUniqueInput
-    data: XOR<favourite_tanksUpdateWithoutTanksInput, favourite_tanksUncheckedUpdateWithoutTanksInput>
+    data: XOR<favourite_tanksUpdateWithoutTankInput, favourite_tanksUncheckedUpdateWithoutTankInput>
   }
 
-  export type favourite_tanksUpdateManyWithWhereWithoutTanksInput = {
+  export type favourite_tanksUpdateManyWithWhereWithoutTankInput = {
     where: favourite_tanksScalarWhereInput
-    data: XOR<favourite_tanksUpdateManyMutationInput, favourite_tanksUncheckedUpdateManyWithoutTanksInput>
+    data: XOR<favourite_tanksUpdateManyMutationInput, favourite_tanksUncheckedUpdateManyWithoutTankInput>
   }
 
-  export type tank_photosUpsertWithWhereUniqueWithoutTanksInput = {
+  export type battlelocation_tankUpsertWithWhereUniqueWithoutTankInput = {
+    where: battlelocation_tankWhereUniqueInput
+    update: XOR<battlelocation_tankUpdateWithoutTankInput, battlelocation_tankUncheckedUpdateWithoutTankInput>
+    create: XOR<battlelocation_tankCreateWithoutTankInput, battlelocation_tankUncheckedCreateWithoutTankInput>
+  }
+
+  export type battlelocation_tankUpdateWithWhereUniqueWithoutTankInput = {
+    where: battlelocation_tankWhereUniqueInput
+    data: XOR<battlelocation_tankUpdateWithoutTankInput, battlelocation_tankUncheckedUpdateWithoutTankInput>
+  }
+
+  export type battlelocation_tankUpdateManyWithWhereWithoutTankInput = {
+    where: battlelocation_tankScalarWhereInput
+    data: XOR<battlelocation_tankUpdateManyMutationInput, battlelocation_tankUncheckedUpdateManyWithoutTankInput>
+  }
+
+  export type tank_photosUpsertWithWhereUniqueWithoutTankInput = {
     where: tank_photosWhereUniqueInput
-    update: XOR<tank_photosUpdateWithoutTanksInput, tank_photosUncheckedUpdateWithoutTanksInput>
-    create: XOR<tank_photosCreateWithoutTanksInput, tank_photosUncheckedCreateWithoutTanksInput>
+    update: XOR<tank_photosUpdateWithoutTankInput, tank_photosUncheckedUpdateWithoutTankInput>
+    create: XOR<tank_photosCreateWithoutTankInput, tank_photosUncheckedCreateWithoutTankInput>
   }
 
-  export type tank_photosUpdateWithWhereUniqueWithoutTanksInput = {
+  export type tank_photosUpdateWithWhereUniqueWithoutTankInput = {
     where: tank_photosWhereUniqueInput
-    data: XOR<tank_photosUpdateWithoutTanksInput, tank_photosUncheckedUpdateWithoutTanksInput>
+    data: XOR<tank_photosUpdateWithoutTankInput, tank_photosUncheckedUpdateWithoutTankInput>
   }
 
-  export type tank_photosUpdateManyWithWhereWithoutTanksInput = {
+  export type tank_photosUpdateManyWithWhereWithoutTankInput = {
     where: tank_photosScalarWhereInput
-    data: XOR<tank_photosUpdateManyMutationInput, tank_photosUncheckedUpdateManyWithoutTanksInput>
+    data: XOR<tank_photosUpdateManyMutationInput, tank_photosUncheckedUpdateManyWithoutTankInput>
+  }
+
+  export type battlelocationCreateWithoutPhotosInput = {
+    name: string
+    latitude?: Decimal | DecimalJsLike | number | string | null
+    longitude?: Decimal | DecimalJsLike | number | string | null
+    description?: string | null
+    battleCountries?: battlelocation_countryCreateNestedManyWithoutBattlelocationInput
+    battleTanks?: battlelocation_tankCreateNestedManyWithoutBattlelocationInput
+  }
+
+  export type battlelocationUncheckedCreateWithoutPhotosInput = {
+    id?: number
+    name: string
+    latitude?: Decimal | DecimalJsLike | number | string | null
+    longitude?: Decimal | DecimalJsLike | number | string | null
+    description?: string | null
+    battleCountries?: battlelocation_countryUncheckedCreateNestedManyWithoutBattlelocationInput
+    battleTanks?: battlelocation_tankUncheckedCreateNestedManyWithoutBattlelocationInput
+  }
+
+  export type battlelocationCreateOrConnectWithoutPhotosInput = {
+    where: battlelocationWhereUniqueInput
+    create: XOR<battlelocationCreateWithoutPhotosInput, battlelocationUncheckedCreateWithoutPhotosInput>
+  }
+
+  export type photosCreateWithoutBattleLocationsInput = {
+    filename: string
+    filepath: string
+    tankPhotos?: tank_photosCreateNestedManyWithoutPhotoInput
+  }
+
+  export type photosUncheckedCreateWithoutBattleLocationsInput = {
+    photo_id?: number
+    filename: string
+    filepath: string
+    tankPhotos?: tank_photosUncheckedCreateNestedManyWithoutPhotoInput
+  }
+
+  export type photosCreateOrConnectWithoutBattleLocationsInput = {
+    where: photosWhereUniqueInput
+    create: XOR<photosCreateWithoutBattleLocationsInput, photosUncheckedCreateWithoutBattleLocationsInput>
+  }
+
+  export type battlelocationUpsertWithoutPhotosInput = {
+    update: XOR<battlelocationUpdateWithoutPhotosInput, battlelocationUncheckedUpdateWithoutPhotosInput>
+    create: XOR<battlelocationCreateWithoutPhotosInput, battlelocationUncheckedCreateWithoutPhotosInput>
+    where?: battlelocationWhereInput
+  }
+
+  export type battlelocationUpdateToOneWithWhereWithoutPhotosInput = {
+    where?: battlelocationWhereInput
+    data: XOR<battlelocationUpdateWithoutPhotosInput, battlelocationUncheckedUpdateWithoutPhotosInput>
+  }
+
+  export type battlelocationUpdateWithoutPhotosInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    battleCountries?: battlelocation_countryUpdateManyWithoutBattlelocationNestedInput
+    battleTanks?: battlelocation_tankUpdateManyWithoutBattlelocationNestedInput
+  }
+
+  export type battlelocationUncheckedUpdateWithoutPhotosInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    latitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    longitude?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    battleCountries?: battlelocation_countryUncheckedUpdateManyWithoutBattlelocationNestedInput
+    battleTanks?: battlelocation_tankUncheckedUpdateManyWithoutBattlelocationNestedInput
+  }
+
+  export type photosUpsertWithoutBattleLocationsInput = {
+    update: XOR<photosUpdateWithoutBattleLocationsInput, photosUncheckedUpdateWithoutBattleLocationsInput>
+    create: XOR<photosCreateWithoutBattleLocationsInput, photosUncheckedCreateWithoutBattleLocationsInput>
+    where?: photosWhereInput
+  }
+
+  export type photosUpdateToOneWithWhereWithoutBattleLocationsInput = {
+    where?: photosWhereInput
+    data: XOR<photosUpdateWithoutBattleLocationsInput, photosUncheckedUpdateWithoutBattleLocationsInput>
+  }
+
+  export type photosUpdateWithoutBattleLocationsInput = {
+    filename?: StringFieldUpdateOperationsInput | string
+    filepath?: StringFieldUpdateOperationsInput | string
+    tankPhotos?: tank_photosUpdateManyWithoutPhotoNestedInput
+  }
+
+  export type photosUncheckedUpdateWithoutBattleLocationsInput = {
+    photo_id?: IntFieldUpdateOperationsInput | number
+    filename?: StringFieldUpdateOperationsInput | string
+    filepath?: StringFieldUpdateOperationsInput | string
+    tankPhotos?: tank_photosUncheckedUpdateManyWithoutPhotoNestedInput
   }
 
   export type battlelocation_countryCreateManyBattlelocationInput = {
@@ -15493,8 +17203,13 @@ export namespace Prisma {
     tank_id: number
   }
 
+  export type battlelocation_photosCreateManyBattlelocationInput = {
+    id?: number
+    photo_id: number
+  }
+
   export type battlelocation_countryUpdateWithoutBattlelocationInput = {
-    countries?: countriesUpdateOneRequiredWithoutBattleCountriesNestedInput
+    country?: countriesUpdateOneRequiredWithoutBattleLocationsNestedInput
   }
 
   export type battlelocation_countryUncheckedUpdateWithoutBattlelocationInput = {
@@ -15506,7 +17221,7 @@ export namespace Prisma {
   }
 
   export type battlelocation_tankUpdateWithoutBattlelocationInput = {
-    tanks?: tanksUpdateOneRequiredWithoutBattleTanksNestedInput
+    tank?: tanksUpdateOneRequiredWithoutBattleLocationsNestedInput
   }
 
   export type battlelocation_tankUncheckedUpdateWithoutBattlelocationInput = {
@@ -15517,49 +17232,78 @@ export namespace Prisma {
     tank_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type favourite_tanksCreateManyUsersInput = {
+  export type battlelocation_photosUpdateWithoutBattlelocationInput = {
+    photo?: photosUpdateOneRequiredWithoutBattleLocationsNestedInput
+  }
+
+  export type battlelocation_photosUncheckedUpdateWithoutBattlelocationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    photo_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type battlelocation_photosUncheckedUpdateManyWithoutBattlelocationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    photo_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type favourite_tanksCreateManyUserInput = {
     fav_id?: number
     tank_id: number
   }
 
-  export type favourite_tanksUpdateWithoutUsersInput = {
-    tanks?: tanksUpdateOneRequiredWithoutFavourite_tanksNestedInput
+  export type favourite_tanksUpdateWithoutUserInput = {
+    tank?: tanksUpdateOneRequiredWithoutFavourite_tanksNestedInput
   }
 
-  export type favourite_tanksUncheckedUpdateWithoutUsersInput = {
+  export type favourite_tanksUncheckedUpdateWithoutUserInput = {
     fav_id?: IntFieldUpdateOperationsInput | number
     tank_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type favourite_tanksUncheckedUpdateManyWithoutUsersInput = {
+  export type favourite_tanksUncheckedUpdateManyWithoutUserInput = {
     fav_id?: IntFieldUpdateOperationsInput | number
     tank_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type tank_photosCreateManyPhotosInput = {
+  export type tank_photosCreateManyPhotoInput = {
     id?: number
     tank_id: number
   }
 
-  export type tank_photosUpdateWithoutPhotosInput = {
-    tanks?: tanksUpdateOneRequiredWithoutPhotosNestedInput
-  }
-
-  export type tank_photosUncheckedUpdateWithoutPhotosInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tank_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type tank_photosUncheckedUpdateManyWithoutPhotosInput = {
-    id?: IntFieldUpdateOperationsInput | number
-    tank_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type battlelocation_countryCreateManyCountriesInput = {
+  export type battlelocation_photosCreateManyPhotoInput = {
+    id?: number
     battlelocation_id: number
   }
 
-  export type tanksCreateManyCountriesInput = {
+  export type tank_photosUpdateWithoutPhotoInput = {
+    tank?: tanksUpdateOneRequiredWithoutPhotosNestedInput
+  }
+
+  export type tank_photosUncheckedUpdateWithoutPhotoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tank_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type tank_photosUncheckedUpdateManyWithoutPhotoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    tank_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type battlelocation_photosUpdateWithoutPhotoInput = {
+    battlelocation?: battlelocationUpdateOneRequiredWithoutPhotosNestedInput
+  }
+
+  export type battlelocation_photosUncheckedUpdateWithoutPhotoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    battlelocation_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type battlelocation_photosUncheckedUpdateManyWithoutPhotoInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    battlelocation_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type tanksCreateManyCountryInput = {
     tank_id?: number
     name: string
     type_id?: number | null
@@ -15571,76 +17315,88 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
+    summary?: string | null
   }
 
-  export type battlelocation_countryUpdateWithoutCountriesInput = {
+  export type battlelocation_countryCreateManyCountryInput = {
+    battlelocation_id: number
+  }
+
+  export type tanksUpdateWithoutCountryInput = {
+    name?: StringFieldUpdateOperationsInput | string
+    weight_kg?: NullableIntFieldUpdateOperationsInput | number | null
+    crew?: NullableIntFieldUpdateOperationsInput | number | null
+    engine_power_hp?: NullableIntFieldUpdateOperationsInput | number | null
+    top_speed_kmh?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    armor_front_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    vehicle_type?: vehicle_typesUpdateOneWithoutTanksNestedInput
+    favourite_tanks?: favourite_tanksUpdateManyWithoutTankNestedInput
+    battleLocations?: battlelocation_tankUpdateManyWithoutTankNestedInput
+    photos?: tank_photosUpdateManyWithoutTankNestedInput
+  }
+
+  export type tanksUncheckedUpdateWithoutCountryInput = {
+    tank_id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    type_id?: NullableIntFieldUpdateOperationsInput | number | null
+    weight_kg?: NullableIntFieldUpdateOperationsInput | number | null
+    crew?: NullableIntFieldUpdateOperationsInput | number | null
+    engine_power_hp?: NullableIntFieldUpdateOperationsInput | number | null
+    top_speed_kmh?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    armor_front_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTankNestedInput
+    battleLocations?: battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput
+    photos?: tank_photosUncheckedUpdateManyWithoutTankNestedInput
+  }
+
+  export type tanksUncheckedUpdateManyWithoutCountryInput = {
+    tank_id?: IntFieldUpdateOperationsInput | number
+    name?: StringFieldUpdateOperationsInput | string
+    type_id?: NullableIntFieldUpdateOperationsInput | number | null
+    weight_kg?: NullableIntFieldUpdateOperationsInput | number | null
+    crew?: NullableIntFieldUpdateOperationsInput | number | null
+    engine_power_hp?: NullableIntFieldUpdateOperationsInput | number | null
+    top_speed_kmh?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    armor_front_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
+    year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type battlelocation_countryUpdateWithoutCountryInput = {
     battlelocation?: battlelocationUpdateOneRequiredWithoutBattleCountriesNestedInput
   }
 
-  export type battlelocation_countryUncheckedUpdateWithoutCountriesInput = {
+  export type battlelocation_countryUncheckedUpdateWithoutCountryInput = {
     battlelocation_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type battlelocation_countryUncheckedUpdateManyWithoutCountriesInput = {
+  export type battlelocation_countryUncheckedUpdateManyWithoutCountryInput = {
     battlelocation_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type tanksUpdateWithoutCountriesInput = {
-    name?: StringFieldUpdateOperationsInput | string
-    weight_kg?: NullableIntFieldUpdateOperationsInput | number | null
-    crew?: NullableIntFieldUpdateOperationsInput | number | null
-    engine_power_hp?: NullableIntFieldUpdateOperationsInput | number | null
-    top_speed_kmh?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    armor_front_mm?: NullableIntFieldUpdateOperationsInput | number | null
-    armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
-    armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
-    gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    vehicle_types?: vehicle_typesUpdateOneWithoutTanksNestedInput
-    battleTanks?: battlelocation_tankUpdateManyWithoutTanksNestedInput
-    favourite_tanks?: favourite_tanksUpdateManyWithoutTanksNestedInput
-    photos?: tank_photosUpdateManyWithoutTanksNestedInput
-  }
-
-  export type tanksUncheckedUpdateWithoutCountriesInput = {
-    tank_id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    type_id?: NullableIntFieldUpdateOperationsInput | number | null
-    weight_kg?: NullableIntFieldUpdateOperationsInput | number | null
-    crew?: NullableIntFieldUpdateOperationsInput | number | null
-    engine_power_hp?: NullableIntFieldUpdateOperationsInput | number | null
-    top_speed_kmh?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    armor_front_mm?: NullableIntFieldUpdateOperationsInput | number | null
-    armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
-    armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
-    gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-    battleTanks?: battlelocation_tankUncheckedUpdateManyWithoutTanksNestedInput
-    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTanksNestedInput
-    photos?: tank_photosUncheckedUpdateManyWithoutTanksNestedInput
-  }
-
-  export type tanksUncheckedUpdateManyWithoutCountriesInput = {
-    tank_id?: IntFieldUpdateOperationsInput | number
-    name?: StringFieldUpdateOperationsInput | string
-    type_id?: NullableIntFieldUpdateOperationsInput | number | null
-    weight_kg?: NullableIntFieldUpdateOperationsInput | number | null
-    crew?: NullableIntFieldUpdateOperationsInput | number | null
-    engine_power_hp?: NullableIntFieldUpdateOperationsInput | number | null
-    top_speed_kmh?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    armor_front_mm?: NullableIntFieldUpdateOperationsInput | number | null
-    armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
-    armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
-    gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
-    year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
-    notes?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type tanksCreateManyVehicle_typesInput = {
+  export type tanksCreateManyVehicle_typeInput = {
     tank_id?: number
     name: string
     country_id?: number | null
@@ -15652,11 +17408,13 @@ export namespace Prisma {
     armor_side_mm?: number | null
     armor_rear_mm?: number | null
     gun_caliber_mm?: Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: number | null
     year_introduced?: number | null
     notes?: string | null
+    summary?: string | null
   }
 
-  export type tanksUpdateWithoutVehicle_typesInput = {
+  export type tanksUpdateWithoutVehicle_typeInput = {
     name?: StringFieldUpdateOperationsInput | string
     weight_kg?: NullableIntFieldUpdateOperationsInput | number | null
     crew?: NullableIntFieldUpdateOperationsInput | number | null
@@ -15666,15 +17424,17 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    countries?: countriesUpdateOneWithoutTanksNestedInput
-    battleTanks?: battlelocation_tankUpdateManyWithoutTanksNestedInput
-    favourite_tanks?: favourite_tanksUpdateManyWithoutTanksNestedInput
-    photos?: tank_photosUpdateManyWithoutTanksNestedInput
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    country?: countriesUpdateOneWithoutTanksNestedInput
+    favourite_tanks?: favourite_tanksUpdateManyWithoutTankNestedInput
+    battleLocations?: battlelocation_tankUpdateManyWithoutTankNestedInput
+    photos?: tank_photosUpdateManyWithoutTankNestedInput
   }
 
-  export type tanksUncheckedUpdateWithoutVehicle_typesInput = {
+  export type tanksUncheckedUpdateWithoutVehicle_typeInput = {
     tank_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
@@ -15686,14 +17446,16 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
-    battleTanks?: battlelocation_tankUncheckedUpdateManyWithoutTanksNestedInput
-    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTanksNestedInput
-    photos?: tank_photosUncheckedUpdateManyWithoutTanksNestedInput
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTankNestedInput
+    battleLocations?: battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput
+    photos?: tank_photosUncheckedUpdateManyWithoutTankNestedInput
   }
 
-  export type tanksUncheckedUpdateManyWithoutVehicle_typesInput = {
+  export type tanksUncheckedUpdateManyWithoutVehicle_typeInput = {
     tank_id?: IntFieldUpdateOperationsInput | number
     name?: StringFieldUpdateOperationsInput | string
     country_id?: NullableIntFieldUpdateOperationsInput | number | null
@@ -15705,60 +17467,62 @@ export namespace Prisma {
     armor_side_mm?: NullableIntFieldUpdateOperationsInput | number | null
     armor_rear_mm?: NullableIntFieldUpdateOperationsInput | number | null
     gun_caliber_mm?: NullableDecimalFieldUpdateOperationsInput | Decimal | DecimalJsLike | number | string | null
+    penetration_mm?: NullableIntFieldUpdateOperationsInput | number | null
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
-  export type battlelocation_tankCreateManyTanksInput = {
-    battlelocation_id: number
-  }
-
-  export type favourite_tanksCreateManyTanksInput = {
+  export type favourite_tanksCreateManyTankInput = {
     fav_id?: number
     user_id: number
   }
 
-  export type tank_photosCreateManyTanksInput = {
+  export type battlelocation_tankCreateManyTankInput = {
+    battlelocation_id: number
+  }
+
+  export type tank_photosCreateManyTankInput = {
     id?: number
     photo_id: number
   }
 
-  export type battlelocation_tankUpdateWithoutTanksInput = {
+  export type favourite_tanksUpdateWithoutTankInput = {
+    user?: usersUpdateOneRequiredWithoutFavourite_tanksNestedInput
+  }
+
+  export type favourite_tanksUncheckedUpdateWithoutTankInput = {
+    fav_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type favourite_tanksUncheckedUpdateManyWithoutTankInput = {
+    fav_id?: IntFieldUpdateOperationsInput | number
+    user_id?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type battlelocation_tankUpdateWithoutTankInput = {
     battlelocation?: battlelocationUpdateOneRequiredWithoutBattleTanksNestedInput
   }
 
-  export type battlelocation_tankUncheckedUpdateWithoutTanksInput = {
+  export type battlelocation_tankUncheckedUpdateWithoutTankInput = {
     battlelocation_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type battlelocation_tankUncheckedUpdateManyWithoutTanksInput = {
+  export type battlelocation_tankUncheckedUpdateManyWithoutTankInput = {
     battlelocation_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type favourite_tanksUpdateWithoutTanksInput = {
-    users?: usersUpdateOneRequiredWithoutFavourite_tanksNestedInput
+  export type tank_photosUpdateWithoutTankInput = {
+    photo?: photosUpdateOneRequiredWithoutTankPhotosNestedInput
   }
 
-  export type favourite_tanksUncheckedUpdateWithoutTanksInput = {
-    fav_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type favourite_tanksUncheckedUpdateManyWithoutTanksInput = {
-    fav_id?: IntFieldUpdateOperationsInput | number
-    user_id?: IntFieldUpdateOperationsInput | number
-  }
-
-  export type tank_photosUpdateWithoutTanksInput = {
-    photos?: photosUpdateOneRequiredWithoutTanksNestedInput
-  }
-
-  export type tank_photosUncheckedUpdateWithoutTanksInput = {
+  export type tank_photosUncheckedUpdateWithoutTankInput = {
     id?: IntFieldUpdateOperationsInput | number
     photo_id?: IntFieldUpdateOperationsInput | number
   }
 
-  export type tank_photosUncheckedUpdateManyWithoutTanksInput = {
+  export type tank_photosUncheckedUpdateManyWithoutTankInput = {
     id?: IntFieldUpdateOperationsInput | number
     photo_id?: IntFieldUpdateOperationsInput | number
   }

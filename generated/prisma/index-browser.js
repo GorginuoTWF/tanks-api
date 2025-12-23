@@ -188,8 +188,16 @@ exports.Prisma.TanksScalarFieldEnum = {
   armor_side_mm: 'armor_side_mm',
   armor_rear_mm: 'armor_rear_mm',
   gun_caliber_mm: 'gun_caliber_mm',
+  penetration_mm: 'penetration_mm',
   year_introduced: 'year_introduced',
-  notes: 'notes'
+  notes: 'notes',
+  summary: 'summary'
+};
+
+exports.Prisma.Battlelocation_photosScalarFieldEnum = {
+  id: 'id',
+  battlelocation_id: 'battlelocation_id',
+  photo_id: 'photo_id'
 };
 
 exports.Prisma.SortOrder = {
@@ -211,7 +219,6 @@ exports.Prisma.usersOrderByRelevanceFieldEnum = {
   nickname: 'nickname',
   password: 'password',
   email: 'email',
-  role: 'role',
   avatar_url: 'avatar_url'
 };
 
@@ -230,9 +237,13 @@ exports.Prisma.vehicle_typesOrderByRelevanceFieldEnum = {
 
 exports.Prisma.tanksOrderByRelevanceFieldEnum = {
   name: 'name',
-  notes: 'notes'
+  notes: 'notes',
+  summary: 'summary'
 };
-
+exports.users_role = exports.$Enums.users_role = {
+  user: 'user',
+  admin: 'admin'
+};
 
 exports.Prisma.ModelName = {
   battlelocation: 'battlelocation',
@@ -244,7 +255,8 @@ exports.Prisma.ModelName = {
   tank_photos: 'tank_photos',
   countries: 'countries',
   vehicle_types: 'vehicle_types',
-  tanks: 'tanks'
+  tanks: 'tanks',
+  battlelocation_photos: 'battlelocation_photos'
 };
 
 /**
