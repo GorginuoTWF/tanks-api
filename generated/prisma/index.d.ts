@@ -10769,6 +10769,7 @@ export namespace Prisma {
     year_introduced: number | null
     notes: string | null
     summary: string | null
+    source_url: string | null
   }
 
   export type TanksMaxAggregateOutputType = {
@@ -10788,6 +10789,7 @@ export namespace Prisma {
     year_introduced: number | null
     notes: string | null
     summary: string | null
+    source_url: string | null
   }
 
   export type TanksCountAggregateOutputType = {
@@ -10807,6 +10809,7 @@ export namespace Prisma {
     year_introduced: number
     notes: number
     summary: number
+    source_url: number
     _all: number
   }
 
@@ -10860,6 +10863,7 @@ export namespace Prisma {
     year_introduced?: true
     notes?: true
     summary?: true
+    source_url?: true
   }
 
   export type TanksMaxAggregateInputType = {
@@ -10879,6 +10883,7 @@ export namespace Prisma {
     year_introduced?: true
     notes?: true
     summary?: true
+    source_url?: true
   }
 
   export type TanksCountAggregateInputType = {
@@ -10898,6 +10903,7 @@ export namespace Prisma {
     year_introduced?: true
     notes?: true
     summary?: true
+    source_url?: true
     _all?: true
   }
 
@@ -11004,6 +11010,7 @@ export namespace Prisma {
     year_introduced: number | null
     notes: string | null
     summary: string | null
+    source_url: string | null
     _count: TanksCountAggregateOutputType | null
     _avg: TanksAvgAggregateOutputType | null
     _sum: TanksSumAggregateOutputType | null
@@ -11042,6 +11049,7 @@ export namespace Prisma {
     year_introduced?: boolean
     notes?: boolean
     summary?: boolean
+    source_url?: boolean
     country?: boolean | tanks$countryArgs<ExtArgs>
     vehicle_type?: boolean | tanks$vehicle_typeArgs<ExtArgs>
     favourite_tanks?: boolean | tanks$favourite_tanksArgs<ExtArgs>
@@ -11069,9 +11077,10 @@ export namespace Prisma {
     year_introduced?: boolean
     notes?: boolean
     summary?: boolean
+    source_url?: boolean
   }
 
-  export type tanksOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"tank_id" | "name" | "country_id" | "type_id" | "weight_kg" | "crew" | "engine_power_hp" | "top_speed_kmh" | "armor_front_mm" | "armor_side_mm" | "armor_rear_mm" | "gun_caliber_mm" | "penetration_mm" | "year_introduced" | "notes" | "summary", ExtArgs["result"]["tanks"]>
+  export type tanksOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"tank_id" | "name" | "country_id" | "type_id" | "weight_kg" | "crew" | "engine_power_hp" | "top_speed_kmh" | "armor_front_mm" | "armor_side_mm" | "armor_rear_mm" | "gun_caliber_mm" | "penetration_mm" | "year_introduced" | "notes" | "summary" | "source_url", ExtArgs["result"]["tanks"]>
   export type tanksInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     country?: boolean | tanks$countryArgs<ExtArgs>
     vehicle_type?: boolean | tanks$vehicle_typeArgs<ExtArgs>
@@ -11107,6 +11116,7 @@ export namespace Prisma {
       year_introduced: number | null
       notes: string | null
       summary: string | null
+      source_url: string | null
     }, ExtArgs["result"]["tanks"]>
     composites: {}
   }
@@ -11497,6 +11507,7 @@ export namespace Prisma {
     readonly year_introduced: FieldRef<"tanks", 'Int'>
     readonly notes: FieldRef<"tanks", 'String'>
     readonly summary: FieldRef<"tanks", 'String'>
+    readonly source_url: FieldRef<"tanks", 'String'>
   }
     
 
@@ -13033,7 +13044,8 @@ export namespace Prisma {
     penetration_mm: 'penetration_mm',
     year_introduced: 'year_introduced',
     notes: 'notes',
-    summary: 'summary'
+    summary: 'summary',
+    source_url: 'source_url'
   };
 
   export type TanksScalarFieldEnum = (typeof TanksScalarFieldEnum)[keyof typeof TanksScalarFieldEnum]
@@ -13107,7 +13119,8 @@ export namespace Prisma {
   export const tanksOrderByRelevanceFieldEnum: {
     name: 'name',
     notes: 'notes',
-    summary: 'summary'
+    summary: 'summary',
+    source_url: 'source_url'
   };
 
   export type tanksOrderByRelevanceFieldEnum = (typeof tanksOrderByRelevanceFieldEnum)[keyof typeof tanksOrderByRelevanceFieldEnum]
@@ -13636,6 +13649,7 @@ export namespace Prisma {
     year_introduced?: IntNullableFilter<"tanks"> | number | null
     notes?: StringNullableFilter<"tanks"> | string | null
     summary?: StringNullableFilter<"tanks"> | string | null
+    source_url?: StringNullableFilter<"tanks"> | string | null
     country?: XOR<CountriesNullableScalarRelationFilter, countriesWhereInput> | null
     vehicle_type?: XOR<Vehicle_typesNullableScalarRelationFilter, vehicle_typesWhereInput> | null
     favourite_tanks?: Favourite_tanksListRelationFilter
@@ -13660,6 +13674,7 @@ export namespace Prisma {
     year_introduced?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     summary?: SortOrderInput | SortOrder
+    source_url?: SortOrderInput | SortOrder
     country?: countriesOrderByWithRelationInput
     vehicle_type?: vehicle_typesOrderByWithRelationInput
     favourite_tanks?: favourite_tanksOrderByRelationAggregateInput
@@ -13688,6 +13703,7 @@ export namespace Prisma {
     year_introduced?: IntNullableFilter<"tanks"> | number | null
     notes?: StringNullableFilter<"tanks"> | string | null
     summary?: StringNullableFilter<"tanks"> | string | null
+    source_url?: StringNullableFilter<"tanks"> | string | null
     country?: XOR<CountriesNullableScalarRelationFilter, countriesWhereInput> | null
     vehicle_type?: XOR<Vehicle_typesNullableScalarRelationFilter, vehicle_typesWhereInput> | null
     favourite_tanks?: Favourite_tanksListRelationFilter
@@ -13712,6 +13728,7 @@ export namespace Prisma {
     year_introduced?: SortOrderInput | SortOrder
     notes?: SortOrderInput | SortOrder
     summary?: SortOrderInput | SortOrder
+    source_url?: SortOrderInput | SortOrder
     _count?: tanksCountOrderByAggregateInput
     _avg?: tanksAvgOrderByAggregateInput
     _max?: tanksMaxOrderByAggregateInput
@@ -13739,6 +13756,7 @@ export namespace Prisma {
     year_introduced?: IntNullableWithAggregatesFilter<"tanks"> | number | null
     notes?: StringNullableWithAggregatesFilter<"tanks"> | string | null
     summary?: StringNullableWithAggregatesFilter<"tanks"> | string | null
+    source_url?: StringNullableWithAggregatesFilter<"tanks"> | string | null
   }
 
   export type battlelocation_photosWhereInput = {
@@ -14201,6 +14219,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     country?: countriesCreateNestedOneWithoutTanksInput
     vehicle_type?: vehicle_typesCreateNestedOneWithoutTanksInput
     favourite_tanks?: favourite_tanksCreateNestedManyWithoutTankInput
@@ -14225,6 +14244,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTankInput
     battleLocations?: battlelocation_tankUncheckedCreateNestedManyWithoutTankInput
     photos?: tank_photosUncheckedCreateNestedManyWithoutTankInput
@@ -14244,6 +14264,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     country?: countriesUpdateOneWithoutTanksNestedInput
     vehicle_type?: vehicle_typesUpdateOneWithoutTanksNestedInput
     favourite_tanks?: favourite_tanksUpdateManyWithoutTankNestedInput
@@ -14268,6 +14289,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTankNestedInput
     battleLocations?: battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput
     photos?: tank_photosUncheckedUpdateManyWithoutTankNestedInput
@@ -14290,6 +14312,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
   }
 
   export type tanksUpdateManyMutationInput = {
@@ -14306,6 +14329,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type tanksUncheckedUpdateManyInput = {
@@ -14325,6 +14349,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type battlelocation_photosCreateInput = {
@@ -14934,6 +14959,7 @@ export namespace Prisma {
     year_introduced?: SortOrder
     notes?: SortOrder
     summary?: SortOrder
+    source_url?: SortOrder
   }
 
   export type tanksAvgOrderByAggregateInput = {
@@ -14969,6 +14995,7 @@ export namespace Prisma {
     year_introduced?: SortOrder
     notes?: SortOrder
     summary?: SortOrder
+    source_url?: SortOrder
   }
 
   export type tanksMinOrderByAggregateInput = {
@@ -14988,6 +15015,7 @@ export namespace Prisma {
     year_introduced?: SortOrder
     notes?: SortOrder
     summary?: SortOrder
+    source_url?: SortOrder
   }
 
   export type tanksSumOrderByAggregateInput = {
@@ -16208,6 +16236,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     country?: countriesCreateNestedOneWithoutTanksInput
     vehicle_type?: vehicle_typesCreateNestedOneWithoutTanksInput
     favourite_tanks?: favourite_tanksCreateNestedManyWithoutTankInput
@@ -16231,6 +16260,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTankInput
     photos?: tank_photosUncheckedCreateNestedManyWithoutTankInput
   }
@@ -16295,6 +16325,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     country?: countriesUpdateOneWithoutTanksNestedInput
     vehicle_type?: vehicle_typesUpdateOneWithoutTanksNestedInput
     favourite_tanks?: favourite_tanksUpdateManyWithoutTankNestedInput
@@ -16318,6 +16349,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTankNestedInput
     photos?: tank_photosUncheckedUpdateManyWithoutTankNestedInput
   }
@@ -16402,6 +16434,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     country?: countriesCreateNestedOneWithoutTanksInput
     vehicle_type?: vehicle_typesCreateNestedOneWithoutTanksInput
     battleLocations?: battlelocation_tankCreateNestedManyWithoutTankInput
@@ -16425,6 +16458,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     battleLocations?: battlelocation_tankUncheckedCreateNestedManyWithoutTankInput
     photos?: tank_photosUncheckedCreateNestedManyWithoutTankInput
   }
@@ -16487,6 +16521,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     country?: countriesUpdateOneWithoutTanksNestedInput
     vehicle_type?: vehicle_typesUpdateOneWithoutTanksNestedInput
     battleLocations?: battlelocation_tankUpdateManyWithoutTankNestedInput
@@ -16510,6 +16545,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     battleLocations?: battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput
     photos?: tank_photosUncheckedUpdateManyWithoutTankNestedInput
   }
@@ -16607,6 +16643,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     country?: countriesCreateNestedOneWithoutTanksInput
     vehicle_type?: vehicle_typesCreateNestedOneWithoutTanksInput
     favourite_tanks?: favourite_tanksCreateNestedManyWithoutTankInput
@@ -16630,6 +16667,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTankInput
     battleLocations?: battlelocation_tankUncheckedCreateNestedManyWithoutTankInput
   }
@@ -16682,6 +16720,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     country?: countriesUpdateOneWithoutTanksNestedInput
     vehicle_type?: vehicle_typesUpdateOneWithoutTanksNestedInput
     favourite_tanks?: favourite_tanksUpdateManyWithoutTankNestedInput
@@ -16705,6 +16744,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTankNestedInput
     battleLocations?: battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput
   }
@@ -16747,6 +16787,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     vehicle_type?: vehicle_typesCreateNestedOneWithoutTanksInput
     favourite_tanks?: favourite_tanksCreateNestedManyWithoutTankInput
     battleLocations?: battlelocation_tankCreateNestedManyWithoutTankInput
@@ -16769,6 +16810,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTankInput
     battleLocations?: battlelocation_tankUncheckedCreateNestedManyWithoutTankInput
     photos?: tank_photosUncheckedCreateNestedManyWithoutTankInput
@@ -16838,6 +16880,7 @@ export namespace Prisma {
     year_introduced?: IntNullableFilter<"tanks"> | number | null
     notes?: StringNullableFilter<"tanks"> | string | null
     summary?: StringNullableFilter<"tanks"> | string | null
+    source_url?: StringNullableFilter<"tanks"> | string | null
   }
 
   export type battlelocation_countryUpsertWithWhereUniqueWithoutCountryInput = {
@@ -16870,6 +16913,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     country?: countriesCreateNestedOneWithoutTanksInput
     favourite_tanks?: favourite_tanksCreateNestedManyWithoutTankInput
     battleLocations?: battlelocation_tankCreateNestedManyWithoutTankInput
@@ -16892,6 +16936,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
     favourite_tanks?: favourite_tanksUncheckedCreateNestedManyWithoutTankInput
     battleLocations?: battlelocation_tankUncheckedCreateNestedManyWithoutTankInput
     photos?: tank_photosUncheckedCreateNestedManyWithoutTankInput
@@ -17319,6 +17364,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
   }
 
   export type battlelocation_countryCreateManyCountryInput = {
@@ -17339,6 +17385,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     vehicle_type?: vehicle_typesUpdateOneWithoutTanksNestedInput
     favourite_tanks?: favourite_tanksUpdateManyWithoutTankNestedInput
     battleLocations?: battlelocation_tankUpdateManyWithoutTankNestedInput
@@ -17361,6 +17408,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTankNestedInput
     battleLocations?: battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput
     photos?: tank_photosUncheckedUpdateManyWithoutTankNestedInput
@@ -17382,6 +17430,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type battlelocation_countryUpdateWithoutCountryInput = {
@@ -17412,6 +17461,7 @@ export namespace Prisma {
     year_introduced?: number | null
     notes?: string | null
     summary?: string | null
+    source_url?: string | null
   }
 
   export type tanksUpdateWithoutVehicle_typeInput = {
@@ -17428,6 +17478,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     country?: countriesUpdateOneWithoutTanksNestedInput
     favourite_tanks?: favourite_tanksUpdateManyWithoutTankNestedInput
     battleLocations?: battlelocation_tankUpdateManyWithoutTankNestedInput
@@ -17450,6 +17501,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
     favourite_tanks?: favourite_tanksUncheckedUpdateManyWithoutTankNestedInput
     battleLocations?: battlelocation_tankUncheckedUpdateManyWithoutTankNestedInput
     photos?: tank_photosUncheckedUpdateManyWithoutTankNestedInput
@@ -17471,6 +17523,7 @@ export namespace Prisma {
     year_introduced?: NullableIntFieldUpdateOperationsInput | number | null
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     summary?: NullableStringFieldUpdateOperationsInput | string | null
+    source_url?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type favourite_tanksCreateManyTankInput = {

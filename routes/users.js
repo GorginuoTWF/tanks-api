@@ -18,15 +18,15 @@ const nodemailer = require("nodemailer");
 const transporter = nodemailer.createTransport({
   service: "gmail", // or your email service
   auth: {
-    user: process.env.EMAIL_USER || "your-email@gmail.com",
-    pass: process.env.EMAIL_PASS || "your-app-password", // Use app password for Gmail
+    user: process.env.EMAIL_USER || "ukrastuk@gmail.com",
+    pass: process.env.EMAIL_PASS || "fufq xbxk bhow cfwk", // Use app password for Gmail
   },
 });
 
 async function sendMail(to, text) {
   try {
     await transporter.sendMail({
-      from: process.env.EMAIL_USER || "your-email@gmail.com",
+      from: process.env.EMAIL_USER || "ukrastuk@gmail.com",
       to,
       subject: "Your Verification Code",
       text,

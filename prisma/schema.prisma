@@ -118,6 +118,8 @@ model tanks {
   notes           String?  @db.Text
   summary         String?  @db.VarChar(255)
 
+  source_url      String?  @db.VarChar(512)
+
   country          countries?          @relation(fields: [country_id], references: [country_id])
   vehicle_type     vehicle_types?      @relation(fields: [type_id], references: [type_id])
   favourite_tanks  favourite_tanks[]

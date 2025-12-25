@@ -191,7 +191,8 @@ exports.Prisma.TanksScalarFieldEnum = {
   penetration_mm: 'penetration_mm',
   year_introduced: 'year_introduced',
   notes: 'notes',
-  summary: 'summary'
+  summary: 'summary',
+  source_url: 'source_url'
 };
 
 exports.Prisma.Battlelocation_photosScalarFieldEnum = {
@@ -238,7 +239,8 @@ exports.Prisma.vehicle_typesOrderByRelevanceFieldEnum = {
 exports.Prisma.tanksOrderByRelevanceFieldEnum = {
   name: 'name',
   notes: 'notes',
-  summary: 'summary'
+  summary: 'summary',
+  source_url: 'source_url'
 };
 exports.users_role = exports.$Enums.users_role = {
   user: 'user',

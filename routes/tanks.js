@@ -202,7 +202,7 @@ router.post('/', async (req, res) => {
     console.error('Create tank error:', err);
     const msg = (err && err.message) ? err.message : 'Unknown error';
     // If DB doesn't have the column (migration not applied), try without summary as a fallback
-    if (/Unknown column|ER_BAD_FIELD_ERROR|has no column named/i.test(msg)) {
+    if (/Unknown column|Unknown column|ER_BAD_FIELD_ERROR|has no column named/i.test(msg)) {
       try {
         console.warn('Summary column missing in DB — retrying without it');
         newTank = await prisma.tanks.create({
@@ -388,6 +388,25 @@ router.put(
           vehicle_type: true
         }
       });
+      // Update notes file if notes were changed
+      if ('notes' in updateData) {
+        const notesDir = path.join(__dirname, '../notes');
+        if (!fs.existsSync(notesDir)) {
+          fs.mkdirSync(notesDir, { recursive: true });
+        }
+        const safeName = updatedTank.name
+          .toLowerCase()
+          .normalize('NFD')
+          .replace(/[-\u001f\u007f-\u009f]/g, '')
+          .replace(/\s+/g, "_")
+          .replace(/[^a-z0-9_]/g, "")
+          .replace(/^_+|_+$/g, '');
+        let fileName = `${safeName}.txt`;
+        let fullPath = path.join(notesDir, fileName);
+        // Check if file exists, if not try with _2 etc., but for simplicity assume base name
+        // To handle properly, you might need to store filename in DB or search, but for now overwrite base
+        fs.writeFileSync(fullPath, updateData.notes);
+      }
       res.json({ message: "Tank updated", tank: updatedTank });
     } catch (err) {
       console.error("Tank admin update error:", err);
@@ -412,5 +431,14 @@ router.put('/:id', async (req, res) => {
     data: body // предполагаем, то тело запроса содержит все обновляемые полей
   });
   res.json(updatedTank);
+});
+// Serve notes files
+router.get('/notes/:file', (req, res) => {
+  const filePath = path.join(__dirname, '../notes', req.params.file);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    res.status(404).send('Notes not found');
+  }
 });
 module.exports = router;

@@ -38,6 +38,7 @@ CREATE TABLE tanks (
     year_introduced YEAR,
     summary TEXT,
     notes TEXT,
+    source_url VARCHAR(512),
     FOREIGN KEY (country_id) REFERENCES countries(country_id),
     FOREIGN KEY (type_id) REFERENCES vehicle_types(type_id)
     
@@ -156,59 +157,59 @@ INSERT INTO vehicle_types (name) VALUES
 INSERT INTO tanks (
   name, country_id, type_id, weight_kg, crew, engine_power_hp, top_speed_kmh,
   armor_front_mm, armor_side_mm, armor_rear_mm,
-  gun_caliber_mm, penetration_mm, year_introduced, notes
+  gun_caliber_mm, penetration_mm, year_introduced, notes, source_url
 )
 VALUES
 ('T-34-76', 1, 2, 26800, 4, 500, 53.0, 45, 40, 40, 76.2, 70, 1940,
- 'Revolutionary Soviet medium tank — well-balanced and mass-produced.'),
+ 'Revolutionary Soviet medium tank — well-balanced and mass-produced.', 'https://www.youtube.com/watch?v=azjAmD0f_Ck'),
 
 ('KV-1', 1, 3, 47000, 5, 600, 35.0, 90, 75, 70, 76.2, 75, 1939,
- 'Heavy Soviet tank that was nearly invulnerable early in the war.'),
+ 'Heavy Soviet tank that was nearly invulnerable early in the war.', 'https://www.youtube.com/watch?v=cdxm7QC2fKA'),
 
 ('Panzer 3', 2, 2, 23000, 5, 300, 40.0, 50, 30, 20, 50.0, 60, 1937,
- 'German medium tank used in Blitzkrieg campaigns.'),
+ 'German medium tank used in Blitzkrieg campaigns.', 'https://www.youtube.com/watch?v=MOcoTyrEfeU&t'),
 
 ('M3 Stuart', 3, 1, 14300, 4, 250, 58.0, 38, 25, 25, 37.0, 45, 1941,
- 'Light American reconnaissance tank, fast but lightly armored.'),
+ 'Light American reconnaissance tank, fast but lightly armored.', 'https://www.youtube.com/watch?v=CHgYV_me4Tk&t'),
 
 ('Panzer 4', 2, 2, 25000, 5, 300, 42.0, 80, 30, 20, 75.0, 90, 1937,
- 'Versatile German medium tank, widely used across all fronts.'),
+ 'Versatile German medium tank, widely used across all fronts.', 'https://www.youtube.com/watch?v=qGPH26YYvDk&t'),
 
 ('Tiger 1', 2, 3, 57000, 5, 700, 38.0, 100, 80, 80, 88.0, 110, 1942,
- 'Iconic German heavy tank with formidable armor and gun.'),
+ 'Iconic German heavy tank with formidable armor and gun.', 'https://www.youtube.com/watch?v=q3JRx4PkDYg'),
 
 ('Panther', 2, 2, 44500, 5, 700, 55.0, 80, 50, 45, 75.0, 120, 1943,
- 'German medium tank with strong frontal armor and powerful 75mm gun.'),
+ 'German medium tank with strong frontal armor and powerful 75mm gun.','https://www.youtube.com/watch?v=cVDmZyqjuB4'),
 
 ('Fiat M14/41', 7, 2, 14000, 4, 125, 42.0, 42, 30, 20, 47.0, 55, 1941,
- 'Italian medium tank used in North Africa.'),
+ 'Italian medium tank used in North Africa.', 'https://www.youtube.com/watch?v=db0y41gz8nA&t'),
 
 ('M4 Sherman', 3, 2, 30300, 5, 450, 48.0, 63, 38, 38, 75.0, 90, 1942,
- 'Reliable Allied tank, mass-produced and easily maintained.'),
+ 'Reliable Allied tank, mass-produced and easily maintained.', 'https://www.youtube.com/watch?v=ugai_z4JNro&t'),
 
 ('SU-152', 1, 5, 45600, 5, 520, 43.0, 75, 60, 60, 152.4, 125, 1943,
- 'Soviet heavy self-propelled gun.'),
+ 'Soviet heavy self-propelled gun.', 'https://www.youtube.com/watch?v=SpBIUuW9oO8&t'),
 
 ('Churchill Mk 4', 4, 3, 40000, 5, 350, 25.0, 102, 76, 50, 75.0, 75, 1941,
- 'Heavily armored British infantry tank.'),
+ 'Heavily armored British infantry tank.','https://www.youtube.com/watch?v=_-mQlONM1xk&t'),
 
 ('Crusader', 4, 2, 20500, 4, 340, 42.0, 40, 30, 20, 40.0, 55, 1941,
- 'British cruiser tank used in North Africa.'),
+ 'British cruiser tank used in North Africa.', 'https://www.youtube.com/watch?v=nXJKME4qSwc&t'),
 
 ('Type 97 Chi-Ha', 5, 2, 15500, 4, 170, 38.0, 33, 25, 20, 57.0, 50, 1938,
- 'Japanese medium tank with weak armor.'),
+ 'Japanese medium tank with weak armor.', 'https://www.youtube.com/watch?v=FvWhVvDtWyc&t'),
 
 ('Renault FT', 6, 1, 6000, 2, 35, 7.0, 22, 8, 8, 37.0, 30, 1917,
- 'Iconic WWI French light tank.'),
+ 'Iconic WWI French light tank.', 'https://www.youtube.com/watch?v=D_BrpT9kANY&t'),
 
 ('Char B1', 6, 3, 28000, 4, 105, 28.0, 60, 45, 40, 75.0, 75, 1935,
- 'Heavily armored French heavy tank.'),
+ 'Heavily armored French heavy tank.', 'https://www.youtube.com/watch?v=NRvuqFOa0Lg&t'),
 
 ('Somua S35', 6, 2, 19500, 3, 190, 40.0, 47, 40, 40, 47.0, 60, 1936,
- 'Well-armored French cavalry tank.'),
+ 'Well-armored French cavalry tank.', 'https://www.youtube.com/watch?v=nZuGsDDNyQc&t'),
 
 ('Cromwell', 4, 2, 28000, 5, 600, 64.0, 76, 40, 25, 75.0, 95, 1943,
- 'British cruiser tank known for its speed.');
+ 'British cruiser tank known for its speed.', 'https://www.youtube.com/watch?v=4wUWTjJq1so&t');
 -- === INSERT USERS ===
 INSERT INTO users (nickname, password, email) VALUES
 ('RedComrade', 'pass123', 'redcomrade@example.com'),
@@ -236,7 +237,7 @@ VALUES
     ('T_34_76_4.jpg', 'uploads/tankphoto/T_34_76_4.jpg'),
     ('Panzer_3.jpg', 'uploads/tankphoto/Panzer_3.jpg'),
     ('Panzer_3_2.jpg', 'uploads/tankphoto/Panzer_3_2.jpg'),
-    ('Panzer_3_3.jpg', 'uploads/tankphoto/Panzer_3_3.jpg'),
+    ('Panzer_3_3.jpeg', 'uploads/tankphoto/Panzer_3_3.jpeg'),
     ('Panzer_3_4.jpg', 'uploads/tankphoto/Panzer_3_4.jpg'),
     ('M3_Stuart.jpg', 'uploads/tankphoto/M3_Stuart.jpg'),
     ('M3_Stuart_2.jpg', 'uploads/tankphoto/M3_Stuart_2.jpg'),
@@ -245,7 +246,7 @@ VALUES
     ('Panzer_4.jpg', 'uploads/tankphoto/Panzer_4.jpg'),
     ('Panzer_4_2.jpg', 'uploads/tankphoto/Panzer_4_2.jpg'),
     ('Panzer_4_3.webp', 'uploads/tankphoto/Panzer_4_3.webp'),
-    ('Panzer_4_4.jpg', 'uploads/tankphoto/Panzer_4_4.jpg'),
+    ('Panzer_4_4.jpeg', 'uploads/tankphoto/Panzer_4_4.jpeg'),
     ('Tiger_1.png', 'uploads/tankphoto/Tiger_1.png'),
     ('Tiger_1_2.jpg', 'uploads/tankphoto/Tiger_1_2.jpg'),
     ('Tiger_1_3.jpg', 'uploads/tankphoto/Tiger_1_3.jpg'),
@@ -263,21 +264,21 @@ VALUES
     ('M4_Sherman_3.jpg', 'uploads/tankphoto/M4_Sherman_3.jpg'),
     ('M4_Sherman_4.jpg', 'uploads/tankphoto/M4_Sherman_4.jpg'),
     ('SU_152.png', 'uploads/tankphoto/SU_152.png'),
-    ('SU_152_2.jpg', 'uploads/tankphoto/SU_152_2.jpg'),
+    ('SU_152_2.png', 'uploads/tankphoto/SU_152_2.png'),
     ('SU_152_3.jpg', 'uploads/tankphoto/SU_152_3.jpg'),
     ('SU_152_4.jpg', 'uploads/tankphoto/SU_152_4.jpg'),
     ('Churchill_Mk_4.webp', 'uploads/tankphoto/Churchill_Mk_4.webp'),
-    ('Churchill_Mk_4_2.jpg', 'uploads/tankphoto/Churchill_Mk_4_2.jpg'),
+    ('Churchill_Mk_4_2.webp', 'uploads/tankphoto/Churchill_Mk_4_2.webp'),
     ('Churchill_Mk_4_3.jpg', 'uploads/tankphoto/Churchill_Mk_4_3.jpg'),
     ('Churchill_Mk_4_4.jpg', 'uploads/tankphoto/Churchill_Mk_4_4.jpg'),
     ('Crusader.jpg', 'uploads/tankphoto/Crusader.jpg'),
     ('Crusader_2.jpg', 'uploads/tankphoto/Crusader_2.jpg'),
-    ('Crusader_3.jpg', 'uploads/tankphoto/Crusader_3.jpg'),
-    ('Crusader_4.jpg', 'uploads/tankphoto/Crusader_4.jpg'),
+    ('Crusader_3.jpeg', 'uploads/tankphoto/Crusader_3.jpeg'),
+    ('Crusader_4.webp', 'uploads/tankphoto/Crusader_4.webp'),
     ('Type_97_Chi_Ha.png', 'uploads/tankphoto/Type_97_Chi_Ha.png'),
     ('Type_97_Chi_Ha_2.jpg', 'uploads/tankphoto/Type_97_Chi_Ha_2.jpg'),
     ('Type_97_Chi_Ha_3.jpg', 'uploads/tankphoto/Type_97_Chi_Ha_3.jpg'),
-    ('Type_97_Chi_Ha_4.jpg', 'uploads/tankphoto/Type_97_Chi_Ha_4.jpg'),
+    ('Type_97_Chi_Ha_4.webp', 'uploads/tankphoto/Type_97_Chi_Ha_4.webp'),
     ('Renault_FT.jpg', 'uploads/tankphoto/Renault_FT.jpg'),
     ('Renault_FT_2.jpg', 'uploads/tankphoto/Renault_FT_2.jpg'),
     ('Renault_FT_3.jpg', 'uploads/tankphoto/Renault_FT_3.jpg'),
@@ -289,9 +290,9 @@ VALUES
     ('Somua_S35.jpg', 'uploads/tankphoto/Somua_S35.jpg'),
     ('Somua_S35_2.jpg', 'uploads/tankphoto/Somua_S35_2.jpg'),
     ('Somua_S35_3.jpg', 'uploads/tankphoto/Somua_S35_3.jpg'),
-    ('Somua_S35_4.jpg', 'uploads/tankphoto/Somua_S35_4.jpg'),
+    ('Somua_S35_4.jpeg', 'uploads/tankphoto/Somua_S35_4.jpeg'),
     ('Cromwell.jpg', 'uploads/tankphoto/Cromwell.jpg'),
-    ('Cromwell_2.jpg', 'uploads/tankphoto/Cromwell_2.jpg'),
+    ('Cromwell_2.png', 'uploads/tankphoto/Cromwell_2.png'),
     ('Cromwell_3.jpg', 'uploads/tankphoto/Cromwell_3.jpg'),
     ('Cromwell_4.jpg', 'uploads/tankphoto/Cromwell_4.jpg'),
   ('El_Alamein_1.jpg', 'uploads/location/el_alamein_1.png'),
